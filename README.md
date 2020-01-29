@@ -1,6 +1,6 @@
 # validator
 
-∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.
+∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.<br>
 Very simple and efficient, all validations return `true` or `false`.
 
 Also [validator/check](#check) (not exposed by default) provides error message handling intended for the end user.
@@ -34,9 +34,9 @@ By default the **validator** module expose only `Validator` and `Valid` (alias) 
 ```crystal
 require "validator"
 
-Valid :email?, "contact@example.org" # => true
-Valid.url?("https://github.com/Nicolab/crystal-validator") # => true
-Valid :my_validator?, "value to validate", "hello", 42 # => true
+Valid.email? "contact@example.org" # => true
+Valid.url? "https://github.com/Nicolab/crystal-validator" # => true
+Valid.my_validator? "value to validate", "hello", 42 # => true
 ```
 
 An (optional) expressive validation flavor, `is` available as an alternative.

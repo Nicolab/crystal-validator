@@ -98,7 +98,7 @@
   </svg>
 </a>validator</h1>
 
-<p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> micro validations module.
+<p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> micro validations module.&lt;br>
 Very simple and efficient, all validations return <code>true</code> or <code>false</code>.</p>
 
 <p>Also <a href="#check" target="_blank">validator/check</a> (not exposed by default) provides error message handling intended for the end user.</p>
@@ -136,9 +136,9 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator&quot;</span>
 
-<span class="t">Valid</span> <span class="n">:email?</span>, <span class="s">&quot;contact@example.org&quot;</span> <span class="c"># =&gt; true</span>
-<span class="t">Valid</span>.url?(<span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span>) <span class="c"># =&gt; true</span>
-<span class="t">Valid</span> <span class="n">:my_validator?</span>, <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span></code></pre>
+<span class="t">Valid</span>.email? <span class="s">&quot;contact@example.org&quot;</span> <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.url? <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.my_validator? <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span></code></pre>
 
 <p>An (optional) expressive validation flavor, <code><a href="toplevel.html#is(name,*args)-macro">is</a></code> available as an alternative.
 Not exposed by default, it must be imported:</p>
