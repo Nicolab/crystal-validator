@@ -75,7 +75,7 @@ module Check
   # end
   # ```
   #
-  # 3 methods [#check](https://nicolab.github.io/crystal-validator/docs/Check/Validation.html#instance-method-summary):
+  # 3 methods [#check](https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary):
   #
   # ```crystal
   # # check(key : Symbol, valid : Bool)
