@@ -24,9 +24,9 @@ require "./validators/*"
 # ```
 # require "validator"
 #
-# Valid :email?, "contact@example.org" # => true
-# Valid.url?("https://github.com/Nicolab/crystal-validator") # => true
-# Valid :my_validator?, "value to validate", "hello", 42 # => true
+# Valid.email? "contact@example.org" # => true
+# Valid.url? "https://github.com/Nicolab/crystal-validator" # => true
+# Valid.my_validator? "value to validate", "hello", 42 # => true
 # ```
 #
 # An (optional) expressive validation flavor, `is` available as an alternative.  \
