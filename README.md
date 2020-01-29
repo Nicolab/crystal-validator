@@ -22,7 +22,7 @@ dependencies:
 
 ## Usage
 
-- [Validator - API docs](https://nicolab.github.io/crystal-validator/docs/)
+- [Validator - API docs](https://nicolab.github.io/crystal-validator/)
 
 There are 2 main ways to use *validator*:
 
@@ -58,13 +58,13 @@ is! :email?, "contact@@example..org" # => Validator::Error
  By the nature of the macros, you can't pass the *validator* name dynamically with a variable like that `is(validator_name, "my value to validate", arg)`.
  But of course you can pass arguments with variables `is(:validator_name?, arg1, arg2)`.
 
-- [Validator - API docs](https://nicolab.github.io/crystal-validator/docs/)
+- [Validator - API docs](https://nicolab.github.io/crystal-validator/)
 
 ### Check
 
-To perform a series of validations with error handling, the [validator/check](https://nicolab.github.io/crystal-validator/docs/Check.html) module offers this possibility 👍
+To perform a series of validations with error handling, the [validator/check](https://nicolab.github.io/crystal-validator/Check.html) module offers this possibility 👍
 
-A [Validation](https://nicolab.github.io/crystal-validator/docs/Check/Validation.html) instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.
+A [Validation](https://nicolab.github.io/crystal-validator/Check/Validation.html) instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.
 
 ```crystal
 require "validator/check"
@@ -118,7 +118,7 @@ puts errors.each do |key, messages|
 end
 ```
 
-3 methods [#check](https://nicolab.github.io/crystal-validator/docs/Check/Validation.html#instance-method-summary):
+3 methods [#check](https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary):
 
 ```crystal
 # check(key : Symbol, valid : Bool)

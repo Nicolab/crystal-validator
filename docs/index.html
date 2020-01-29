@@ -14,8 +14,8 @@
   </symbol>
 </svg>
 
-  <meta id="repository-name" content="">
-  <title>README - </title>
+  <meta id="repository-name" content="github.com/Nicolab/crystal-validator">
+  <title>README - github.com/Nicolab/crystal-validator</title>
   <script type="text/javascript">
   CrystalDoc.base_path = "";
   </script>
@@ -40,22 +40,22 @@
   <div class="types-list">
     <ul>
   
-  <li class=" " data-id="/toplevel" data-name="top level namespace">
+  <li class=" " data-id="github.com/Nicolab/crystal-validator/toplevel" data-name="top level namespace">
       <a href="toplevel.html">Top Level Namespace</a>
       
     </li>
   
-  <li class="parent " data-id="/Check" data-name="check">
+  <li class="parent " data-id="github.com/Nicolab/crystal-validator/Check" data-name="check">
       <a href="Check.html">Check</a>
       
         <ul>
   
-  <li class=" " data-id="/Check/Errors" data-name="check::errors">
+  <li class=" " data-id="github.com/Nicolab/crystal-validator/Check/Errors" data-name="check::errors">
       <a href="Check/Errors.html">Errors</a>
       
     </li>
   
-  <li class=" " data-id="/Check/Validation" data-name="check::validation">
+  <li class=" " data-id="github.com/Nicolab/crystal-validator/Check/Validation" data-name="check::validation">
       <a href="Check/Validation.html">Validation</a>
       
     </li>
@@ -65,17 +65,17 @@
       
     </li>
   
-  <li class=" " data-id="/Valid" data-name="valid">
+  <li class=" " data-id="github.com/Nicolab/crystal-validator/Valid" data-name="valid">
       <a href="Valid.html">Valid</a>
       
     </li>
   
-  <li class="parent " data-id="/Validator" data-name="validator">
+  <li class="parent " data-id="github.com/Nicolab/crystal-validator/Validator" data-name="validator">
       <a href="Validator.html">Validator</a>
       
         <ul>
   
-  <li class=" " data-id="/Validator/Error" data-name="validator::error">
+  <li class=" " data-id="github.com/Nicolab/crystal-validator/Validator/Error" data-name="validator::error">
       <a href="Validator/Error.html">Error</a>
       
     </li>
@@ -126,7 +126,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
   </svg>
 </a>Usage</h2>
 
-<ul><li><a href="https://nicolab.github.io/crystal-validator/docs/" target="_blank">Validator - API docs</a></li></ul>
+<ul><li><a href="https://nicolab.github.io/crystal-validator/" target="_blank">Validator - API docs</a></li></ul>
 
 <p>There are 2 main ways to use <em>validator</em>:</p>
 
@@ -157,7 +157,7 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
  By the nature of the macros, you can't pass the <em>validator</em> name dynamically with a variable like that <code>is(validator_name, "my value to validate", arg)</code>.
  But of course you can pass arguments with variables <code>is(:validator_name?, arg1, arg2)</code>.</p>
 
-<ul><li><a href="https://nicolab.github.io/crystal-validator/docs/" target="_blank">Validator - API docs</a></li></ul>
+<ul><li><a href="https://nicolab.github.io/crystal-validator/" target="_blank">Validator - API docs</a></li></ul>
 
 <h3><a id="check" class="anchor" href="#check">
   <svg class="octicon-link" aria-hidden="true">
@@ -165,9 +165,9 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
   </svg>
 </a>Check</h3>
 
-<p>To perform a series of validations with error handling, the <a href="https://nicolab.github.io/crystal-validator/docs/Check.html" target="_blank">validator/check</a> module offers this possibility 👍</p>
+<p>To perform a series of validations with error handling, the <a href="https://nicolab.github.io/crystal-validator/Check.html" target="_blank">validator/check</a> module offers this possibility 👍</p>
 
-<p>A <a href="https://nicolab.github.io/crystal-validator/docs/Check/Validation.html" target="_blank">Validation</a> instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.</p>
+<p>A <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html" target="_blank">Validation</a> instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.</p>
 
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
@@ -219,7 +219,7 @@ puts errors.each <span class="k">do</span> <span class="o">|</span>key, messages
   puts messages <span class="c"># =&gt; [&quot;The username is required.&quot;, &quot;etc...&quot;]</span>
 <span class="k">end</span></code></pre>
 
-<p>3 methods <a href="https://nicolab.github.io/crystal-validator/docs/Check/Validation.html#instance-method-summary" target="_blank">#check</a>:</p>
+<p>3 methods <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary" target="_blank">#check</a>:</p>
 
 <pre><code class="language-crystal"><span class="c"># check(key : Symbol, valid : Bool)</span>
 <span class="c"># Using default error message</span>
