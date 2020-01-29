@@ -1,0 +1,10 @@
+#!/bin/bash
+
+reflex \
+  -R '^local' \
+  -R '^docs' \
+  -R '^examples' \
+  -R '^vc' \
+  -r '^src|^spec' \
+  -r '\.cr$' \
+  -s -- crystal spec
