@@ -1,9 +1,8 @@
 name: validator
-version: 1.0.0-beta
+version: 1.0.0-beta1
+crystal: 0.32.1
 
 authors:
   - Nicolas Talle <dev@nicolab.net>
-
-crystal: 0.32.1
 
 license: MIT
