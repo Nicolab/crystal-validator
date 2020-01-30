@@ -1,5 +1,7 @@
 # validator
 
+[![GitHub release](https://img.shields.io/github/release/Nicolab/crystal-validator.svg)](https://github.com/Nicolab/crystal-validator/releases) [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://nicolab.github.io/crystal-validator/)
+
 ∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.<br>
 Very simple and efficient, all validations return `true` or `false`.
 
@@ -15,7 +17,6 @@ Also [validator/check](#check) (not exposed by default) provides error message h
 dependencies:
   validator:
     github: nicolab/crystal-validator
-    # version: ~1 # Indicate the last version
 ```
 
 2. Run `shards install`
