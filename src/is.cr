@@ -17,7 +17,7 @@
 # ```
 macro is(name, *args)
   # Symbol ? String
-  Valid.{{ name.id.chars[0] == ':' ? name[1..-1].id : name.id }} {{args.splat}}
+  Valid.{{ name.id }} {{args.splat}}
 end
 
 # Same as `is` but `raise` a `Validator::Error`
@@ -25,7 +25,7 @@ end
 # Useful for the unit tests :)
 macro is!(name, *args)
   # Symbol ? String
-  valid = Valid.{{ name.id.chars[0] == ':' ? name[1..-1].id : name.id }} {{args.splat}}
+  valid = Valid.{{ name.id }} {{args.splat}}
 
   if valid == false
     raise Validator::Error.new "Is not \"#{{{name}}}\":\n#{{{args.stringify}}}"
