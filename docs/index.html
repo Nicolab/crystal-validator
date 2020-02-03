@@ -98,6 +98,8 @@
   </svg>
 </a>validator</h1>
 
+<p><a href="https://github.com/Nicolab/crystal-validator/releases" target="_blank"><img src="https://img.shields.io/github/release/Nicolab/crystal-validator.svg" alt="GitHub release"/></a> <a href="https://nicolab.github.io/crystal-validator/" target="_blank"><img src="https://img.shields.io/badge/docs-available-brightgreen.svg" alt="Docs"/></a></p>
+
 <p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> micro validations module.&lt;br>
 Very simple and efficient, all validations return <code>true</code> or <code>false</code>.</p>
 
@@ -115,8 +117,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 
 <pre><code class="language-yaml">dependencies:
   validator:
-    github: nicolab/crystal-validator
-    # version: ~1 # Indicate the last version</code></pre>
+    github: nicolab/crystal-validator</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
 
@@ -178,7 +179,7 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
   <span class="c"># -- email</span>
 
   v.check <span class="n">:email</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="n">:email</span>, user
-  v.check <span class="n">:email</span>, <span class="s">&quot;</span><span class="i">#{</span>user[<span class="n">:email</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>, is <span class="n">:email?</span>, user[<span class="n">:email</span>]?
+  v.check <span class="n">:email</span>, <span class="s">&quot;</span><span class="i">#{</span>user[<span class="n">:email</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>, is <span class="n">:email?</span>, user[<span class="n">:email</span>]
 
   <span class="c"># -- username</span>
 
@@ -187,13 +188,13 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
   v.check(
     <span class="n">:username</span>,
     <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
-    is <span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>
+    is <span class="n">:min?</span>, user[<span class="n">:username</span>], <span class="n">2</span>
   )
 
   v.check(
     <span class="n">:username</span>,
     <span class="s">&quot;The username must contain a maximum of 20 characters.&quot;</span>,
-    is <span class="n">:max?</span>, user[<span class="n">:username</span>]?, <span class="n">20</span>
+    is <span class="n">:max?</span>, user[<span class="n">:username</span>], <span class="n">20</span>
   )
 <span class="k">end</span>
 
@@ -214,7 +215,7 @@ pp errors
 <span class="c"># It&#39;s a Hash of Array</span>
 puts errors.size
 puts errors.first_value
-puts errors.each <span class="k">do</span> <span class="o">|</span>key, messages<span class="o">|</span>
+errors.each <span class="k">do</span> <span class="o">|</span>key, messages<span class="o">|</span>
   puts key   <span class="c"># =&gt; :username</span>
   puts messages <span class="c"># =&gt; [&quot;The username is required.&quot;, &quot;etc...&quot;]</span>
 <span class="k">end</span></code></pre>
@@ -225,7 +226,7 @@ puts errors.each <span class="k">do</span> <span class="o">|</span>key, messages
 <span class="c"># Using default error message</span>
 v.check(
   <span class="n">:username</span>,
-  is(<span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>)
+  is(<span class="n">:min?</span>, user[<span class="n">:username</span>], <span class="n">2</span>)
 )
 
 <span class="c"># check(key : Symbol, message : String, valid : Bool)</span>
@@ -233,14 +234,14 @@ v.check(
 v.check(
   <span class="n">:username</span>,
   <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
-  is(<span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>)
+  is(<span class="n">:min?</span>, user[<span class="n">:username</span>], <span class="n">2</span>)
 )
 
 <span class="c"># check(key : Symbol, valid : Bool, message : String)</span>
 <span class="c"># Using custom error message</span>
 v.check(
   <span class="n">:username</span>,
-  is(<span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>),
+  is(<span class="n">:min?</span>, user[<span class="n">:username</span>], <span class="n">2</span>),
   <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>
 )</code></pre>
 

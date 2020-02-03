@@ -77,7 +77,7 @@ def validate_user(user : Hash) : Check::Validation
   # -- email
 
   v.check :email, "The email is required.", is :presence?, :email, user
-  v.check :email, "#{user[:email]} is an invalid email.", is :email?, user[:email]?
+  v.check :email, "#{user[:email]} is an invalid email.", is :email?, user[:email]
 
   # -- username
 
@@ -86,13 +86,13 @@ def validate_user(user : Hash) : Check::Validation
   v.check(
     :username,
     "The username must contain at least 2 characters.",
-    is :min?, user[:username]?, 2
+    is :min?, user[:username], 2
   )
 
   v.check(
     :username,
     "The username must contain a maximum of 20 characters.",
-    is :max?, user[:username]?, 20
+    is :max?, user[:username], 20
   )
 end
 
@@ -113,7 +113,7 @@ pp errors
 # It's a Hash of Array
 puts errors.size
 puts errors.first_value
-puts errors.each do |key, messages|
+errors.each do |key, messages|
   puts key   # => :username
   puts messages # => ["The username is required.", "etc..."]
 end
@@ -126,7 +126,7 @@ end
 # Using default error message
 v.check(
   :username,
-  is(:min?, user[:username]?, 2)
+  is(:min?, user[:username], 2)
 )
 
 # check(key : Symbol, message : String, valid : Bool)
@@ -134,14 +134,14 @@ v.check(
 v.check(
   :username,
   "The username must contain at least 2 characters.",
-  is(:min?, user[:username]?, 2)
+  is(:min?, user[:username], 2)
 )
 
 # check(key : Symbol, valid : Bool, message : String)
 # Using custom error message
 v.check(
   :username,
-  is(:min?, user[:username]?, 2),
+  is(:min?, user[:username], 2),
   "The username must contain at least 2 characters."
 )
 ```
