@@ -508,6 +508,14 @@ describe "Valid#between?" do
     Valid.between?(:abc, :a, :b).should be_true
     is(:between?, :abc, :a, :b).should be_true
     is!(:between?, :abc, :a, :b).should be_true
+
+    Valid.between?("abc", 1, 3).should be_true
+    is(:between?, "abc", 1, 3).should be_true
+    is!(:between?, "abc", 1, 3).should be_true
+
+    Valid.between?(["a", "b", "c"], 1, 3).should be_true
+    is(:between?, ["a", "b", "c"], 1, 3).should be_true
+    is!(:between?, ["a", "b", "c"], 1, 3).should be_true
   end
 
   it "should return false if not between" do
@@ -558,6 +566,14 @@ describe "Valid#between?" do
     Valid.between?(:bbc, :abb, :bb).should be_false
     is(:between?, :bbc, :abb, :bb).should be_false
     is_error :between? { is!(:between?, :bbc, :abb, :bb) }
+
+    Valid.between?("abc", 4, 10).should be_false
+    is(:between?, "abc", 4, 10).should be_false
+    is_error :between? { is!(:between?, "abc", 4, 10) }
+
+    Valid.between?(["a", "b", "c"], 4, 10).should be_false
+    is(:between?, ["a", "b", "c"], 4, 10).should be_false
+    is_error :between? { is!(:between?, ["a", "b", "c"], 4, 10) }
   end
 
   # --------------------------------------------------------------------------#
@@ -602,6 +618,18 @@ describe "Valid#between?" do
     Valid.between?(:c, :a, :c).should be_true
     is(:between?, :c, :a, :c).should be_true
     is!(:between?, :c, :a, :c).should be_true
+
+    Valid.between?("abc", 3, 10).should be_true
+    is(:between?, "abc", 3, 10).should be_true
+    is!(:between?, "abc", 3, 10).should be_true
+
+    Valid.between?("abc", 1, 3).should be_true
+    is(:between?, "abc", 1, 3).should be_true
+    is!(:between?, "abc", 1, 3).should be_true
+
+    Valid.between?(["a", "b", "c"], 1, 3).should be_true
+    is(:between?, ["a", "b", "c"], 1, 3).should be_true
+    is!(:between?, ["a", "b", "c"], 1, 3).should be_true
   end
 end
 
