@@ -50,6 +50,14 @@ module Validator
     value >= min && value <= max
   end
 
+  # Validates that the size of the *value* (`String` or `Array`) is between
+  # (inclusive) *min* and *max*.
+  # - See also `#size?`.
+  def self.between?(value : String | Array, min : Int, max : Int) : Bool
+    size = value.size
+    size >= min && size <= max
+  end
+
   # Validates that the *value* is equal to the *size*.
   def self.size?(value, size : Int)
     value.size == size
@@ -61,11 +69,13 @@ module Validator
   end
 
   # Validates that the *value* is in the *size* range.
+  # - See also `#between?`.
   def self.size?(value, size : Range)
     size.includes?(value.size)
   end
 
   # Validates that the *value* is in the *size* array.
+  # - See also `#between?`.
   def self.size?(value, size : Array(Int))
     size.includes?(value.size)
   end
