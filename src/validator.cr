@@ -24,9 +24,9 @@ require "./validators/*"
 # ```
 # require "validator"
 #
-# Valid.email? "contact@example.org" # => true
+# Valid.email? "contact@example.org"                        # => true
 # Valid.url? "https://github.com/Nicolab/crystal-validator" # => true
-# Valid.my_validator? "value to validate", "hello", 42 # => true
+# Valid.my_validator? "value to validate", "hello", 42      # => true
 # ```
 #
 # An (optional) expressive validation flavor, `is` available as an alternative.  \
@@ -82,7 +82,7 @@ require "./validators/*"
 #
 # `Check` is a simple and lightweight wrapper, let your imagination run wild to add your logic around it.
 module Validator
-  VERSION = "1.0.0-rc1"
+  VERSION = "1.0.0-rc2"
 
   # Used by `is!` when a validation is not `true`.
   class Error < Exception; end

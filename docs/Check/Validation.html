@@ -228,7 +228,7 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
   </h2>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L115" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L115" target="_blank">
         check.cr
       </a>
     
@@ -280,35 +280,35 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#add_error(key:Symbol,message:String):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol, message : String) : Validation</a>
+        <a href="#add_error(key:Symbol%7CString,message:String):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol | String, message : String) : Validation</a>
         
           <div class="summary"><p>Add a validation error.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#add_error(key:Symbol):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol) : Validation</a>
+        <a href="#add_error(key:Symbol%7CString):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol | String) : Validation</a>
         
           <div class="summary"><p>Add a validation error.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#check(key:Symbol,message:String,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol, message : String, valid : Bool) : Validation</a>
+        <a href="#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, message : String, valid : Bool) : Validation</a>
         
           <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#check(key:Symbol,valid:Bool,message:String):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol, valid : Bool, message : String) : Validation</a>
+        <a href="#check(key:Symbol%7CString,valid:Bool,message:String):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, valid : Bool, message : String) : Validation</a>
         
           <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#check(key:Symbol,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol, valid : Bool) : Validation</a>
+        <a href="#check(key:Symbol%7CString,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, valid : Bool) : Validation</a>
         
           <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
         
@@ -390,7 +390,7 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -417,7 +417,7 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L129" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -436,12 +436,12 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="add_error(key:Symbol,message:String):Validation-instance-method">
+    <div class="entry-detail" id="add_error(key:Symbol|String,message:String):Validation-instance-method">
       <div class="signature">
         
-        def <strong>add_error</strong>(key : Symbol, message : String) : <a href="../Check/Validation.html">Validation</a>
+        def <strong>add_error</strong>(key : Symbol | String, message : String) : <a href="../Check/Validation.html">Validation</a>
 
-        <a class="method-permalink" href="#add_error(key:Symbol,message:String):Validation-instance-method">#</a>
+        <a class="method-permalink" href="#add_error(key:Symbol%7CString,message:String):Validation-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -458,17 +458,17 @@ pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;Foo error!&quot;]}</span>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L167" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L167" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="add_error(key:Symbol):Validation-instance-method">
+    <div class="entry-detail" id="add_error(key:Symbol|String):Validation-instance-method">
       <div class="signature">
         
-        def <strong>add_error</strong>(key : Symbol) : <a href="../Check/Validation.html">Validation</a>
+        def <strong>add_error</strong>(key : Symbol | String) : <a href="../Check/Validation.html">Validation</a>
 
-        <a class="method-permalink" href="#add_error(key:Symbol):Validation-instance-method">#</a>
+        <a class="method-permalink" href="#add_error(key:Symbol%7CString):Validation-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -487,17 +487,17 @@ pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;\&quot;foo\&quot; is not 
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="check(key:Symbol,message:String,valid:Bool):Validation-instance-method">
+    <div class="entry-detail" id="check(key:Symbol|String,message:String,valid:Bool):Validation-instance-method">
       <div class="signature">
         
-        def <strong>check</strong>(key : Symbol, message : String, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
+        def <strong>check</strong>(key : Symbol | String, message : String, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
 
-        <a class="method-permalink" href="#check(key:Symbol,message:String,valid:Bool):Validation-instance-method">#</a>
+        <a class="method-permalink" href="#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -537,17 +537,17 @@ pp v.errors</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L229" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L229" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="check(key:Symbol,valid:Bool,message:String):Validation-instance-method">
+    <div class="entry-detail" id="check(key:Symbol|String,valid:Bool,message:String):Validation-instance-method">
       <div class="signature">
         
-        def <strong>check</strong>(key : Symbol, valid : Bool, message : String) : <a href="../Check/Validation.html">Validation</a>
+        def <strong>check</strong>(key : Symbol | String, valid : Bool, message : String) : <a href="../Check/Validation.html">Validation</a>
 
-        <a class="method-permalink" href="#check(key:Symbol,valid:Bool,message:String):Validation-instance-method">#</a>
+        <a class="method-permalink" href="#check(key:Symbol%7CString,valid:Bool,message:String):Validation-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -587,17 +587,17 @@ pp v.errors</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L266" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L266" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="check(key:Symbol,valid:Bool):Validation-instance-method">
+    <div class="entry-detail" id="check(key:Symbol|String,valid:Bool):Validation-instance-method">
       <div class="signature">
         
-        def <strong>check</strong>(key : Symbol, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
+        def <strong>check</strong>(key : Symbol | String, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
 
-        <a class="method-permalink" href="#check(key:Symbol,valid:Bool):Validation-instance-method">#</a>
+        <a class="method-permalink" href="#check(key:Symbol%7CString,valid:Bool):Validation-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -607,7 +607,7 @@ pp v.errors</code></pre>
 <p>If <em>valid</em> is <code>false</code>, an error message is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
 Nothing if <em>valid</em> is <code>true</code>.</p>
 
-<blockquote>Unlike other <code><a href="../Check/Validation.html#check(key:Symbol,message:String,valid:Bool):Validation-instance-method">#check</a></code> methods, with this one a default standard message is used.</blockquote>
+<blockquote>Unlike other <code><a href="../Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#check</a></code> methods, with this one a default standard message is used.</blockquote>
 
 <pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
 
@@ -621,7 +621,7 @@ pp v.errors</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L287" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L287" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -645,7 +645,7 @@ pp v.errors</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L154" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L154" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -666,7 +666,7 @@ pp v.errors</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d3b904a58bb5fa5b73c1571deb4946fe81721b55/src/check.cr#L193" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/check.cr#L193" target="_blank">View source</a>]
         
       </div>
     </div>

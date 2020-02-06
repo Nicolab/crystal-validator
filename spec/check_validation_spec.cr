@@ -99,6 +99,35 @@ describe "Check" do
       v.valid?.should be_false
     end
 
+    it "#check with string and symbol keys" do
+      v = Check.new_validation
+
+      v.check("ok", is(:eq?, 1, 1))
+      v.valid?.should be_true
+
+      v.check(:ok, is(:eq?, 1, 1))
+      v.valid?.should be_true
+
+      v.check("ko", is(:eq?, 0, 1))
+      v.valid?.should be_false
+
+      v.check(:ko, is(:eq?, 0, 1))
+      v.valid?.should be_false
+
+      v.errors["ko"].should eq [
+        "\"ko\" is not valid.",
+      ]
+
+      v.errors[:ko].should eq [
+        "\"ko\" is not valid.",
+      ]
+
+      v.errors.to_a.should eq [
+        {"ko", ["\"ko\" is not valid."]},
+        {:ko, ["\"ko\" is not valid."]},
+      ]
+    end
+
     context "check overloads" do
       it "#check(key : Symbol, message : String, valid : Bool)" do
         v = Check.new_validation

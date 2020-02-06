@@ -14,7 +14,7 @@ module Check
   # v = Check.new_validation
   # pp v.errors
   # ```
-  alias Errors = Hash(Symbol, Array(String))
+  alias Errors = Hash(Symbol | String, Array(String))
 
   # Combines a series of checks into one validation instance,
   # with a customized error message for each case.
@@ -164,7 +164,7 @@ module Check
     # ```
     #
     # See also: `Errors`
-    def add_error(key : Symbol, message : String) : Validation
+    def add_error(key : Symbol | String, message : String) : Validation
       message = "\"#{key}\" is not valid." if message.blank?
 
       @errors[key] = Array(String).new unless @errors.has_key? key
@@ -184,7 +184,7 @@ module Check
     # ```
     #
     # See also: `Errors`
-    def add_error(key : Symbol) : Validation
+    def add_error(key : Symbol | String) : Validation
       add_error key, ""
       self
     end
@@ -226,7 +226,7 @@ module Check
     # # Print all errors
     # pp v.errors
     # ```
-    def check(key : Symbol, message : String, valid : Bool) : Validation
+    def check(key : Symbol | String, message : String, valid : Bool) : Validation
       add_error(key, message) unless valid
       self
     end
@@ -263,7 +263,7 @@ module Check
     # # Print all errors
     # pp v.errors
     # ```
-    def check(key : Symbol, valid : Bool, message : String) : Validation
+    def check(key : Symbol | String, valid : Bool, message : String) : Validation
       add_error(key, message) unless valid
       self
     end
@@ -284,7 +284,7 @@ module Check
     # # Print all errors
     # pp v.errors
     # ```
-    def check(key : Symbol, valid : Bool) : Validation
+    def check(key : Symbol | String, valid : Bool) : Validation
       add_error(key, "") unless valid
       self
     end
