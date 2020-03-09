@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.31.1">
+<meta name="generator" content="Crystal Docs 0.32.1">
 
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/doc.js"></script>
@@ -208,56 +208,56 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
   </h2>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/alpha_num.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/alpha_num.cr#L8" target="_blank">
         validators/alpha_num.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/case_sensitive.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/case_sensitive.cr#L8" target="_blank">
         validators/case_sensitive.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L8" target="_blank">
         validators/comparisons.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L8" target="_blank">
         validators/format.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/geo.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/geo.cr#L8" target="_blank">
         validators/geo.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L8" target="_blank">
         validators/presence.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L8" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L8" target="_blank">
         validators/uri.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validator.cr#L84" target="_blank">
+      <a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validator.cr#L84" target="_blank">
         validator.cr
       </a>
     
@@ -279,7 +279,7 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
   <dl>
     
       <dt class="entry-const" id="VERSION">
-        <strong>VERSION</strong> = <code><span class="s">&quot;1.0.0-rc2&quot;</span></code>
+        <strong>VERSION</strong> = <code><span class="s">&quot;1.0.0-rc3&quot;</span></code>
       </dt>
       
     
@@ -300,13 +300,6 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method" class="signature"><strong>.absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool</a>
-        
-          <div class="summary"><p>Validates the absence of the value.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method" class="signature"><strong>.absence?</strong>(key : String | Symbol | Number, list : Hash) : Bool</a>
         
           <div class="summary"><p>Validates the absence of the value.</p></div>
@@ -314,9 +307,9 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
-        <a href="#accepted?(value:String):Bool-class-method" class="signature"><strong>.accepted?</strong>(value : String) : Bool</a>
+        <a href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method" class="signature"><strong>.absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool</a>
         
-          <div class="summary"><p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p></div>
+          <div class="summary"><p>Validates the absence of the value.</p></div>
         
       </li>
     
@@ -324,6 +317,13 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
         <a href="#accepted?(value):Bool-class-method" class="signature"><strong>.accepted?</strong>(value) : Bool</a>
         
           <div class="summary"><p>Validates that the <em>value</em> is the representation of an acceptance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#accepted?(value:String):Bool-class-method" class="signature"><strong>.accepted?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p></div>
         
       </li>
     
@@ -391,14 +391,14 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
-        <a href="#ends?(value:String,search:Char):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : Char) : Bool</a>
+        <a href="#ends?(value:String,search:String):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : String) : Bool</a>
         
           <div class="summary"><p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ends?(value:String,search:String):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : String) : Bool</a>
+        <a href="#ends?(value:String,search:Char):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : Char) : Bool</a>
         
           <div class="summary"><p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p></div>
         
@@ -426,16 +426,16 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
-        <a href="#hex?(value:String):Bool-class-method" class="signature"><strong>.hex?</strong>(value : String) : Bool</a>
+        <a href="#hex?(value:Bytes):Bool-class-method" class="signature"><strong>.hex?</strong>(value : Bytes) : Bool</a>
         
-          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> does denote a representation of a hexadecimal string.</p></div>
+          <div class="summary"><p>Validates that the <code>Bytes</code> <em>value</em> does denote a representation of a hexadecimal slice of Bytes.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#hex?(value:Bytes):Bool-class-method" class="signature"><strong>.hex?</strong>(value : Bytes) : Bool</a>
+        <a href="#hex?(value:String):Bool-class-method" class="signature"><strong>.hex?</strong>(value : String) : Bool</a>
         
-          <div class="summary"><p>Validates that the <code>Bytes</code> <em>value</em> does denote a representation of a hexadecimal slice of Bytes.</p></div>
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> does denote a representation of a hexadecimal string.</p></div>
         
       </li>
     
@@ -447,21 +447,14 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
-        <a href="#in?(value:String,str:String):Bool-class-method" class="signature"><strong>.in?</strong>(value : String, str : String) : Bool</a>
-        
-          <div class="summary"><p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#in?(value,list:Array):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Array) : Bool</a>
+        <a href="#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : NamedTuple) : Bool</a>
         
           <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#in?(value,list:Tuple):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Tuple) : Bool</a>
+        <a href="#in?(key:Symbol%7CString,list:Hash):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : Hash) : Bool</a>
         
           <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
         
@@ -475,14 +468,21 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
-        <a href="#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : NamedTuple) : Bool</a>
+        <a href="#in?(value,list:Tuple):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Tuple) : Bool</a>
         
           <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#in?(key:Symbol%7CString,list:Hash):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : Hash) : Bool</a>
+        <a href="#in?(value:String,str:String):Bool-class-method" class="signature"><strong>.in?</strong>(value : String, str : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(value,list:Array):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Array) : Bool</a>
         
           <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
         
@@ -517,9 +517,23 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       </li>
     
       <li class="entry-summary">
+        <a href="#lat?(value:String%7CFloat):Bool-class-method" class="signature"><strong>.lat?</strong>(value : String | Float) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical latitude.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#lat_lng?(value:String):Bool-class-method" class="signature"><strong>.lat_lng?</strong>(value : String) : Bool</a>
         
           <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical position (given in latitude and longitude).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lng?(value:String%7CFloat):Bool-class-method" class="signature"><strong>.lng?</strong>(value : String | Float) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical longitude.</p></div>
         
       </li>
     
@@ -820,29 +834,6 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="absence?(key:String|Symbol,list:NamedTuple):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool
-
-        <a class="method-permalink" href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates the absence of the value.</p>
-
-<ul><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L47" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="absence?(key:String|Symbol|Number,list:Hash):Bool-class-method">
       <div class="signature">
         
@@ -861,32 +852,30 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="accepted?(value:String):Bool-class-method">
+    <div class="entry-detail" id="absence?(key:String|Symbol,list:NamedTuple):Bool-class-method">
       <div class="signature">
         
-        def self.<strong>accepted?</strong>(value : String) : Bool
+        def self.<strong>absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool
 
-        <a class="method-permalink" href="#accepted?(value:String):Bool-class-method">#</a>
+        <a class="method-permalink" href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p>
+          <p>Validates the absence of the value.</p>
 
-<blockquote>One of: "yes", "y", "on", "o", "ok", "1", "true"</blockquote>
-
-<ul><li>See also <code><a href="Validator.html#refused?(value:String):Bool-class-method">#refused?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L162" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -913,7 +902,32 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L171" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L171" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="accepted?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>accepted?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#accepted?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p>
+
+<blockquote>One of: "yes", "y", "on", "o", "ok", "1", "true"</blockquote>
+
+<ul><li>See also <code><a href="Validator.html#refused?(value:String):Bool-class-method">#refused?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L162" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -935,7 +949,7 @@ are comprised in their entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -957,7 +971,7 @@ is comprised in its entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -978,7 +992,7 @@ is comprised in its entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1002,7 +1016,7 @@ is comprised in its entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1023,7 +1037,7 @@ is comprised in its entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1044,7 +1058,7 @@ is comprised in its entirety by ASCII characters.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,7 +1083,7 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1086,13 +1100,13 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
           
           <p>Validates that the <em>value</em> is empty.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1109,36 +1123,13 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
           
           <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L235" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="ends?(value:String,search:Char):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>ends?</strong>(value : String, search : Char) : Bool
-
-        <a class="method-permalink" href="#ends?(value:String,search:Char):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
-
-<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L230" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L235" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1155,13 +1146,36 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
           
           <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L225" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L225" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends?(value:String,search:Char):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ends?</strong>(value : String, search : Char) : Bool
+
+        <a class="method-permalink" href="#ends?(value:String,search:Char):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L230" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1182,7 +1196,7 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1203,7 +1217,7 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1226,29 +1240,7 @@ and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L21" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="hex?(value:String):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>hex?</strong>(value : String) : Bool
-
-        <a class="method-permalink" href="#hex?(value:String):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the <code>String</code> <em>value</em> does denote
-a representation of a hexadecimal string.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1270,7 +1262,29 @@ a representation of a hexadecimal slice of Bytes.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L97" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#hex?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> does denote
+a representation of a hexadecimal string.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L91" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1295,99 +1309,7 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L108" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="in?(value:String,str:String):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>in?</strong>(value : String, str : String) : Bool
-
-        <a class="method-permalink" href="#in?(value:String,str:String):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p>
-
-<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L83" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="in?(value,list:Array):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>in?</strong>(value, list : Array) : Bool
-
-        <a class="method-permalink" href="#in?(value,list:Array):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
-
-<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L91" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="in?(value,list:Tuple):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>in?</strong>(value, list : Tuple) : Bool
-
-        <a class="method-permalink" href="#in?(value,list:Tuple):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
-
-<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L96" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="in?(value,list:Range):Bool-class-method">
-      <div class="signature">
-        
-        def self.<strong>in?</strong>(value, list : Range) : Bool
-
-        <a class="method-permalink" href="#in?(value,list:Range):Bool-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
-
-<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1410,7 +1332,7 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1433,7 +1355,99 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L111" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Range):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Range) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Range):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Tuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Tuple) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Tuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L96" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value:String,str:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value : String, str : String) : Bool
+
+        <a class="method-permalink" href="#in?(value:String,str:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Array):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Array) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Array):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L91" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1454,7 +1468,7 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L70" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1475,7 +1489,7 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1496,7 +1510,7 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1517,7 +1531,30 @@ a representation of a hexadecimal color.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lat?(value:String|Float):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lat?</strong>(value : String | Float) : Bool
+
+        <a class="method-permalink" href="#lat?(value:String%7CFloat):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a valid format representation of a geographical latitude.</p>
+
+<ul><li>See also <code><a href="Validator.html#lng?(value:String%7CFloat):Bool-class-method">#lng?</a></code>.</li><li>See also <code><a href="Validator.html#lat_lng?(value:String):Bool-class-method">#lat_lng?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/geo.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1534,12 +1571,37 @@ a representation of a hexadecimal color.</p>
           
           <p>Validates that the <em>value</em> is a valid format representation of
 a geographical position (given in latitude and longitude).</p>
+
+<ul><li>See also <code><a href="Validator.html#lat?(value:String%7CFloat):Bool-class-method">#lat?</a></code>.</li><li>See also <code><a href="Validator.html#lng?(value:String%7CFloat):Bool-class-method">#lng?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/geo.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/geo.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lng?(value:String|Float):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lng?</strong>(value : String | Float) : Bool
+
+        <a class="method-permalink" href="#lng?(value:String%7CFloat):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a valid format representation of a geographical longitude.</p>
+
+<ul><li>See also <code><a href="Validator.html#lat?(value:String%7CFloat):Bool-class-method">#lat?</a></code>.</li><li>See also <code><a href="Validator.html#lat_lng?(value:String):Bool-class-method">#lat_lng?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/geo.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1560,7 +1622,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/case_sensitive.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/case_sensitive.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1581,7 +1643,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1604,7 +1666,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L32" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1625,7 +1687,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L105" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L105" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1646,7 +1708,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L110" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L110" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1667,7 +1729,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1688,7 +1750,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1711,7 +1773,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1732,7 +1794,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1755,7 +1817,7 @@ a geographical position (given in latitude and longitude).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1777,7 +1839,7 @@ a representation of a <em>MongoID</em> slice of Bytes.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L122" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L122" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1799,7 +1861,7 @@ a representation of a <em>MongoID</em> string.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L116" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1816,13 +1878,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the <em>value</em> is not empty.</p>
 
-<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1839,13 +1901,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>str</em>) <code>String</code> does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1862,13 +1924,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L131" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1885,13 +1947,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L136" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L136" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1908,13 +1970,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L141" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1931,13 +1993,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L146" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1954,13 +2016,13 @@ a representation of a <em>MongoID</em> string.</p>
           
           <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L151" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L151" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1981,7 +2043,7 @@ a representation of a <em>MongoID</em> string.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/alpha_num.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/alpha_num.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2003,7 +2065,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2025,7 +2087,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2042,13 +2104,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
           
           <p>Validates the presence of the value.</p>
 
-<ul><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2065,13 +2127,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
           
           <p>Validates the presence of the value.</p>
 
-<ul><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2090,13 +2152,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
 
 <blockquote>One of: "no", "n", "off", "0", "false"</blockquote>
 
-<ul><li>See also <code><a href="Validator.html#accepted?(value:String):Bool-class-method">#accepted?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#accepted?(value):Bool-class-method">#accepted?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L182" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L182" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2117,13 +2179,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
 
 <p><em>value</em> must implements <em>#to_s</em> method.</p>
 
-<ul><li>See also <code><a href="Validator.html#accepted?(value:String):Bool-class-method">#accepted?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#accepted?(value):Bool-class-method">#accepted?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L191" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L191" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2146,7 +2208,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2169,7 +2231,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2192,7 +2254,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2213,7 +2275,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L67" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L67" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2234,7 +2296,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/comparisons.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/comparisons.cr#L62" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2255,7 +2317,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L100" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L100" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2272,13 +2334,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
           
           <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L213" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L213" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2295,13 +2357,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
           
           <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L208" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L208" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2318,13 +2380,13 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
           
           <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
 
-<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:Number,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#in?</a></code>.</li></ul>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/presence.cr#L203" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/presence.cr#L203" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2345,7 +2407,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2366,7 +2428,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/case_sensitive.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/case_sensitive.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2387,7 +2449,7 @@ between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/uri.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/uri.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -2409,7 +2471,7 @@ Versions: 0 (all), 3, 4 and 5. <em>version</em> by default is 0 (all).</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d8056465956f6f15e479af0577fd681428a27ab0/src/validators/format.cr#L82" target="_blank">View source</a>]
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/cb363e4efe76ad8dd93fabca25b4904dd4ebf83f/src/validators/format.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -11,6 +11,8 @@ module Validator
 
   # Validates that the *value* is a valid format representation of
   # a geographical position (given in latitude and longitude).
+  # - See also `#lat?`.
+  # - See also `#lng?`.
   def self.lat_lng?(value : String) : Bool
     return false if !value.includes?(",")
 
@@ -20,6 +22,20 @@ module Validator
     return false if (lat.starts_with?('(') && !lng.ends_with?(')'))
     return false if (lng.ends_with?(')') && !lat.starts_with?('('))
     return true if lat.match(@@rx_geo_lat) && lng.match(@@rx_geo_lng)
-    return false
+    false
+  end
+
+  # Validates that the *value* is a valid format representation of a geographical latitude.
+  # - See also `#lng?`.
+  # - See also `#lat_lng?`.
+  def self.lat?(value : String | Float) : Bool
+    !value.to_s.match(@@rx_geo_lat).nil?
+  end
+
+  # Validates that the *value* is a valid format representation of a geographical longitude.
+  # - See also `#lat?`.
+  # - See also `#lat_lng?`.
+  def self.lng?(value : String | Float) : Bool
+    !value.to_s.match(@@rx_geo_lng).nil?
   end
 end
