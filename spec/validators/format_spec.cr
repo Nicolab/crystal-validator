@@ -123,6 +123,108 @@ describe "Valid#ascii_only?" do
   end
 end
 
+describe "Valid#json?" do
+  context "strict: true" do
+    it "should return true if json" do
+      Valid.json?("{}").should be_true
+      is(:json?, "{}").should be_true
+      is!(:json?, "{}").should be_true
+
+      Valid.json?("[]").should be_true
+      is(:json?, "[]").should be_true
+      is!(:json?, "[]").should be_true
+
+      Valid.json?(%([0, 1, "validator"])).should be_true
+      is(:json?, %([0, 1, "validator"])).should be_true
+      is!(:json?, %([0, 1, "validator"])).should be_true
+
+      Valid.json?(%(
+        [
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+        ]
+      )).should be_true
+      is(:json?, %(
+        [
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+        ]
+      )).should be_true
+      is!(:json?, %(
+        [
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+          {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+        ]
+      )).should be_true
+    end
+
+    it "should return false if not json" do
+      Valid.json?("").should be_false
+      is(:json?, "").should be_false
+      is_error :json? { is!(:json?, "") }
+
+      Valid.json?(" ").should be_false
+      is(:json?, " ").should be_false
+      is_error :json? { is!(:json?, " ") }
+
+      Valid.json?(%({name: "validator"})).should be_false
+      is(:json?, %({name: "validator"})).should be_false
+      is_error :json? { is!(:json?, %({name: "validator"})) }
+
+      Valid.json?(%({"validator"})).should be_false
+      is(:json?, %({"validator"})).should be_false
+      is_error :json? { is!(:json?, %({"validator"})) }
+
+      Valid.json?(%([validator])).should be_false
+      is(:json?, %([validator])).should be_false
+      is_error :json? { is!(:json?, %([validator])) }
+    end
+  end
+
+  context "strict: false" do
+    it "should return true if json" do
+      Valid.json?("{}", false).should be_true
+      is(:json?, "{}", false).should be_true
+      is!(:json?, "{}", false).should be_true
+
+      Valid.json?("[]", false).should be_true
+      is(:json?, "[]", false).should be_true
+      is!(:json?, "[]", false).should be_true
+
+      Valid.json?(%([0, 1, "validator"]), false).should be_true
+      is(:json?, %([0, 1, "validator"]), false).should be_true
+      is!(:json?, %([0, 1, "validator"]), false).should be_true
+
+      Valid.json?(%([
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+      ]), false).should be_true
+      is(:json?, %([
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+      ]), false).should be_true
+      is!(:json?, %([
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null},
+        {"name": "validator", "good": true, "arr": [], "obj": {"nested": 1}, "n": null}
+      ]), false).should be_true
+    end
+
+    it "should return false if not json" do
+      Valid.json?("", false).should be_false
+      is(:json?, "", false).should be_false
+      is_error :json? { is!(:json?, "", false) }
+
+      Valid.json?(" ", false).should be_false
+      is(:json?, " ", false).should be_false
+      is_error :json? { is!(:json?, " ", false) }
+
+      Valid.json?(%("name": "validator"), false).should be_false
+      is(:json?, %("name": "validator"), false).should be_false
+      is_error :json? { is!(:json?, %("name": "validator"), false) }
+    end
+  end
+end
+
 describe "Valid#md5?" do
   it "should return true if md5" do
     Valid.md5?("5e9b13ce8f6c99f3f510756be58d15fe").should be_true

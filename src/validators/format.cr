@@ -55,6 +55,27 @@ module Validator
     true
   end
 
+  # ------------------------------------------------------------------------- #
+
+  # Validates that the *value* represents a JSON string.
+  # *strict* to `true` (default) to try to parse the JSON,
+  # returns `false if the parsing fails.
+  # If *strict* is `false`, only the first char and the last char are checked.
+  def self.json?(value : String, strict : Bool = true) : Bool
+    if strict
+      begin
+        JSON.parse(value)
+      rescue err
+        return false
+      else
+        return true
+      end
+    end
+
+    (self.starts?(value, "{") && self.ends?(value, "}")) ||
+      (self.starts?(value, "[") && self.ends?(value, "]"))
+  end
+
   # --------------------------------------------------------------------------#
 
   # Validates that the *value* has the format *md5*.
