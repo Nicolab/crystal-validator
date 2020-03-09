@@ -59,7 +59,7 @@ module Validator
 
   # Validates that the *value* represents a JSON string.
   # *strict* to `true` (default) to try to parse the JSON,
-  # returns `false if the parsing fails.
+  # returns `false` if the parsing fails.
   # If *strict* is `false`, only the first char and the last char are checked.
   def self.json?(value : String, strict : Bool = true) : Bool
     if strict
