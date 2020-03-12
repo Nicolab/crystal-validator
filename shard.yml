@@ -1,6 +1,6 @@
 name: validator
-version: 1.0.0-rc4
-crystal: 0.32.1
+version: 1.0.0-rc5
+crystal: 0.33
 
 authors:
   - Nicolas Talle <dev@nicolab.net>
