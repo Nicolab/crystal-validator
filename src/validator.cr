@@ -83,7 +83,7 @@ require "./validators/*"
 #
 # `Check` is a simple and lightweight wrapper, let your imagination run wild to add your logic around it.
 module Validator
-  VERSION = "1.0.0-rc4"
+  VERSION = "1.0.0-rc5"
 
   # Used by `is!` when a validation is not `true`.
   class Error < Exception; end
