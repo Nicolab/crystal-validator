@@ -274,4 +274,17 @@ describe "Check" do
       end
     end
   end
+
+  describe "::Checkable", focus: true do
+    it "should call rules, checker and lifecycle methods" do
+      checker_test = H::CheckableTest.new "wrong@mail", nil
+      v = checker_test.check
+
+      v.should be_a(Check::Validation)
+      checker_test.after_check_call.should be_true
+      checker_test.before_check_call.should be_true
+      checker_test.external_check_call.should be_true
+      checker_test.other_check_call.should be_false
+    end
+  end
 end
