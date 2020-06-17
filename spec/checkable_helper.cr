@@ -1,38 +1,112 @@
 module H
   class CheckableTest
-    include Check::Checkable
+    Check.checkable
 
-    @[Check::Rules(email: {"It is not a valid email"})]
     property email : String
-    @[Check::Rules(
-      min: {"Age should be more than 18", 18},
-      between: {"Age should be between 25 and 35", 25, 35},
-    )]
     property age : Int32?
 
-    property before_check_call : Bool = false
-    property after_check_call : Bool = false
-    property external_check_call : Bool = false
-    property other_check_call : Bool = false
+    Check.rules(
+      email: {
+        check: {
+          not_empty: {"Email should not be empty"},
+          email:     {"It is not a valid email"},
+        },
+        clean: {type: String, to: :to_s, format: ->self.convert_email(String), message: "Wrong type"},
+      },
+      age: {
+        check: {
+          min:     {"Age should be more than 18", 18},
+          between: {"Age should be between 25 and 35", 25, 35},
+        },
+        clean: {type: Int32, to: :to_i32, message: "Wrong type"},
+      }
+    )
+
+    #---------------------------------------------------------------------------
+    # Spied methods
+    #---------------------------------------------------------------------------
+    property before_check_called : Bool = false
+    property after_check_called : Bool = false
+    property external_check_called : Bool = false
+    property other_check_called : Bool = false
+    @@before_check_called : Bool = false
+    @@after_check_called : Bool = false
+    @@external_check_called : Bool = false
+    @@other_check_called : Bool = false
+
+    def self.before_check_called
+      @@before_check_called
+    end
+
+    def self.after_check_called
+      @@after_check_called
+    end
+
+    def self.external_check_called
+      @@external_check_called
+    end
+
+    def self.other_check_called
+      @@other_check_called
+    end
+
+    #---------------------------------------------------------------------------
+    # Constructor
+    #---------------------------------------------------------------------------
 
     def initialize(@email, @age)
     end
 
-    def before_check(v)
-      self.before_check_call = true
+    #---------------------------------------------------------------------------
+    # Lifecycle methods
+    #---------------------------------------------------------------------------
+
+    def before_check(v, format)
+      self.before_check_called = true
     end
 
-    def after_check(v)
-      self.after_check_call = true
+    def after_check(v, format)
+      self.after_check_called = true
+    end
+
+    def self.before_check(v, h, format)
+      @@before_check_called = true
+    end
+
+    def self.after_check(v, h, cleaned_h, format)
+      @@after_check_called = true
+      cleaned_h
+    end
+
+    #---------------------------------------------------------------------------
+    #  Custom checkers
+    #---------------------------------------------------------------------------
+
+    @[Check::Checker]
+    def external_check(v, format)
+      self.external_check_called = true
     end
 
     @[Check::Checker]
-    def external_check(v)
-      self.external_check_call = true
+    def self.external_check(v, h, cleaned_h, format)
+      @@external_check_called = true
+      cleaned_h
     end
 
+    #---------------------------------------------------------------------------
+    # Normal methods
+    #---------------------------------------------------------------------------
+
     def other_check(v)
-      self.other_check_call = true
+      self.other_check_called = true
+    end
+
+    def self.other_check(v)
+      @@other_check_called = true
+    end
+
+    def self.convert_email(email)
+      email.strip
     end
   end
 end
