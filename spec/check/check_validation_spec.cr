@@ -5,7 +5,7 @@
 # information and documentation: https://github.com/Nicolab/crystal-validator
 # ------------------------------------------------------------------------------
 
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Check" do
   it "Check::Errors" do

@@ -59,7 +59,7 @@ require "./validators/*"
 #
 # check = Check.new
 #
-# check(:email, "The email is required.", is :absence?, :email, user)
+# check("email", "The email is required.", is :absence?, "email", user)
 # ```
 # ## Custom validator
 #
@@ -82,8 +82,39 @@ require "./validators/*"
 # ```
 #
 # `Check` is a simple and lightweight wrapper, let your imagination run wild to add your logic around it.
+#
+# Using the custom validator with the validation rules:
+#
+# ```
+# require "validator/check"
+#
+# class Article
+#   # Mixin
+#   Check.checkable
+#
+#   property title : String
+#   property content : String
+#
+#   Check.rules(
+#     content: {
+#       # Now the custom validator is available
+#       check: {
+#         my_validator: {"My validator error message"},
+#         between:      {"The article content must be between 10 and 20 000 characters", 10, 20_000},
+#         # ...
+#       },
+#     },
+#   )
+# end
+#
+# # Triggered with all data
+# v, article = Article.check(input_data)
+#
+# # Triggered with one value
+# v, content = Article.check_content(input_data["content"]?)
+# ```
 module Validator
-  VERSION = "1.0.0-rc5"
+  VERSION = "1.0.0"
 
   # Used by `is!` when a validation is not `true`.
   class Error < Exception; end

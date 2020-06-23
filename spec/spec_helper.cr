@@ -6,9 +6,15 @@
 # ------------------------------------------------------------------------------
 
 require "spec"
+
 require "../src/validator"
 require "../src/is"
 require "../src/check"
+
+require "./checkable_helper"
+
+# Spec helpers.
+module H; end
 
 # Get a Hash
 def get_hash : Hash
