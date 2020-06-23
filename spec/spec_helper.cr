@@ -13,6 +13,9 @@ require "../src/check"
 
 require "./checkable_helper"
 
+# Spec helpers.
+module H; end
+
 # Get a Hash
 def get_hash : Hash
   {

@@ -5,7 +5,7 @@
 # information and documentation: https://github.com/Nicolab/crystal-validator
 # ------------------------------------------------------------------------------
 
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Check" do
   it "Check::Errors" do
@@ -271,81 +271,6 @@ describe "Check" do
             ],
           },
         ]
-      end
-    end
-  end
-
-  describe "::Checkable" do
-    context "generated field methods" do
-      context "clean" do
-        it "should cast and format" do
-          email : JSON::Any = JSON::Any.new " my@email.com "
-          ok, value = H::CheckableTest.clean_email(email)
-
-          ok.should be_true
-          value.class.should eq(String)
-          value.should eq(email.as_s.strip)
-        end
-
-        it "should only cast" do
-          email : JSON::Any = JSON::Any.new " my@email.com "
-          ok, value = H::CheckableTest.clean_email(email, false)
-
-          ok.should be_true
-          value.class.should eq(String)
-          value.should eq(email.as_s)
-        end
-      end
-
-      context "check" do
-        it "should success check with format" do
-          email : JSON::Any = JSON::Any.new " my@email.com "
-          v, value = H::CheckableTest.check_email(value: email)
-
-          v.valid?.should be_true
-          value.class.should eq(String)
-          value.should eq(email.as_s.strip)
-        end
-
-        it "should fail to check without format" do
-          email : JSON::Any = JSON::Any.new " my@email.com "
-          v, value = H::CheckableTest.check_email(value: email, format: false)
-
-          v.valid?.should be_false
-          value.class.should eq(String)
-          value.should eq(email.as_s)
-        end
-      end
-    end
-
-    context "on instance" do
-      it "should call field and generic checkers and lifecycle methods" do
-        checker_test = H::CheckableTest.new "wrong@mail", nil
-        v = checker_test.check
-
-        v.should be_a(Check::Validation)
-        checker_test.after_check_called.should be_true
-        checker_test.before_check_called.should be_true
-        checker_test.external_check_called.should be_true
-        checker_test.other_check_called.should be_false
-
-        v.errors.should eq({"email" => ["It is not a valid email"]})
-      end
-    end
-
-    context "on class" do
-      it "should check hash" do
-        h = {"email" => "falsemail@mail.com ", "age" => "30", "p" => 'a', "c" => H::CheckableTest.new("plop", nil)}
-        v, cleaned_h = H::CheckableTest.check h
-
-        v.should be_a(Check::Validation)
-        H::CheckableTest.after_check_called.should be_true
-        H::CheckableTest.before_check_called.should be_true
-        H::CheckableTest.external_check_called.should be_true
-        H::CheckableTest.other_check_called.should be_false
-
-        v.valid?.should be_true
-        cleaned_h.should eq({"email" => "falsemail@mail.com", "age" => 30})
       end
     end
   end

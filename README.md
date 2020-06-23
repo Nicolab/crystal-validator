@@ -5,7 +5,11 @@
 ∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.<br>
 Very simple and efficient, all validations return `true` or `false`.
 
-Also [validator/check](#check) (not exposed by default) provides error message handling intended for the end user.
+Also [validator/check](#check) (not exposed by default) provides:
+
+* Error message handling intended for the end user.
+* Also (optional) a powerful and productive system of validation rules.
+  With self-generated granular methods for cleaning and checking data.
 
 **Validator** respects the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle) and the [Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy). It's a great basis tool for doing your own validation logic on top of it.
 
@@ -17,18 +21,22 @@ Also [validator/check](#check) (not exposed by default) provides error message h
 dependencies:
   validator:
     github: nicolab/crystal-validator
+    version: ~> 1.0.0 # Check the latest version!
 ```
 
 2. Run `shards install`
 
 ## Usage
 
-- [Validator - API docs](https://nicolab.github.io/crystal-validator/)
+* [Validator - API docs](https://nicolab.github.io/crystal-validator/)
 
-There are 2 main ways to use *validator*:
+There are 3 main ways to use *validator*:
 
-- As a simple validator to check rules (eg: email, url, min, max, presence, in, ...) which return a boolean.
-- As a more advanced validation system which will check a series of rules and returns all validation errors encountered with custom or standard messages.
+* As a simple validator to check rules (eg: email, url, min, max, presence, in, ...) which return a boolean.
+* As a more advanced validation system which will check a series of rules and returns all validation errors encountered with custom or standard messages.
+* As a system of validation rules (inspired by the _Laravel framework's Validator_)
+  which makes data cleaning and data validation in Crystal very easy!
+  With self-generated granular methods for cleaning and checking data of each field.
 
 By default the **validator** module expose only `Validator` and `Valid` (alias) in the scope:
 
@@ -59,13 +67,260 @@ is! :email?, "contact@@example..org" # => Validator::Error
  By the nature of the macros, you can't pass the *validator* name dynamically with a variable like that `is(validator_name, "my value to validate", arg)`.
  But of course you can pass arguments with variables `is(:validator_name?, arg1, arg2)`.
 
-- [Validator - API docs](https://nicolab.github.io/crystal-validator/)
+* [Validator - API docs](https://nicolab.github.io/crystal-validator/)
 
-### Check
+### Validation rules
+
+```crystal
+require "validator/check"
+
+class User
+    # Mixin
+    Check.checkable
+
+    property email : String
+    property age : Int32?
+
+    Check.rules(
+      email: {
+        # Checker (all validators are supported)
+        check: {
+          not_empty: {"Email is required"},
+          email:     {"It is not a valid email"},
+        },
+
+        # Cleaner
+        clean: {
+          # Data type
+          type: String,
+
+          # Converter (if union or other)
+          # Example if the input value is i32, but i64 is expected
+          # Here is a String
+          to: :to_s,
+
+          # Formatter (any Crystal Proc)
+          format: ->self.format_email(String),
+
+          # Error message
+          # Default is "Wrong type" but it can be customized
+          message: "Oops! Wrong type.",
+        },
+      },
+      age: {
+        check: {
+          min:     {"Age should be more than 18", 18},
+          between: {"Age should be between 25 and 35", 25, 35},
+        },
+        clean: {type: Int32, to: :to_i32, message: "Unable to cast to Int32"},
+      }
+    )
+
+    def initialize(@email, @age); end
+
+    # ---------------------------------------------------------------------------
+    # Lifecycle methods (hooks)
+    # ---------------------------------------------------------------------------
+
+    # Triggered on instance: `user.check`
+    def before_check(v : Check::Validation, format : Bool)
+      # Code...
+    end
+
+    # Triggered on instance: `user.check`
+    def after_check(v : Check::Validation, format : Bool)
+      # Code...
+    end
+
+    # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+    def self.before_check(v : Check::Validation, h, format : Bool)
+      # Code...
+      pp h
+    end
+
+    # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+    def self.after_check(v : Check::Validation, h, cleaned_h, format : Bool)
+      # Code...
+      pp cleaned_h
+      cleaned_h # <= returns cleaned_h!
+    end
+
+    # --------------------------------------------------------------------------
+    #  Custom checkers
+    # --------------------------------------------------------------------------
+
+    # Triggered on instance: `user.check`
+    @[Check::Checker]
+    def custom_checker(v, format)
+      self.custom_checker_called = true
+    end
+
+     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+    @[Check::Checker]
+    def self.custom_checker(v, h, cleaned_h, format)
+      @@custom_checker_called = true
+      cleaned_h # <= returns cleaned_h!
+    end
+
+    # --------------------------------------------------------------------------
+    #  Formatters
+    # --------------------------------------------------------------------------
+
+    # Format (convert) email.
+    def self.format_email(email)
+      puts "mail stripped"
+      email.strip
+    end
+
+    # --------------------------------------------------------------------------
+    # Normal methods
+    # --------------------------------------------------------------------------
+
+    def foo()
+      # Code...
+    end
+
+    def self.bar(v)
+      # Code...
+    end
+
+    # ...
+  end
+```
+
+__Check__ with this example class (`User`):
+
+```crystal
+# Check a Hash (statically)
+v, user_h = User.check(input_h)
+
+pp v # => Validation instance
+pp v.valid?
+pp v.errors
+
+pp user_h # => Casted and cleaned Hash
+
+# Check a Hash (on instance)
+user = user.new("demo@example.org", 38)
+
+v = user.check # => Validation instance
+pp v.valid?
+pp v.errors
+
+# Check field
+v, email = User.check_email(value: "demo@example.org")
+v, age = User.check_age(value: 42)
+
+v, email = User.check_email(value: "demo@example.org ", format: true)
+v, email = User.check_email(value: "demo@example.org ", format: false)
+
+# Using an existing Validation instance
+v = Check.new_validation
+v, email = User.check_email(v, value: "demo@example.org")
+```
+
+__Clean__ with this example class (`User`):
+
+```crystal
+# `check` method cleans all values of the Hash (or JSON::Any),
+# before executing the validation rules
+v, user_h = User.check(input_h)
+
+pp v # => Validation instance
+pp v.valid?
+pp v.errors
+
+pp user_h # => Casted and cleaned Hash
+
+# Cast and clean field
+ok, email = User.clean_email(value: "demo@example.org")
+ok, age = User.clean_age(value: 42)
+
+ok, email = User.clean_email(value: "demo@example.org ", format: true)
+ok, email = User.clean_email(value: "demo@example.org ", format: false)
+
+puts "${email} is casted and cleaned" if ok
+# or
+puts "Email type error" unless ok
+```
+
+* `clean_*` methods are useful to caste a union value (like `Hash` or `JSON::Any`).
+* Also `clean_*` methods are optional and handy for formatting values, such as the strip on the email in the example `User` class.
+
+More details about cleaning, casting, formatting and return values:
+
+By default `format` is `true`, to disable:
+
+```crystal
+ok, email = User.clean_email(value: "demo@example.org", format: false)
+# or
+ok, email = User.clean_email("demo@example.org", false)
+```
+
+Always use named argument if there is only one (the `value`):
+
+```crystal
+ok, email = User.clean_email(value: "demo@example.org")
+```
+
+`ok` is a boolean value that reports whether the cast succeeded. Like the type assertions in _Go_ (lang).
+But the `ok` value is returned in first (like in _Elixir_ lang) for easy handling of multiple return values (`Tuple`).
+
+Example with multiple values returned:
+
+```crystal
+ok, value1, value2 = User.clean_my_tuple({1, 2, 3})
+```
+
+Considering the example class above (`User`).
+As a reminder, the email field has been defined with the formatter below:
+
+```crystal
+Check.rules(
+  email: {
+    clean: {
+      type:    String,
+      to:      :to_s,
+      format:  ->self.format_email(String), # <= Here!
+      message: "Wrong type",
+    },
+  },
+)
+
+# ...
+
+# Format (convert) email.
+def self.format_email(email)
+  puts "mail stripped"
+  email.strip
+end
+```
+
+So `clean_email` cast to `String` and strip the value `" demo@example.org "`:
+
+```crystal
+# Email value with one space before and one space after
+ok, email = User.clean_email(value: " demo@example.org ")
+
+puts email # => "demo@example.org"
+```
+
+If the email was taken from a union type (`json["email"]?`), the returned `email` variable would be a `String` too.
+
+See [more examples](https://github.com/Nicolab/crystal-validator/tree/master/examples).
+
+### Validation#check
 
 To perform a series of validations with error handling, the [validator/check](https://nicolab.github.io/crystal-validator/Check.html) module offers this possibility 👍
 
 A [Validation](https://nicolab.github.io/crystal-validator/Check/Validation.html) instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.
+
+> `Validation` is also used with `Check.rules` and `Check.checkable`
+  that provide a powerful and productive system of validation rules
+  which makes data cleaning and data validation in Crystal very easy.
+  With self-generated granular methods for cleaning and checking data.
+
+To use the checker (`check`) includes in the `Validation` class:
 
 ```crystal
 require "validator/check"
@@ -76,23 +331,26 @@ def validate_user(user : Hash) : Check::Validation
 
   # -- email
 
+  # Hash key can be a String or a Symbol
   v.check :email, "The email is required.", is :presence?, :email, user
-  v.check :email, "#{user[:email]} is an invalid email.", is :email?, user[:email]
+
+  v.check "email", "The email is required.", is :presence?, "email", user
+  v.check "email", "#{user["email"]} is an invalid email.", is :email?, user["email"]
 
   # -- username
 
-  v.check :username, "The username is required.", is :presence?, :username, user
+  v.check "username", "The username is required.", is :presence?, "username", user
 
   v.check(
-    :username,
+    "username",
     "The username must contain at least 2 characters.",
-    is :min?, user[:username], 2
+    is :min?, user["username"], 2
   )
 
   v.check(
-    :username,
+    "username",
     "The username must contain a maximum of 20 characters.",
-    is :max?, user[:username], 20
+    is :max?, user["username"], 20
   )
 end
 
@@ -100,21 +358,22 @@ v = validate_user user
 
 pp v.valid? # => true (or false)
 
-errors = v.errors
-
 # Inverse of v.valid?
-if errors.empty?
+if v.errors.empty?
   return "no error"
 end
 
 # Print all the errors (if any)
-pp errors
+pp v.errors
 
 # It's a Hash of Array
+errors = v.errors
+
 puts errors.size
 puts errors.first_value
+
 errors.each do |key, messages|
-  puts key   # => :username
+  puts key   # => "username"
   puts messages # => ["The username is required.", "etc..."]
 end
 ```
@@ -122,26 +381,26 @@ end
 3 methods [#check](https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary):
 
 ```crystal
-# check(key : Symbol, valid : Bool)
+# check(key : Symbol | String, valid : Bool)
 # Using default error message
 v.check(
-  :username,
-  is(:min?, user[:username], 2)
+  "username",
+  is(:min?, user["username"], 2)
 )
 
-# check(key : Symbol, message : String, valid : Bool)
+# check(key : Symbol | String, message : String, valid : Bool)
 # Using custom error message
 v.check(
-  :username,
+  "username",
   "The username must contain at least 2 characters.",
-  is(:min?, user[:username], 2)
+  is(:min?, user["username"], 2)
 )
 
-# check(key : Symbol, valid : Bool, message : String)
+# check(key : Symbol | String, valid : Bool, message : String)
 # Using custom error message
 v.check(
-  :username,
-  is(:min?, user[:username], 2),
+  "username",
+  is(:min?, user["username"], 2),
   "The username must contain at least 2 characters."
 )
 ```
@@ -151,8 +410,18 @@ The `Check::Validation` is agnostic of the checked data,
 of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
 
 > Use case example:
-  Before saving to the database,
+  Before saving to the database or process user data for a particular task,
   the custom error messages can be used for the end user response.
+
+But a `Validation` instance can be used just to store validation errors:
+
+```crystal
+v = Check.new_validation
+v.add_error("foo", "foo error!")
+pp v.errors # => {"foo" => ["foo error!"]}
+```
+
+> See also `Check.rules` and `Check.checkable`.
 
 Let your imagination run wild to add your logic around it.
 
@@ -176,25 +445,56 @@ puts Valid.my_validator?("value to validate", "hello", 42) # => true
 puts is :my_validator?, "value to validate", "hello", 42 # => true
 ```
 
+Using the custom validator with the validation rules:
+
+```crystal
+require "validator/check"
+
+class Article
+  # Mixin
+  Check.checkable
+
+  property title : String
+  property content : String
+
+  Check.rules(
+    content: {
+      # Now the custom validator is available
+      check: {
+        my_validator: {"My validator error message"},
+        between: {"The article content must be between 10 and 20 000 characters", 10, 20_000},
+        # ...
+      },
+    },
+  )
+end
+
+# Triggered with all data
+v, article = Article.check(input_data)
+
+# Triggered with one value
+v, content = Article.check_content(input_data["content"]?)
+```
+
 ## Conventions
 
-- The word "validator" is the method to make a "validation" (value validation).
-- A *validator* returns `true` if the value (or/and the condition) is valid, `false` if not.
-- The first argument(s) is (are) the value(s) to be validated.
-- Always add the `Bool` return type to a *validator*.
-- Always add the suffix `?` to the method name of a *validator*.
-- If possible, indicates the type of the *validator* arguments.
-- Spec: Battle tested.
-- [KISS](https://en.wikipedia.org/wiki/KISS_principle) and [Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy).
+* The word "validator" is the method to make a "validation" (value validation).
+* A *validator* returns `true` if the value (or/and the condition) is valid, `false` if not.
+* The first argument(s) is (are) the value(s) to be validated.
+* Always add the `Bool` return type to a *validator*.
+* Always add the suffix `?` to the method name of a *validator*.
+* If possible, indicates the type of the *validator* arguments.
+* Spec: Battle tested.
+* [KISS](https://en.wikipedia.org/wiki/KISS_principle) and [Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy).
 
 ## Development
 
 ```sh
 crystal spec
-crystal tool format --check
+crystal tool format
 ```
 
-> TODO: add `ameba`
+> TODO: add `ameba`?
 
 ## Contributing
 
@@ -214,3 +514,5 @@ crystal tool format --check
 |---|
 | [Nicolas Talle](https://github.com/sponsors/Nicolab) |
 | [![Make a donation via Paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PGRH4ZXP36GUC) |
+
+> Thanks to [ilourt](https://github.com/ilourt) for his great work on `checkable` mixins (clean_*, check_*, ...).

@@ -25,7 +25,15 @@ module Check
   # fine-tune each micro-validation with their own rules and custom error message,
   # the possibility to retrieve all error messages, etc.
   #
-  # ```crystal
+  # > `Validation` is also used with `Check.rules` and `Check.checkable`
+  # that provide a powerful and productive system of validation rules
+  # which makes data cleaning and data validation in Crystal very easy.
+  # With self-generated granular methods for cleaning and checking data.
+  #
+  #
+  # To use the checker (`check`) includes in the `Validation` class:
+  #
+  # ```
   # require "validator/check"
   #
   # # Validates the *user* data received in the HTTP controller or other.
@@ -34,23 +42,26 @@ module Check
   #
   #   # -- email
   #
+  #   # Hash key can be a String or a Symbol
   #   v.check :email, "The email is required.", is :presence?, :email, user
-  #   v.check :email, "#{user[:email]} is an invalid email.", is :email?, user[:email]
+  #
+  #   v.check "email", "The email is required.", is :presence?, "email", user
+  #   v.check "email", "#{user["email"]} is an invalid email.", is :email?, user["email"]
   #
   #   # -- username
   #
-  #   v.check :username, "The username is required.", is :presence?, :username, user
+  #   v.check "username", "The username is required.", is :presence?, "username", user
   #
   #   v.check(
-  #     :username,
+  #     "username",
   #     "The username must contain at least 2 characters.",
-  #     is :min?, user[:username], 2
+  #     is :min?, user["username"], 2
   #   )
   #
   #   v.check(
-  #     :username,
+  #     "username",
   #     "The username must contain a maximum of 20 characters.",
-  #     is :max?, user[:username], 20
+  #     is :max?, user["username"], 20
   #   )
   # end
   #
@@ -58,59 +69,70 @@ module Check
   #
   # pp v.valid? # => true (or false)
   #
-  # errors = v.errors
-  #
   # # Inverse of v.valid?
-  # if errors.empty?
+  # if v.errors.empty?
   #   return "no error"
   # end
   #
   # # display all the errors (if any)
-  # pp errors
+  # pp v.errors
   #
   # # It's a Hash of Array
+  # errors = v.errors
+  #
   # puts errors.size
   # puts errors.first_value
+  #
   # errors.each do |key, messages|
-  #   puts key      # => :username
+  #   puts key      # => "username"
   #   puts messages # => ["The username is required.", "etc..."]
   # end
   # ```
   #
   # 3 methods [#check](https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary):
   #
-  # ```crystal
-  # # check(key : Symbol, valid : Bool)
+  # ```
+  # # check(key : Symbol | String, valid : Bool)
   # # Using default standard error message
   # v.check(
-  #   :username,
-  #   is(:min?, user[:username], 2)
+  #   "username",
+  #   is(:min?, user["username"], 2)
   # )
   #
-  # # check(key : Symbol, message : String, valid : Bool)
+  # # check(key : Symbol | String, message : String, valid : Bool)
   # # Using custom error message
   # v.check(
-  #   :username,
+  #   "username",
   #   "The username must contain at least 2 characters.",
-  #   is(:min?, user[:username], 2)
+  #   is(:min?, user["username"], 2)
   # )
   #
-  # # check(key : Symbol, valid : Bool, message : String)
+  # # check(key : Symbol | String, valid : Bool, message : String)
   # # Using custom error message
   # v.check(
-  #   :username,
-  #   is(:min?, user[:username], 2),
+  #   "username",
+  #   is(:min?, user["username"], 2),
   #   "The username must contain at least 2 characters."
   # )
   # ```
   #
   # `Check` is a simple and lightweight wrapper.
-  # The `Check::Validation` is agnostic of the checked data,
+  # `Check::Validation` is agnostic of the checked data,
   # of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
   #
   # > Use case example:
-  #   Before saving to the database,
+  #   Before saving to the database or process user data for a particular task,
   #   the custom error messages can be used for the end user response.
+  #
+  # But a `Validation` instance can be used just to store validation errors:
+  #
+  # ```
+  # v = Check.new_validation
+  # v.add_error("foo", "foo error!")
+  # pp v.errors # => {"foo" => ["foo error!"]}
+  # ```
+  #
+  # > See also `Check.rules` and `Check.checkable`.
   #
   # Let your imagination run wild to add your logic around it.
   #
@@ -192,6 +214,12 @@ module Check
     end
 
     # Returns `true` if there is no error, `false` if there is one or more errors.
+    #
+    # ```
+    # pp v.errors if !v.valid?
+    # # or with another flavor ;-)
+    # pp v.errors unless v.valid?
+    # ```
     def valid?
       @errors.empty?
     end
@@ -280,8 +308,8 @@ module Check
     # ```
     # v = Check.new_validation
     #
-    # v.check(:email, is(:presence?, :email, user))
-    # v.check(:email, is(:email?, user[:email]?))
+    # v.check("email", Valid.presence?("email", user))
+    # v.check("email", Valid.email?(user["email"]?))
     #
     # # Print all errors
     # pp v.errors
@@ -320,6 +348,13 @@ module Check
   #
   # ```
   # v = Check::Validation.new existing_errors
+  # ```
+  #
+  # Example to combine two hashes of validation errors:
+  #
+  # ```
+  # preview_validation = Check.new_validation
+  # v = Check.new_validation preview_validation.errors
   # ```
   def self.new_validation(errors : Errors)
     Validation.new errors
