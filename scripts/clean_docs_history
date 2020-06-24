@@ -1,0 +1,29 @@
+#!/bin/bash
+
+################################################################################
+# Cleans up Git history filled unnecessarily by generating HTML docs
+#
+# Inspi:
+# https://emmanuelballery.com/blog/2016-11-01-supprimer-des-fichiers-d-un-depot-git
+# https://makina-corpus.com/blog/metier/2016/nettoyer-un-depot-git
+# https://www.davidlangin.fr/articles/git-supprimer-un-fichier-de-lhistorique
+################################################################################
+
+# Show stats
+git gc
+git count-objects -vH
+
+# Remove useless directory history
+git filter-branch --force --index-filter 'git rm -r --cached --ignore-unmatch ./docs' --prune-empty --tag-name-filter cat -- --all
+git gc --aggressive --prune=now
+
+# Remove old backup
+git filter-branch -f --tree-filter ' ' HEAD --all
+
+# Clean unreachable objects (not related to a commit)
+git reflog expire --expire-unreachable=all --all
+git gc --aggressive --prune=now
+
+# Show stats
+git gc
+git count-objects -vH
