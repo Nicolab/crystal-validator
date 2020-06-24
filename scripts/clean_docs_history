@@ -23,6 +23,7 @@ git filter-branch -f --tree-filter ' ' HEAD --all
 # Clean unreachable objects (not related to a commit)
 git reflog expire --expire-unreachable=all --all
 git gc --aggressive --prune=now
+rm -rf .git/refs/original/
 
 # Show stats
 git gc
