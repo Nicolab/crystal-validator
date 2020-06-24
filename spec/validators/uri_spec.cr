@@ -190,29 +190,137 @@ describe "Valid#url?" do
   end
 end
 
-# describe "Valid#ip?" do
-#   it "should return true if IP" do
-#   end
+describe "Valid#ip?" do
+  it "should return true if IP" do
+    [
+      "127.0.0.1",
+      "0.0.0.0",
+      "255.255.255.255",
+      "1.2.3.4",
+      "::1",
+      "2001:db8:0000:1:1:1:1:1",
+      "2001:41d0:2:a141::1",
+      "::ffff:127.0.0.1",
+      "::0000",
+      "0000::",
+      "1::",
+      "1111:1:1:1:1:1:1:1",
+      "fe80::a6db:30ff:fe98:e946",
+      "::",
+      "::ffff:127.0.0.1",
+      "0:0:0:0:0:ffff:127.0.0.1",
+    ].each do |addr|
+      Valid.ip?(addr).should be_true
+      is(:ip?, addr).should be_true
+      is!(:ip?, addr).should be_true
+    end
+  end
 
-#   it "should return false if not IP" do
-#   end
-# end
+  it "should return false if not IP" do
+    [
+      "abc",
+      "256.0.0.0",
+      "0.0.0.256",
+      "26.0.0.256",
+      "0200.200.200.200",
+      "200.0200.200.200",
+      "200.200.0200.200",
+      "200.200.200.0200",
+      "::banana",
+      "banana::",
+      "::1banana",
+      "::1::",
+      "1:",
+      ":1",
+      ":1:1:1::2",
+      "1:1:1:1:1:1:1:1:1:1:1:1:1:1:1:1",
+      "::11111",
+      "11111:1:1:1:1:1:1:1",
+      "2001:db8:0000:1:1:1:1::1",
+      "0:0:0:0:0:0:ffff:127.0.0.1",
+      "0:0:0:0:ffff:127.0.0.1",
+    ].each do |addr|
+      Valid.ip?(addr).should be_false
+      is(:ip?, addr).should be_false
+      is_error :ip? { is!(:ip?, addr) }
+    end
+  end
+end
 
-# describe "Valid#ipv4?" do
-#   it "should return true if IPv4" do
-#   end
+describe "Valid#ipv4?" do
+  it "should return true if IPv4" do
+    [
+      "127.0.0.1",
+      "0.0.0.0",
+      "255.255.255.255",
+      "1.2.3.4",
+      "255.0.0.1",
+      "0.0.1.1",
+      "8.8.8.8",
+      "198.27.92.1",
+    ].each do |addr|
+      Valid.ipv4?(addr).should be_true
+      is(:ipv4?, addr).should be_true
+      is!(:ipv4?, addr).should be_true
+    end
+  end
 
-#   it "should return false if not IPv4" do
-#   end
-# end
+  it "should return false if not IPv4" do
+    [
+      "::1",
+      "2001:db8:0000:1:1:1:1:1",
+      "::ffff:127.0.0.1",
+      "137.132.10.01",
+      "0.256.0.0",
+      "0.0.0.256",
+      "256.255.255.255",
+      "255.256.255.255",
+      "255.255.256.255",
+      "255.255.255.256",
+      "8.8.8.8.8",
+    ].each do |addr|
+      Valid.ipv4?(addr).should be_false
+      is(:ipv4?, addr).should be_false
+      is_error :ipv4? { is!(:ipv4?, addr) }
+    end
+  end
+end
 
-# describe "Valid#ipv6?" do
-#   it "should return true if IPv6" do
-#   end
+describe "Valid#ipv6?" do
+  it "should return true if IPv6" do
+    [
+      "::1",
+      "2001:db8:0000:1:1:1:1:1",
+      "::ffff:127.0.0.1",
+      "fe80::1234%1",
+      "ff08::9abc%10",
+      "ff08::9abc%interface10",
+      "ff02::5678%pvc1.3",
+    ].each do |addr|
+      Valid.ipv6?(addr).should be_true
+      is(:ipv6?, addr).should be_true
+      is!(:ipv6?, addr).should be_true
+    end
+  end
 
-#   it "should return false if not IPv6" do
-#   end
-# end
+  it "should return false if not IPv6" do
+    [
+      "127.0.0.1",
+      "0.0.0.0",
+      "255.255.255.255",
+      "1.2.3.4",
+      "::ffff:287.0.0.1",
+      "%",
+      "fe80::1234%",
+      "fe80::1234%1%3%4",
+      "fe80%fe80%",
+    ].each do |addr|
+      Valid.ipv6?(addr).should be_false
+      is(:ipv6?, addr).should be_false
+      is_error :ipv6? { is!(:ipv6?, addr) }
+    end
+  end
+end
 
 describe "Valid#email?" do
   it "should return true if email" do
@@ -314,18 +422,114 @@ describe "Valid#slug?" do
   end
 end
 
-# describe "Valid#mac_addr?" do
-#   it "should return true if mac_addr" do
-#   end
+describe "Valid#mac_addr?" do
+  it "should return true if mac_addr" do
+    [
+      "ab:ab:ab:ab:ab:ab",
+      "FF:FF:FF:FF:FF:FF",
+      "01:02:03:04:05:ab",
+      "01:AB:03:04:05:06",
+      "A9 C5 D4 9F EB D3",
+      "01 02 03 04 05 ab",
+      "01-02-03-04-05-ab",
+      "0102.0304.05ab",
+    ].each do |addr|
+      Valid.mac_addr?(addr).should be_true
+      is(:mac_addr?, addr).should be_true
+      is!(:mac_addr?, addr).should be_true
+    end
+  end
 
-#   it "should return false if not mac_addr" do
-#   end
-# end
+  it "should return false if not mac_addr" do
+    [
+      "abc",
+      "01:02:03:04:05",
+      "01:02:03:04::ab",
+      "1:2:3:4:5:6",
+      "AB:CD:EF:GH:01:02",
+      "A9C5 D4 9F EB D3",
+      "01-02 03:04 05 ab",
+      "0102.03:04.05ab",
+    ].each do |addr|
+      Valid.mac_addr?(addr).should be_false
+      is(:mac_addr?, addr).should be_false
+      is_error :mac_addr? { is!(:mac_addr?, addr) }
+    end
+  end
 
-# describe "Valid#magnet_uri?" do
-#   it "should return true if URI" do
-#   end
+  context "without colons" do
+    it "should return true if mac_addr" do
+      [
+        "abababababab",
+        "FFFFFFFFFFFF",
+        "0102030405ab",
+        "01AB03040506",
+      ].each do |addr|
+        Valid.mac_addr?(addr, no_colons: true).should be_true
+        is(:mac_addr?, addr, true).should be_true
+        is!(:mac_addr?, addr, true).should be_true
+      end
+    end
 
-#   it "should return false if not URI" do
-#   end
-# end
+    it "should return false if not mac_addr" do
+      [
+        "abc",
+        "01:02:03:04:05",
+        "01:02:03:04::ab",
+        "1:2:3:4:5:6",
+        "AB:CD:EF:GH:01:02",
+        "ab:ab:ab:ab:ab:ab",
+        "FF:FF:FF:FF:FF:FF",
+        "01:02:03:04:05:ab",
+        "01:AB:03:04:05:06",
+        "0102030405",
+        "01020304ab",
+        "123456",
+        "ABCDEFGH0102",
+      ].each do |addr|
+        Valid.mac_addr?(addr, no_colons: true).should be_false
+        is(:mac_addr?, addr, true).should be_false
+        is_error :mac_addr? { is!(:mac_addr?, addr, true) }
+      end
+    end
+  end
+end
+
+describe "Valid#magnet_uri?" do
+  it "should return true if URI" do
+    [
+      "magnet:?xt=urn:btih:06E2A9683BF4DA92C73A661AC56F0ECC9C63C5B4&dn=helloword2000&tr=udp://helloworld:1337/announce",
+      "magnet:?xt=urn:btih:3E30322D5BFC7444B7B1D8DD42404B75D0531DFB&dn=world&tr=udp://world.com:1337",
+      "magnet:?xt=urn:btih:4ODKSDJBVMSDSNJVBCBFYFBKNRU875DW8D97DWC6&dn=helloworld&tr=udp://helloworld.com:1337",
+      "magnet:?xt=urn:btih:1GSHJVBDVDVJFYEHKFHEFIO8573898434JBFEGHD&dn=foo&tr=udp://foo.com:1337",
+      "magnet:?xt=urn:btih:MCJDCYUFHEUD6E2752T7UJNEKHSUGEJFGTFHVBJS&dn=bar&tr=udp://bar.com:1337",
+      "magnet:?xt=urn:btih:LAKDHWDHEBFRFVUFJENBYYTEUY837562JH2GEFYH&dn=foobar&tr=udp://foobar.com:1337",
+      "magnet:?xt=urn:btih:MKCJBHCBJDCU725TGEB3Y6RE8EJ2U267UNJFGUID&dn=test&tr=udp://test.com:1337",
+      "magnet:?xt=urn:btih:UHWY2892JNEJ2GTEYOMDNU67E8ICGICYE92JDUGH&dn=baz&tr=udp://baz.com:1337",
+      "magnet:?xt=urn:btih:HS263FG8U3GFIDHWD7829BYFCIXB78XIHG7CWCUG&dn=foz&tr=udp://foz.com:1337",
+    ].each do |uri|
+      Valid.magnet_uri?(uri).should be_true
+      is(:magnet_uri?, uri).should be_true
+      is!(:magnet_uri?, uri).should be_true
+    end
+  end
+
+  it "should return false if not URI" do
+    [
+      "",
+      ":?xt=urn:btih:06E2A9683BF4DA92C73A661AC56F0ECC9C63C5B4&dn=helloword2000&tr=udp://helloworld:1337/announce",
+      "magnett:?xt=urn:btih:3E30322D5BFC7444B7B1D8DD42404B75D0531DFB&dn=world&tr=udp://world.com:1337",
+      "xt=urn:btih:4ODKSDJBVMSDSNJVBCBFYFBKNRU875DW8D97DWC6&dn=helloworld&tr=udp://helloworld.com:1337",
+      "magneta:?xt=urn:btih:1GSHJVBDVDVJFYEHKFHEFIO8573898434JBFEGHD&dn=foo&tr=udp://foo.com:1337",
+      "magnet:?xt=uarn:btih:MCJDCYUFHEUD6E2752T7UJNEKHSUGEJFGTFHVBJS&dn=bar&tr=udp://bar.com:1337",
+      "magnet:?xt=urn:btihz&dn=foobar&tr=udp://foobar.com:1337",
+      "magnet:?xat=urn:btih:MKCJBHCBJDCU725TGEB3Y6RE8EJ2U267UNJFGUID&dn=test&tr=udp://test.com:1337",
+      "magnet::?xt=urn:btih:UHWY2892JNEJ2GTEYOMDNU67E8ICGICYE92JDUGH&dn=baz&tr=udp://baz.com:1337",
+      "magnet:?xt:btih:HS263FG8U3GFIDHWD7829BYFCIXB78XIHG7CWCUG&dn=foz&tr=udp://foz.com:1337",
+    ].each do |uri|
+      Valid.magnet_uri?(uri).should be_false
+      is(:magnet_uri?, uri).should be_false
+      is_error :magnet_uri? { is!(:magnet_uri?, uri) }
+    end
+  end
+end

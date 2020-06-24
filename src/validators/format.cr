@@ -86,7 +86,7 @@ module Validator
   # Validates that the *value* has the format *base64*.
   def self.base64?(value : String) : Bool
     return true if value.match(@@rx_base64) && (value.size % 4 === 0)
-    return false
+    false
   end
 
   # --------------------------------------------------------------------------#

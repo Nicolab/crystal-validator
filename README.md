@@ -433,7 +433,7 @@ Just add your own method to register a custom *validator* or to overload an exis
 module Validator
   # My custom validator
   def self.my_validator?(value, arg : String, another_arg : Int32) : Bool
-    # TODO: write the logic of your validator
+    # write here the logic of your validator...
     return true
   end
 end
