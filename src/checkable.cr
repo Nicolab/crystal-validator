@@ -333,7 +333,12 @@ module Check
       # Check all fields that have a method `#check_{field}`
       {% for ivar in @type.instance_vars.select { |ivar| @type.class.has_method?("check_#{ivar}") } %}
         v, value = self.class.check_{{ivar.name}}(v, {{ivar.name}}, format)
-        @{{ivar.name}} = value.as({{ivar.type}})
+
+        # If the field is not nilable and the value is nil,
+        # it means that the clean method has failed
+        # (to cast or an exception has been raised (and catched) in the formatter)
+        # So ignore the nil value if the field is not nilable
+        @{{ivar.name}} = value.as({{ivar.type}}) {% if !ivar.type.nilable? %} unless value.nil? {% end %}
       {% end %}
 
       # Check methods with `Check::Checker` annotation
