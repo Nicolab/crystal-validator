@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/Nicolab/crystal-validator.svg?branch=master)](https://travis-ci.com/Nicolab/crystal-validator) [![GitHub release](https://img.shields.io/github/release/Nicolab/crystal-validator.svg)](https://github.com/Nicolab/crystal-validator/releases) [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://nicolab.github.io/crystal-validator/)
 
-∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.<br>
+∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) data validation module.<br>
 Very simple and efficient, all validations return `true` or `false`.
 
 Also [validator/check](#check) (not exposed by default) provides:
@@ -21,7 +21,7 @@ Also [validator/check](#check) (not exposed by default) provides:
 dependencies:
   validator:
     github: nicolab/crystal-validator
-    version: ~> 1.0.0 # Check the latest version!
+    version: ~> 1.0.1 # Check the latest version!
 ```
 
 2. Run `shards install`
@@ -79,7 +79,7 @@ class User
     Check.checkable
 
     property email : String
-    property age : Int32?
+    property age : Int32
 
     Check.rules(
       email: {
@@ -109,6 +109,7 @@ class User
       },
       age: {
         check: {
+          not_null: {"Age is required"},
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
         },

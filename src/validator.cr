@@ -8,7 +8,7 @@
 require "json"
 require "./validators/*"
 
-# ∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) micro validations module.
+# ∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) data validation module.
 # Very simple and efficient, all validations return `true` or `false`.
 #
 # Also [validator/check](https://nicolab.github.io/crystal-validator/Check.html)
