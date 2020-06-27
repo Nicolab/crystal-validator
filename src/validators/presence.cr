@@ -73,6 +73,24 @@ module Validator
   end
 
   # ---------------------------------------------------------------------------
+  # null? / not_null?
+  # ---------------------------------------------------------------------------
+
+  # Validates that the *value* is null (`nil`).
+  # - See also `#empty?`.
+  # - See also `#not_null?`.
+  def self.null?(value) : Bool
+    value.nil?
+  end
+
+  # Validates that the *value* is not null (`nil`).
+  # - See also `#null?`.
+  # - See also `#not_empty?`.
+  def self.not_null?(value) : Bool
+    !value.nil?
+  end
+
+  # ---------------------------------------------------------------------------
   # in?
   # ---------------------------------------------------------------------------
 

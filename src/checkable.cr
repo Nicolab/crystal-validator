@@ -183,7 +183,7 @@ module Check
         end
 
         # Check against each rule provided.
-        # Each rule is executed if *value* is not `nil` except for `not_empty`
+        # Each rule is executed if *value* is not `nil` except for `not_null`
         # which is executed even if the *value* is `nil`
         {% for name, args in check %}
           v.check(
@@ -194,7 +194,7 @@ module Check
             {% else %}
               Valid.{{name.id}}? value, {{ args[1..-1].splat }}
             {% end %}
-          ) {% if name != "not_empty" %}unless value.nil?{% end %}
+          ) {% if name != "not_null" %}unless value.nil?{% end %}
         {% end %}
 
         {v, value}
