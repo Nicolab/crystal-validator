@@ -114,7 +114,7 @@ require "./validators/*"
 # v, content = Article.check_content(input_data["content"]?)
 # ```
 module Validator
-  VERSION = "1.0.0"
+  VERSION = "1.0.1"
 
   # Used by `is!` when a validation is not `true`.
   class Error < Exception; end
