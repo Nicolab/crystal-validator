@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="validator">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="validator">
+  <title>Check::Validation - validator master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          validator
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="validator/toplevel" data-name="top level namespace">
+      <a href="../toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="validator/Check" data-name="check">
+      <a href="../Check.html">Check</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Check/Checkable" data-name="check::checkable">
+      <a href="../Check/Checkable.html">Checkable</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/CheckableStatic" data-name="check::checkablestatic">
+      <a href="../Check/CheckableStatic.html">CheckableStatic</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Checker" data-name="check::checker">
+      <a href="../Check/Checker.html">Checker</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Errors" data-name="check::errors">
+      <a href="../Check/Errors.html">Errors</a>
+      
+    </li>
+  
+  <li class=" current" data-id="validator/Check/Validation" data-name="check::validation">
+      <a href="../Check/Validation.html">Validation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="validator/Valid" data-name="valid">
+      <a href="../Valid.html">Valid</a>
+      
+    </li>
+  
+  <li class="parent " data-id="validator/Validator" data-name="validator">
+      <a href="../Validator.html">Validator</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Validator/Error" data-name="validator::error">
+      <a href="../Validator/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Check::Validation
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Check/Validation.html">Check::Validation</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Combines a series of checks into one validation instance,
+with a customized error message for each case.</p>
+
+<p>A <code><a href="../Check/Validation.html">Validation</a></code> instance provides the means to write sequential checks,
+fine-tune each micro-validation with their own rules and custom error message,
+the possibility to retrieve all error messages, etc.</p>
+
+<blockquote><code><a href="../Check/Validation.html">Validation</a></code> is also used with <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code> and <code><a href="../Check.html#checkable-macro">Check.checkable</a></code>
+that provide a powerful and productive system of validation rules
+which makes data cleaning and data validation in Crystal very easy.
+With self-generated granular methods for cleaning and checking data.</blockquote>
+
+<p>To use the checker (<code><a href="../Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#check</a></code>) includes in the <code><a href="../Check/Validation.html">Validation</a></code> class:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="c"># Validates the *user* data received in the HTTP controller or other.</span>
+<span class="k">def</span> <span class="m">validate_user</span>(user : <span class="t">Hash</span>) : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>
+  v <span class="o">=</span> <span class="t">Check</span>.new_validation
+
+  <span class="c"># -- email</span>
+
+  <span class="c"># Hash key can be a String or a Symbol</span>
+  v.check <span class="n">:email</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="n">:email</span>, user
+
+  v.check <span class="s">&quot;email&quot;</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="s">&quot;email&quot;</span>, user
+  v.check <span class="s">&quot;email&quot;</span>, <span class="s">&quot;</span><span class="i">#{</span>user[<span class="s">&quot;email&quot;</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>, is <span class="n">:email?</span>, user[<span class="s">&quot;email&quot;</span>]
+
+  <span class="c"># -- username</span>
+
+  v.check <span class="s">&quot;username&quot;</span>, <span class="s">&quot;The username is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="s">&quot;username&quot;</span>, user
+
+  v.check(
+    <span class="s">&quot;username&quot;</span>,
+    <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
+    is <span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>
+  )
+
+  v.check(
+    <span class="s">&quot;username&quot;</span>,
+    <span class="s">&quot;The username must contain a maximum of 20 characters.&quot;</span>,
+    is <span class="n">:max?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">20</span>
+  )
+<span class="k">end</span>
+
+v <span class="o">=</span> validate_user user
+
+pp v.valid? <span class="c"># =&gt; true (or false)</span>
+
+<span class="c"># Inverse of v.valid?</span>
+<span class="k">if</span> v.errors.empty?
+  <span class="k">return</span> <span class="s">&quot;no error&quot;</span>
+<span class="k">end</span>
+
+<span class="c"># display all the errors (if any)</span>
+pp v.errors
+
+<span class="c"># It&#39;s a Hash of Array</span>
+errors <span class="o">=</span> v.errors
+
+puts errors.size
+puts errors.first_value
+
+errors.each <span class="k">do</span> <span class="o">|</span>key, messages<span class="o">|</span>
+  puts key      <span class="c"># =&gt; &quot;username&quot;</span>
+  puts messages <span class="c"># =&gt; [&quot;The username is required.&quot;, &quot;etc...&quot;]</span>
+<span class="k">end</span></code></pre>
+
+<p>3 methods <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary" target="_blank">#check</a>:</p>
+
+<pre><code><span class="c"># check(key : Symbol | String, valid : Bool)</span>
+<span class="c"># Using default standard error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>)
+)
+
+<span class="c"># check(key : Symbol | String, message : String, valid : Bool)</span>
+<span class="c"># Using custom error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>)
+)
+
+<span class="c"># check(key : Symbol | String, valid : Bool, message : String)</span>
+<span class="c"># Using custom error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>),
+  <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>
+)</code></pre>
+
+<p><code><a href="../Check.html">Check</a></code> is a simple and lightweight wrapper.
+<code><a href="../Check/Validation.html">Check::Validation</a></code> is agnostic of the checked data,
+of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).</p>
+
+<blockquote>Use case example:
+  Before saving to the database or process user data for a particular task,
+  the custom error messages can be used for the end user response.</blockquote>
+
+<p>But a <code><a href="../Check/Validation.html">Validation</a></code> instance can be used just to store validation errors:</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+v.add_error(<span class="s">&quot;foo&quot;</span>, <span class="s">&quot;foo error!&quot;</span>)
+pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quot;]}</span></code></pre>
+
+<blockquote>See also <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code> and <code><a href="../Check.html#checkable-macro">Check.checkable</a></code>.</blockquote>
+
+<p>Let your imagination run wild to add your logic around it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L139" target="_blank">
+        check.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(errors:Errors)-class-method" class="signature"><strong>.new</strong>(errors : Errors)</a>
+        
+          <div class="summary"><p>Initializes a validation using an existing <em>errors</em> <code>Hash</code> (<code><a href="../Check/Errors.html">Check::Errors</a></code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+          <div class="summary"><p>Initializes a validation.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#add_error(key:Symbol%7CString,message:String):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol | String, message : String) : Validation</a>
+        
+          <div class="summary"><p>Add a validation error.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#add_error(key:Symbol%7CString):Validation-instance-method" class="signature"><strong>#add_error</strong>(key : Symbol | String) : Validation</a>
+        
+          <div class="summary"><p>Add a validation error.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, message : String, valid : Bool) : Validation</a>
+        
+          <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check(key:Symbol%7CString,valid:Bool,message:String):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, valid : Bool, message : String) : Validation</a>
+        
+          <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check(key:Symbol%7CString,valid:Bool):Validation-instance-method" class="signature"><strong>#check</strong>(key : Symbol | String, valid : Bool) : Validation</a>
+        
+          <div class="summary"><p>Checks a validation, often used in sequence.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#errors:Errors-instance-method" class="signature"><strong>#errors</strong> : Errors</a>
+        
+          <div class="summary"><p>Errors container.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#valid?-instance-method" class="signature"><strong>#valid?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if there is no error, <code>false</code> if there is one or more errors.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(errors:Errors)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(errors : <a href="../Check/Errors.html">Errors</a>)
+
+        <a class="method-permalink" href="#new(errors:Errors)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes a validation using an existing <em>errors</em> <code>Hash</code> (<code><a href="../Check/Errors.html">Check::Errors</a></code>).</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+
+<p>Same as:</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L168" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes a validation.</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+
+<p>Same as:</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L153" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="add_error(key:Symbol|String,message:String):Validation-instance-method">
+      <div class="signature">
+        
+        def <strong>add_error</strong>(key : Symbol | String, message : String) : <a href="../Check/Validation.html">Validation</a>
+
+        <a class="method-permalink" href="#add_error(key:Symbol%7CString,message:String):Validation-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Add a validation error.</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+v.add_error(<span class="n">:foo</span>, <span class="s">&quot;Foo error!&quot;</span>)
+pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;Foo error!&quot;]}</span></code></pre>
+
+<p>See also: <code><a href="../Check/Errors.html">Errors</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L191" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="add_error(key:Symbol|String):Validation-instance-method">
+      <div class="signature">
+        
+        def <strong>add_error</strong>(key : Symbol | String) : <a href="../Check/Validation.html">Validation</a>
+
+        <a class="method-permalink" href="#add_error(key:Symbol%7CString):Validation-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Add a validation error.</p>
+
+<blockquote>By default a standard message is used.</blockquote>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+v.add_error(<span class="n">:foo</span>)
+pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;\&quot;foo\&quot; is not valid.&quot;]}</span></code></pre>
+
+<p>See also: <code><a href="../Check/Errors.html">Errors</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L211" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check(key:Symbol|String,message:String,valid:Bool):Validation-instance-method">
+      <div class="signature">
+        
+        def <strong>check</strong>(key : Symbol | String, message : String, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
+
+        <a class="method-permalink" href="#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Checks a validation, often used in sequence.</p>
+
+<p>If <em>valid</em> is <code>false</code>, the error <em>message</em> is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
+Nothing if <em>valid</em> is <code>true</code>.</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+
+<span class="c"># -- email</span>
+
+v.check <span class="n">:email</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="n">:email</span>, user
+v.check <span class="n">:email</span>, <span class="s">&quot;</span><span class="i">#{</span>user[<span class="n">:email</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>, is <span class="n">:email?</span>, user[<span class="n">:email</span>]?
+
+<span class="c"># -- username</span>
+
+v.check <span class="n">:username</span>, <span class="s">&quot;The username is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="n">:username</span>, user
+
+v.check(
+  <span class="n">:username</span>,
+  <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
+  is <span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>
+)
+
+v.check(
+  <span class="n">:username</span>,
+  <span class="s">&quot;The username must contain a maximum of 20 characters.&quot;</span>,
+  is <span class="n">:max?</span>, user[<span class="n">:username</span>]?, <span class="n">20</span>
+)
+
+<span class="c"># Print all errors</span>
+pp v.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L259" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check(key:Symbol|String,valid:Bool,message:String):Validation-instance-method">
+      <div class="signature">
+        
+        def <strong>check</strong>(key : Symbol | String, valid : Bool, message : String) : <a href="../Check/Validation.html">Validation</a>
+
+        <a class="method-permalink" href="#check(key:Symbol%7CString,valid:Bool,message:String):Validation-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Checks a validation, often used in sequence.</p>
+
+<p>If <em>valid</em> is <code>false</code>, the error <em>message</em> is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
+Nothing if <em>valid</em> is <code>true</code>.</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+
+<span class="c"># -- email</span>
+
+v.check(<span class="n">:email</span>, is(<span class="n">:presence?</span>, <span class="n">:email</span>, user), <span class="s">&quot;The email is required.&quot;</span>)
+v.check(<span class="n">:email</span>, is(<span class="n">:email?</span>, user[<span class="n">:email</span>]?), <span class="s">&quot;</span><span class="i">#{</span>user[<span class="n">:email</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>)
+
+<span class="c"># -- username</span>
+
+v.check(<span class="n">:username</span>, is(<span class="n">:presence?</span>, <span class="n">:username</span>, user), <span class="s">&quot;The username is required.&quot;</span>)
+
+v.check(
+  <span class="n">:username</span>,
+  is <span class="n">:min?</span>, user[<span class="n">:username</span>]?, <span class="n">2</span>,
+    <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>
+)
+
+v.check(
+  <span class="n">:username</span>,
+  is <span class="n">:max?</span>, user[<span class="n">:username</span>]?, <span class="n">20</span>,
+    <span class="s">&quot;The username must contain a maximum of 20 characters.&quot;</span>
+)
+
+<span class="c"># Print all errors</span>
+pp v.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L296" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check(key:Symbol|String,valid:Bool):Validation-instance-method">
+      <div class="signature">
+        
+        def <strong>check</strong>(key : Symbol | String, valid : Bool) : <a href="../Check/Validation.html">Validation</a>
+
+        <a class="method-permalink" href="#check(key:Symbol%7CString,valid:Bool):Validation-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Checks a validation, often used in sequence.</p>
+
+<p>If <em>valid</em> is <code>false</code>, an error message is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
+Nothing if <em>valid</em> is <code>true</code>.</p>
+
+<blockquote>Unlike other <code><a href="../Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#check</a></code> methods, with this one a default standard message is used.</blockquote>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+
+v.check(<span class="s">&quot;email&quot;</span>, <span class="t">Valid</span>.presence?(<span class="s">&quot;email&quot;</span>, user))
+v.check(<span class="s">&quot;email&quot;</span>, <span class="t">Valid</span>.email?(user[<span class="s">&quot;email&quot;</span>]?))
+
+<span class="c"># Print all errors</span>
+pp v.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L317" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="errors:Errors-instance-method">
+      <div class="signature">
+        
+        def <strong>errors</strong> : <a href="../Check/Errors.html">Errors</a>
+
+        <a class="method-permalink" href="#errors:Errors-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Errors container.</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+pp v.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="valid?-instance-method">
+      <div class="signature">
+        
+        def <strong>valid?</strong>
+
+        <a class="method-permalink" href="#valid?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if there is no error, <code>false</code> if there is one or more errors.</p>
+
+<pre><code>pp v.errors <span class="k">if</span> <span class="o">!</span>v.valid?
+<span class="c"># or with another flavor ;-)</span>
+pp v.errors <span class="k">unless</span> v.valid?</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/check.cr#L223" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

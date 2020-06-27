@@ -1,0 +1,2627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="validator">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="validator">
+  <title>Validator - validator master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          validator
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="validator/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class="parent " data-id="validator/Check" data-name="check">
+      <a href="Check.html">Check</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Check/Checkable" data-name="check::checkable">
+      <a href="Check/Checkable.html">Checkable</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/CheckableStatic" data-name="check::checkablestatic">
+      <a href="Check/CheckableStatic.html">CheckableStatic</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Checker" data-name="check::checker">
+      <a href="Check/Checker.html">Checker</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Errors" data-name="check::errors">
+      <a href="Check/Errors.html">Errors</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
+      <a href="Check/Validation.html">Validation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="validator/Valid" data-name="valid">
+      <a href="Valid.html">Valid</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="validator/Validator" data-name="validator">
+      <a href="Validator.html">Validator</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Validator/Error" data-name="validator::error">
+      <a href="Validator/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Validator
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> data validation module.
+Very simple and efficient, all validations return <code>true</code> or <code>false</code>.</p>
+
+<p>Also <a href="https://nicolab.github.io/crystal-validator/Check.html" target="_blank">validator/check</a>
+(not exposed by default) provides error message handling intended for the end user.</p>
+
+<p>There are 2 main ways to use <em>validator</em>:</p>
+
+<ul><li>As a simple validator to check rules (eg: email, url, min, max, presence, in, ...) which return a boolean.</li><li>As a more advanced validation system which will check a series of rules
+ and returns all validation errors encountered with custom or standard messages.</li></ul>
+
+<p>By default the <strong>validator</strong> module expose only <code><a href="Validator.html">Validator</a></code> and <code><a href="Valid.html">Valid</a></code> (alias) in the scope:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator&quot;</span>
+
+<span class="t">Valid</span>.email? <span class="s">&quot;contact@example.org&quot;</span>                        <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.url? <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.my_validator? <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span>      <span class="c"># =&gt; true</span></code></pre>
+
+<p>An (optional) expressive validation flavor, <code><a href="toplevel.html#is(name,*args)-macro">is</a></code> available as an alternative.  \
+Not exposed by default, it must be imported:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator/is&quot;</span>
+
+is <span class="n">:email?</span>, <span class="s">&quot;contact@example.org&quot;</span>                        <span class="c"># =&gt; true</span>
+is <span class="n">:url?</span>, <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
+is <span class="n">:my_validator?</span>, <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span>      <span class="c"># =&gt; true</span>
+
+<span class="c"># raises an error if the email is not valid</span>
+is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&quot;</span> <span class="c"># =&gt; Validator::Error</span></code></pre>
+
+<p><code><a href="toplevel.html#is(name,*args)-macro">is</a></code> is a macro, no overhead during the runtime 🚀
+ By the nature of the macros, you can't pass the <em>validator</em> name dynamically
+ with a variable like that <code>is(validator_name, "my value to validate", arg)</code>.
+ But of course you can pass arguments with variables <code>is(:validator_name?, arg1, arg2)</code>.</p>
+
+<h2><a id="check" class="anchor" href="#check">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Check</h2>
+
+<p>Make a series of checks, with a customized error message for each case.</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+check <span class="o">=</span> <span class="t">Check</span>.<span class="k">new</span>
+
+check(<span class="s">&quot;email&quot;</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:absence?</span>, <span class="s">&quot;email&quot;</span>, user)</code></pre>
+
+<h2><a id="custom-validator" class="anchor" href="#custom-validator">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Custom validator</h2>
+
+<p>Just add your own method to register a custom <em>validator</em> or to overload an existing <em>validator</em>.</p>
+
+<pre><code class="language-crystal"><span class="k">module</span> <span class="t">Validator</span>
+  <span class="c"># My custom validator</span>
+  <span class="k">def</span> <span class="m">self</span>.my_validator?(value, arg : <span class="t">String</span>, another_arg : <span class="t">Int32</span>) : <span class="t">Bool</span>
+    <span class="c"># write here the logic of your validator...</span>
+    <span class="k">return</span> <span class="n">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c"># Call it</span>
+puts <span class="t">Valid</span>.my_validator?(<span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span>) <span class="c"># =&gt; true</span>
+
+<span class="c"># or with the `is` flavor</span>
+puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span></code></pre>
+
+<p><code><a href="Check.html">Check</a></code> is a simple and lightweight wrapper, let your imagination run wild to add your logic around it.</p>
+
+<p>Using the custom validator with the validation rules:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="k">class</span> <span class="t">Article</span>
+  <span class="c"># Mixin</span>
+  <span class="t">Check</span>.checkable
+
+  property title : <span class="t">String</span>
+  property content : <span class="t">String</span>
+
+  <span class="t">Check</span>.rules(
+    content: {
+      <span class="c"># Now the custom validator is available</span>
+      check: {
+        my_validator: {<span class="s">&quot;My validator error message&quot;</span>},
+        between:      {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
+        <span class="c"># ...</span>
+      },
+    },
+  )
+<span class="k">end</span>
+
+<span class="c"># Triggered with all data</span>
+v, article <span class="o">=</span> <span class="t">Article</span>.check(input_data)
+
+<span class="c"># Triggered with one value</span>
+v, content <span class="o">=</span> <span class="t">Article</span>.check_content(input_data[<span class="s">&quot;content&quot;</span>]?)</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validator.cr#L116" target="_blank">
+        validator.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/alpha_num.cr#L8" target="_blank">
+        validators/alpha_num.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/case_sensitive.cr#L8" target="_blank">
+        validators/case_sensitive.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L8" target="_blank">
+        validators/comparisons.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L8" target="_blank">
+        validators/format.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/geo.cr#L8" target="_blank">
+        validators/geo.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L8" target="_blank">
+        validators/presence.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L8" target="_blank">
+        validators/uri.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="VERSION">
+        <strong>VERSION</strong> = <code><span class="s">&quot;1.0.1&quot;</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method" class="signature"><strong>.absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool</a>
+        
+          <div class="summary"><p>Validates the absence of the value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method" class="signature"><strong>.absence?</strong>(key : String | Symbol | Number, list : Hash) : Bool</a>
+        
+          <div class="summary"><p>Validates the absence of the value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#accepted?(value:String):Bool-class-method" class="signature"><strong>.accepted?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#accepted?(value):Bool-class-method" class="signature"><strong>.accepted?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is the representation of an acceptance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ascii_only?(values:Array(String)):Bool-class-method" class="signature"><strong>.ascii_only?</strong>(values : Array(String)) : Bool</a>
+        
+          <div class="summary"><p>Validates that all the <code>String</code> in the <em>values</em> <code>Array</code> are comprised in their entirety by ASCII characters.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ascii_only?(value:String):Bool-class-method" class="signature"><strong>.ascii_only?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> <code>String</code> is comprised in its entirety by ASCII characters.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#base64?(value:String):Bool-class-method" class="signature"><strong>.base64?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> has the format <em>base64</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#between?(value:String%7CArray,min:Int,max:Int):Bool-class-method" class="signature"><strong>.between?</strong>(value : String | Array, min : Int, max : Int) : Bool</a>
+        
+          <div class="summary"><p>Validates that the size of the <em>value</em> (<code>String</code> or <code>Array</code>) is between (inclusive) <em>min</em> and <em>max</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#between?(value,min,max):Bool-class-method" class="signature"><strong>.between?</strong>(value, min, max) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is between (inclusive) <em>min</em> and <em>max</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#domain?(value:String):Bool-class-method" class="signature"><strong>.domain?</strong>(value : String) : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#email?(value:String):Bool-class-method" class="signature"><strong>.email?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is an email.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty?(value):Bool-class-method" class="signature"><strong>.empty?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is empty.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ends?(value:String,search:Regex):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : Regex) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ends?(value:String,search:Char):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : Char) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ends?(value:String,search:String):Bool-class-method" class="signature"><strong>.ends?</strong>(value : String, search : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#eq?(value,another_value):Bool-class-method" class="signature"><strong>.eq?</strong>(value, another_value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to <em>another_value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gt?(value,another_value):Bool-class-method" class="signature"><strong>.gt?</strong>(value, another_value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is greater than <em>another_value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gte?(value,another_value):Bool-class-method" class="signature"><strong>.gte?</strong>(value, another_value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to or greater than <em>another_value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex?(value:String):Bool-class-method" class="signature"><strong>.hex?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> does denote a representation of a hexadecimal string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex?(value:Bytes):Bool-class-method" class="signature"><strong>.hex?</strong>(value : Bytes) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>Bytes</code> <em>value</em> does denote a representation of a hexadecimal slice of Bytes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hex_color?(value:String):Bool-class-method" class="signature"><strong>.hex_color?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> does denote a representation of a hexadecimal color.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(value:String,str:String):Bool-class-method" class="signature"><strong>.in?</strong>(value : String, str : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(value,list:Array):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Array) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(value,list:Tuple):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Tuple) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(value,list:Range):Bool-class-method" class="signature"><strong>.in?</strong>(value, list : Range) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : NamedTuple) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#in?(key:Symbol%7CString,list:Hash):Bool-class-method" class="signature"><strong>.in?</strong>(key : Symbol | String, list : Hash) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) contains the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ip?(value:String):Bool-class-method" class="signature"><strong>.ip?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is an IP (IPv4 or IPv6).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ipv4?(value:String):Bool-class-method" class="signature"><strong>.ipv4?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is an IPv4.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ipv6?(value:String):Bool-class-method" class="signature"><strong>.ipv6?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is an IPv6.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#json?(value:String,strict:Bool=true):Bool-class-method" class="signature"><strong>.json?</strong>(value : String, strict : Bool = <span class="n">true</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> represents a JSON string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#jwt?(value:String):Bool-class-method" class="signature"><strong>.jwt?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a <em>JSON Web Token</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lat?(value:String%7CFloat):Bool-class-method" class="signature"><strong>.lat?</strong>(value : String | Float) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical latitude.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lat_lng?(value:String):Bool-class-method" class="signature"><strong>.lat_lng?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical position (given in latitude and longitude).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lng?(value:String%7CFloat):Bool-class-method" class="signature"><strong>.lng?</strong>(value : String | Float) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a valid format representation of a geographical longitude.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lower?(value:String):Bool-class-method" class="signature"><strong>.lower?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in lower case.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lt?(value,another_value):Bool-class-method" class="signature"><strong>.lt?</strong>(value, another_value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is lesser than <em>another_value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lte?(value,another_value):Bool-class-method" class="signature"><strong>.lte?</strong>(value, another_value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to or lesser than <em>another_value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mac_addr?(value:String,no_colons:Bool=false):Bool-class-method" class="signature"><strong>.mac_addr?</strong>(value : String, no_colons : Bool = <span class="n">false</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a MAC address.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#magnet_uri?(value:String):Bool-class-method" class="signature"><strong>.magnet_uri?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a Magnet URI.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match?(value:String,pattern:Regex):Bool-class-method" class="signature"><strong>.match?</strong>(value : String, pattern : Regex) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> matches the <em>pattern</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match?(value:Number,pattern:Regex):Bool-class-method" class="signature"><strong>.match?</strong>(value : Number, pattern : Regex) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> matches the <em>pattern</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max?(value,max):Bool-class-method" class="signature"><strong>.max?</strong>(value, max) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to or lesser than <em>max</em> (inclusive).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#md5?(value:String):Bool-class-method" class="signature"><strong>.md5?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> has the format <em>md5</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min?(value,min):Bool-class-method" class="signature"><strong>.min?</strong>(value, min) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to or greater than <em>min</em> (inclusive).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mongo_id?(value:Bytes):Bool-class-method" class="signature"><strong>.mongo_id?</strong>(value : Bytes) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>Bytes</code> <em>value</em> does denote a representation of a <em>MongoID</em> slice of Bytes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mongo_id?(value:String):Bool-class-method" class="signature"><strong>.mongo_id?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> does denote a representation of a <em>MongoID</em> string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_empty?(value):Bool-class-method" class="signature"><strong>.not_empty?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is not empty.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(value:String,str:String):Bool-class-method" class="signature"><strong>.not_in?</strong>(value : String, str : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>str</em>) <code>String</code> does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(value,list:Array):Bool-class-method" class="signature"><strong>.not_in?</strong>(value, list : Array) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(value,list:Tuple):Bool-class-method" class="signature"><strong>.not_in?</strong>(value, list : Tuple) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(value,list:Range):Bool-class-method" class="signature"><strong>.not_in?</strong>(value, list : Range) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method" class="signature"><strong>.not_in?</strong>(key : Symbol | String, list : NamedTuple) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_in?(key:Symbol%7CString,list:Hash):Bool-class-method" class="signature"><strong>.not_in?</strong>(key : Symbol | String, list : Hash) : Bool</a>
+        
+          <div class="summary"><p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#not_null?(value):Bool-class-method" class="signature"><strong>.not_null?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is not null (<code>nil</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#null?(value):Bool-class-method" class="signature"><strong>.null?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is null (<code>nil</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#number?(value:String):Bool-class-method" class="signature"><strong>.number?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a numeric <code>String</code> representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port?(value:String=&quot;0&quot;,min:String=&quot;1&quot;,max:String=&quot;65535&quot;):Bool-class-method" class="signature"><strong>.port?</strong>(value : String = <span class="s">&quot;0&quot;</span>, min : String = <span class="s">&quot;1&quot;</span>, max : String = <span class="s">&quot;65535&quot;</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in a valid port range, between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port?(value=0,min=1,max=65535):Bool-class-method" class="signature"><strong>.port?</strong>(value = <span class="n">0</span>, min = <span class="n">1</span>, max = <span class="n">65535</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in a valid port range, between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method" class="signature"><strong>.presence?</strong>(key : String | Symbol, list : NamedTuple) : Bool</a>
+        
+          <div class="summary"><p>Validates the presence of the value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#presence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method" class="signature"><strong>.presence?</strong>(key : String | Symbol | Number, list : Hash) : Bool</a>
+        
+          <div class="summary"><p>Validates the presence of the value.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#refused?(value:String):Bool-class-method" class="signature"><strong>.refused?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> <code>String</code> is the representation of a refusal.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#refused?(value):Bool-class-method" class="signature"><strong>.refused?</strong>(value) : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the <em>value</em> is the representation of a refusal.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size?(value,size:Array(String))-class-method" class="signature"><strong>.size?</strong>(value, size : Array(String))</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in the <em>size</em> array.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size?(value,size:Array(Int))-class-method" class="signature"><strong>.size?</strong>(value, size : Array(Int))</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in the <em>size</em> array.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size?(value,size:Range)-class-method" class="signature"><strong>.size?</strong>(value, size : Range)</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in the <em>size</em> range.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size?(value,size:String)-class-method" class="signature"><strong>.size?</strong>(value, size : String)</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to the <em>size</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size?(value,size:Int)-class-method" class="signature"><strong>.size?</strong>(value, size : Int)</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is equal to the <em>size</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#slug?(value:String,min=1,max=100):Bool-class-method" class="signature"><strong>.slug?</strong>(value : String, min = <span class="n">1</span>, max = <span class="n">100</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a slug.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#starts?(value:String,search:Regex):Bool-class-method" class="signature"><strong>.starts?</strong>(value : String, search : Regex) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#starts?(value:String,search:Char):Bool-class-method" class="signature"><strong>.starts?</strong>(value : String, search : Char) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#starts?(value:String,search:String):Bool-class-method" class="signature"><strong>.starts?</strong>(value : String, search : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#time?(value:String):Bool-class-method" class="signature"><strong>.time?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a time <code>String</code> representation.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#upper?(value:String):Bool-class-method" class="signature"><strong>.upper?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is in upper case.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#url?(value:String):Bool-class-method" class="signature"><strong>.url?</strong>(value : String) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a URL.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uuid?(value:String,version=0):Bool-class-method" class="signature"><strong>.uuid?</strong>(value : String, version = <span class="n">0</span>) : Bool</a>
+        
+          <div class="summary"><p>Validates that the <em>value</em> is a <em>UUID</em> Versions: 0 (all), 3, 4 and 5.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="absence?(key:String|Symbol,list:NamedTuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>absence?</strong>(key : String | Symbol, list : NamedTuple) : Bool
+
+        <a class="method-permalink" href="#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates the absence of the value.</p>
+
+<ul><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="absence?(key:String|Symbol|Number,list:Hash):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>absence?</strong>(key : String | Symbol | Number, list : Hash) : Bool
+
+        <a class="method-permalink" href="#absence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates the absence of the value.</p>
+
+<ul><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="accepted?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>accepted?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#accepted?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> <code>String</code> is the representation of an acceptance.</p>
+
+<blockquote>One of: "yes", "y", "on", "o", "ok", "1", "true"</blockquote>
+
+<ul><li>See also <code><a href="Validator.html#refused?(value:String):Bool-class-method">#refused?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L180" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="accepted?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>accepted?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#accepted?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is the representation of an acceptance.</p>
+
+<blockquote>One of: "yes", "y", "on", "o", "ok", "1", "true"</blockquote>
+
+<p><em>value</em> must implements <em>#to_s</em> method.</p>
+
+<ul><li>See also <code><a href="Validator.html#refused?(value:String):Bool-class-method">#refused?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L189" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ascii_only?(values:Array(String)):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ascii_only?</strong>(values : Array(String)) : Bool
+
+        <a class="method-permalink" href="#ascii_only?(values:Array(String)):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that all the <code>String</code> in the <em>values</em> <code>Array</code>
+are comprised in their entirety by ASCII characters.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ascii_only?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ascii_only?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#ascii_only?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> <code>String</code>
+is comprised in its entirety by ASCII characters.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L41" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="base64?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>base64?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#base64?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> has the format <em>base64</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L87" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="between?(value:String|Array,min:Int,max:Int):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>between?</strong>(value : String | Array, min : Int, max : Int) : Bool
+
+        <a class="method-permalink" href="#between?(value:String%7CArray,min:Int,max:Int):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the size of the <em>value</em> (<code>String</code> or <code>Array</code>) is between
+(inclusive) <em>min</em> and <em>max</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#size?(value,size:Array(String))-class-method">#size?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="between?(value,min,max):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>between?</strong>(value, min, max) : Bool
+
+        <a class="method-permalink" href="#between?(value,min,max):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is between (inclusive) <em>min</em> and <em>max</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L49" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="domain?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>domain?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#domain?(value:String):Bool-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="email?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>email?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#email?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is an email.
+This method is stricter than the standard allows.
+It is subjectively based on the common addresses
+of organisations (@enterprise.ltd, ...)
+and mail services suck as Gmail, Hotmail, Yahoo !, ...</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L158" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>empty?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#empty?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is empty.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L58" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends?(value:String,search:Regex):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ends?</strong>(value : String, search : Regex) : Bool
+
+        <a class="method-permalink" href="#ends?(value:String,search:Regex):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L253" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends?(value:String,search:Char):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ends?</strong>(value : String, search : Char) : Bool
+
+        <a class="method-permalink" href="#ends?(value:String,search:Char):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L248" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends?(value:String,search:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ends?</strong>(value : String, search : String) : Bool
+
+        <a class="method-permalink" href="#ends?(value:String,search:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> ends with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#starts?(value:String,search:Regex):Bool-class-method">#starts?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L243" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="eq?(value,another_value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>eq?</strong>(value, another_value) : Bool
+
+        <a class="method-permalink" href="#eq?(value,another_value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to <em>another_value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gt?(value,another_value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>gt?</strong>(value, another_value) : Bool
+
+        <a class="method-permalink" href="#gt?(value,another_value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is greater than <em>another_value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gte?(value,another_value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>gte?</strong>(value, another_value) : Bool
+
+        <a class="method-permalink" href="#gte?(value,another_value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to or greater than <em>another_value</em>.</p>
+
+<blockquote>Similar to <code>#min</code>.</blockquote>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#hex?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> does denote
+a representation of a hexadecimal string.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L112" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex?(value:Bytes):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex?</strong>(value : Bytes) : Bool
+
+        <a class="method-permalink" href="#hex?(value:Bytes):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>Bytes</code> <em>value</em> does denote
+a representation of a hexadecimal slice of Bytes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hex_color?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>hex_color?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#hex_color?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> does denote
+a representation of a hexadecimal color.</p>
+
+<pre><code><span class="t">Valid</span>.hex_color? <span class="s">&quot;#fff&quot;</span> => <span class="n">true</span>
+<span class="t">Valid</span>.hex_color? <span class="s">&quot;#ffffff&quot;</span> => <span class="n">true</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value:String,str:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value : String, str : String) : Bool
+
+        <a class="method-permalink" href="#in?(value:String,str:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>str</em>) <code>String</code> contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Array):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Array) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Array):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L109" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Tuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Tuple) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Tuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L114" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(value,list:Range):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(value, list : Range) : Bool
+
+        <a class="method-permalink" href="#in?(value,list:Range):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(key:Symbol|String,list:NamedTuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(key : Symbol | String, list : NamedTuple) : Bool
+
+        <a class="method-permalink" href="#in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L124" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="in?(key:Symbol|String,list:Hash):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>in?</strong>(key : Symbol | String, list : Hash) : Bool
+
+        <a class="method-permalink" href="#in?(key:Symbol%7CString,list:Hash):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) contains the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#not_in?(value:String,str:String):Bool-class-method">#not_in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ip?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ip?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#ip?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is an IP (IPv4 or IPv6).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ipv4?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ipv4?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#ipv4?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is an IPv4.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L82" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ipv6?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>ipv6?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#ipv6?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is an IPv6.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L87" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="json?(value:String,strict:Bool=true):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>json?</strong>(value : String, strict : Bool = <span class="n">true</span>) : Bool
+
+        <a class="method-permalink" href="#json?(value:String,strict:Bool=true):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> represents a JSON string.
+<em>strict</em> to <code>true</code> (default) to try to parse the JSON,
+returns <code>false</code> if the parsing fails.
+If <em>strict</em> is <code>false</code>, only the first char and the last char are checked.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L64" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="jwt?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>jwt?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#jwt?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a <em>JSON Web Token</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lat?(value:String|Float):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lat?</strong>(value : String | Float) : Bool
+
+        <a class="method-permalink" href="#lat?(value:String%7CFloat):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a valid format representation of a geographical latitude.</p>
+
+<ul><li>See also <code><a href="Validator.html#lng?(value:String%7CFloat):Bool-class-method">#lng?</a></code>.</li><li>See also <code><a href="Validator.html#lat_lng?(value:String):Bool-class-method">#lat_lng?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/geo.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lat_lng?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lat_lng?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#lat_lng?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a valid format representation of
+a geographical position (given in latitude and longitude).</p>
+
+<ul><li>See also <code><a href="Validator.html#lat?(value:String%7CFloat):Bool-class-method">#lat?</a></code>.</li><li>See also <code><a href="Validator.html#lng?(value:String%7CFloat):Bool-class-method">#lng?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/geo.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lng?(value:String|Float):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lng?</strong>(value : String | Float) : Bool
+
+        <a class="method-permalink" href="#lng?(value:String%7CFloat):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a valid format representation of a geographical longitude.</p>
+
+<ul><li>See also <code><a href="Validator.html#lat?(value:String%7CFloat):Bool-class-method">#lat?</a></code>.</li><li>See also <code><a href="Validator.html#lat_lng?(value:String):Bool-class-method">#lat_lng?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/geo.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lower?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lower?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#lower?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in lower case.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/case_sensitive.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lt?(value,another_value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lt?</strong>(value, another_value) : Bool
+
+        <a class="method-permalink" href="#lt?(value,another_value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is lesser than <em>another_value</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lte?(value,another_value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>lte?</strong>(value, another_value) : Bool
+
+        <a class="method-permalink" href="#lte?(value,another_value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to or lesser than <em>another_value</em>.</p>
+
+<blockquote>Similar to <code>#max</code>.</blockquote>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mac_addr?(value:String,no_colons:Bool=false):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>mac_addr?</strong>(value : String, no_colons : Bool = <span class="n">false</span>) : Bool
+
+        <a class="method-permalink" href="#mac_addr?(value:String,no_colons:Bool=false):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a MAC address.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L176" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="magnet_uri?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>magnet_uri?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#magnet_uri?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a Magnet URI.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L186" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match?(value:String,pattern:Regex):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>match?</strong>(value : String, pattern : Regex) : Bool
+
+        <a class="method-permalink" href="#match?(value:String,pattern:Regex):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> matches the <em>pattern</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match?(value:Number,pattern:Regex):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>match?</strong>(value : Number, pattern : Regex) : Bool
+
+        <a class="method-permalink" href="#match?(value:Number,pattern:Regex):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> matches the <em>pattern</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max?(value,max):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>max?</strong>(value, max) : Bool
+
+        <a class="method-permalink" href="#max?(value,max):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to or lesser than <em>max</em> (inclusive).</p>
+
+<blockquote>Similar to <code>#lte</code>.</blockquote>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="md5?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>md5?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#md5?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> has the format <em>md5</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L82" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min?(value,min):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>min?</strong>(value, min) : Bool
+
+        <a class="method-permalink" href="#min?(value,min):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to or greater than <em>min</em> (inclusive).</p>
+
+<blockquote>Similar to <code>#gte</code>.</blockquote>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mongo_id?(value:Bytes):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>mongo_id?</strong>(value : Bytes) : Bool
+
+        <a class="method-permalink" href="#mongo_id?(value:Bytes):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>Bytes</code> <em>value</em> does denote
+a representation of a <em>MongoID</em> slice of Bytes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L143" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mongo_id?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>mongo_id?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#mongo_id?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> does denote
+a representation of a <em>MongoID</em> string.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L137" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_empty?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_empty?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#not_empty?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is not empty.</p>
+
+<ul><li>See also <code><a href="Validator.html#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#presence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(value:String,str:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(value : String, str : String) : Bool
+
+        <a class="method-permalink" href="#not_in?(value:String,str:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>str</em>) <code>String</code> does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L141" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(value,list:Array):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(value, list : Array) : Bool
+
+        <a class="method-permalink" href="#not_in?(value,list:Array):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L149" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(value,list:Tuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(value, list : Tuple) : Bool
+
+        <a class="method-permalink" href="#not_in?(value,list:Tuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L154" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(value,list:Range):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(value, list : Range) : Bool
+
+        <a class="method-permalink" href="#not_in?(value,list:Range):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L159" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(key:Symbol|String,list:NamedTuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(key : Symbol | String, list : NamedTuple) : Bool
+
+        <a class="method-permalink" href="#not_in?(key:Symbol%7CString,list:NamedTuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L164" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_in?(key:Symbol|String,list:Hash):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_in?</strong>(key : Symbol | String, list : Hash) : Bool
+
+        <a class="method-permalink" href="#not_in?(key:Symbol%7CString,list:Hash):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the (<em>list</em>) does not contain the <em>value</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#absence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#absence?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L169" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="not_null?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>not_null?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#not_null?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is not null (<code>nil</code>).</p>
+
+<ul><li>See also <code><a href="Validator.html#null?(value):Bool-class-method">#null?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="null?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>null?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#null?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is null (<code>nil</code>).</p>
+
+<ul><li>See also <code><a href="Validator.html#empty?(value):Bool-class-method">#empty?</a></code>.</li><li>See also <code><a href="Validator.html#not_null?(value):Bool-class-method">#not_null?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L82" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="number?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>number?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#number?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a numeric <code>String</code> representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/alpha_num.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port?(value:String=&quot;0&quot;,min:String=&quot;1&quot;,max:String=&quot;65535&quot;):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>port?</strong>(value : String = <span class="s">&quot;0&quot;</span>, min : String = <span class="s">&quot;1&quot;</span>, max : String = <span class="s">&quot;65535&quot;</span>) : Bool
+
+        <a class="method-permalink" href="#port?(value:String=&quot;0&quot;,min:String=&quot;1&quot;,max:String=&quot;65535&quot;):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in a valid port range,
+between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port?(value=0,min=1,max=65535):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>port?</strong>(value = <span class="n">0</span>, min = <span class="n">1</span>, max = <span class="n">65535</span>) : Bool
+
+        <a class="method-permalink" href="#port?(value=0,min=1,max=65535):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in a valid port range,
+between (inclusive) 1 / <em>min</em> and 65535 / <em>max</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="presence?(key:String|Symbol,list:NamedTuple):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>presence?</strong>(key : String | Symbol, list : NamedTuple) : Bool
+
+        <a class="method-permalink" href="#presence?(key:String%7CSymbol,list:NamedTuple):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates the presence of the value.</p>
+
+<ul><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="presence?(key:String|Symbol|Number,list:Hash):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>presence?</strong>(key : String | Symbol | Number, list : Hash) : Bool
+
+        <a class="method-permalink" href="#presence?(key:String%7CSymbol%7CNumber,list:Hash):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates the presence of the value.</p>
+
+<ul><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li><li>See also <code><a href="Validator.html#not_empty?(value):Bool-class-method">#not_empty?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="refused?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>refused?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#refused?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> <code>String</code> is the representation of a refusal.</p>
+
+<blockquote>One of: "no", "n", "off", "0", "false"</blockquote>
+
+<ul><li>See also <code><a href="Validator.html#accepted?(value:String):Bool-class-method">#accepted?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L200" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="refused?(value):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>refused?</strong>(value) : Bool
+
+        <a class="method-permalink" href="#refused?(value):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the <em>value</em> is the representation of a refusal.</p>
+
+<blockquote>One of: "no", "n", "off", "0", "false"</blockquote>
+
+<p><em>value</em> must implements <em>#to_s</em> method.</p>
+
+<ul><li>See also <code><a href="Validator.html#accepted?(value:String):Bool-class-method">#accepted?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L209" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size?(value,size:Array(String))-class-method">
+      <div class="signature">
+        
+        def self.<strong>size?</strong>(value, size : Array(String))
+
+        <a class="method-permalink" href="#size?(value,size:Array(String))-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in the <em>size</em> array.</p>
+
+<ul><li>See also <code><a href="Validator.html#between?(value:String%7CArray,min:Int,max:Int):Bool-class-method">#between?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size?(value,size:Array(Int))-class-method">
+      <div class="signature">
+        
+        def self.<strong>size?</strong>(value, size : Array(Int))
+
+        <a class="method-permalink" href="#size?(value,size:Array(Int))-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in the <em>size</em> array.</p>
+
+<ul><li>See also <code><a href="Validator.html#between?(value:String%7CArray,min:Int,max:Int):Bool-class-method">#between?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size?(value,size:Range)-class-method">
+      <div class="signature">
+        
+        def self.<strong>size?</strong>(value, size : Range)
+
+        <a class="method-permalink" href="#size?(value,size:Range)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in the <em>size</em> range.</p>
+
+<ul><li>See also <code><a href="Validator.html#between?(value:String%7CArray,min:Int,max:Int):Bool-class-method">#between?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L73" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size?(value,size:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>size?</strong>(value, size : String)
+
+        <a class="method-permalink" href="#size?(value,size:String)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to the <em>size</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size?(value,size:Int)-class-method">
+      <div class="signature">
+        
+        def self.<strong>size?</strong>(value, size : Int)
+
+        <a class="method-permalink" href="#size?(value,size:Int)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is equal to the <em>size</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/comparisons.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="slug?(value:String,min=1,max=100):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>slug?</strong>(value : String, min = <span class="n">1</span>, max = <span class="n">100</span>) : Bool
+
+        <a class="method-permalink" href="#slug?(value:String,min=1,max=100):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a slug.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L171" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="starts?(value:String,search:Regex):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>starts?</strong>(value : String, search : Regex) : Bool
+
+        <a class="method-permalink" href="#starts?(value:String,search:Regex):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L231" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="starts?(value:String,search:Char):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>starts?</strong>(value : String, search : Char) : Bool
+
+        <a class="method-permalink" href="#starts?(value:String,search:Char):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L226" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="starts?(value:String,search:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>starts?</strong>(value : String, search : String) : Bool
+
+        <a class="method-permalink" href="#starts?(value:String,search:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <code>String</code> <em>value</em> starts with <em>search</em>.</p>
+
+<ul><li>See also <code><a href="Validator.html#ends?(value:String,search:Regex):Bool-class-method">#ends?</a></code>.</li><li>See also <code><a href="Validator.html#match?(value:String,pattern:Regex):Bool-class-method">#match?</a></code>.</li><li>See also <code><a href="Validator.html#in?(value:String,str:String):Bool-class-method">#in?</a></code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/presence.cr#L221" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="time?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>time?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#time?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a time <code>String</code> representation.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="upper?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>upper?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#upper?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is in upper case.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/case_sensitive.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="url?(value:String):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>url?</strong>(value : String) : Bool
+
+        <a class="method-permalink" href="#url?(value:String):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a URL.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/uri.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uuid?(value:String,version=0):Bool-class-method">
+      <div class="signature">
+        
+        def self.<strong>uuid?</strong>(value : String, version = <span class="n">0</span>) : Bool
+
+        <a class="method-permalink" href="#uuid?(value:String,version=0):Bool-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Validates that the <em>value</em> is a <em>UUID</em>
+Versions: 0 (all), 3, 4 and 5. <em>version</em> by default is 0 (all).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/575e16ee75e0ef1dcb47a99f1ec1cca73264815f/src/validators/format.cr#L103" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
