@@ -27,8 +27,8 @@ module App::Models
       # required
       username: {
         required: true,
-        check: {
-          between:   {"The username must be between 2 and 20 characters.", 2, 20},
+        check:    {
+          between: {"The username must be between 2 and 20 characters.", 2, 20},
         },
         clean: {type: String, to: :to_s},
       },
@@ -36,8 +36,8 @@ module App::Models
       # required
       first_name: {
         required: true,
-        check: {
-          between:   {"The first name must be between 2 and 20 characters.", 2, 20},
+        check:    {
+          between: {"The first name must be between 2 and 20 characters.", 2, 20},
         },
         clean: {type: String, to: :to_s},
       },
