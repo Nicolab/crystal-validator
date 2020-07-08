@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="validator">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="validator">
-  <title>Check::CheckableStatic - validator master</title>
+  <title>Check::CheckableStatic - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master
+        master-dev
       </span>
     </div>
   </div>
@@ -137,7 +137,7 @@
     Overview
   </h2>
 
-  <p>Mixin that adds <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,format=true)-instance-method">.check</a></code> method to be used with a <code>Hash</code>.
+  <p>Mixin that adds <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.check</a></code> method to be used with a <code>Hash</code>.
 The idea is to check a <code>Hash</code> against rules defined with <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code>
 plus executing custom checkers defined with <code><a href="../Check/Checker.html">Checker</a></code> annotation.</p>
 
@@ -163,13 +163,6 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
     Defined in:
   </h2>
   
-    
-      <a href="https://github.com/Nicolab/crystal-validator/blob/fa8cdc362cd85e4d64ba4bbe0553616a1bf9c64e/src/checkable.cr#L208" target="_blank">
-        checkable.cr
-      </a>
-    
-    <br/>
-  
 
 
 
@@ -190,30 +183,58 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,format=true):Hash-instance-method" class="signature"><strong>#after_check</strong>(v : Check::Validation, h : Hash, cleaned_h : Hash, format = <span class="n">true</span>) : Hash</a>
+        <a href="#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method" class="signature"><strong>#after_check</strong>(v : Check::Validation, h : Hash, cleaned_h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>) : Hash</a>
         
-          <div class="summary"><p>Lifecycle method triggered after each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,format=true)-instance-method">.check</a></code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#before_check(v:Check::Validation,h:Hash,format=true)-instance-method" class="signature"><strong>#before_check</strong>(v : Check::Validation, h : Hash, format = <span class="n">true</span>)</a>
-        
-          <div class="summary"><p>Lifecycle method triggered before each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,format=true)-instance-method">.check</a></code>.</p></div>
+          <div class="summary"><p>Lifecycle method triggered after each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.check</a></code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#check(v:Check::Validation,h:Hash,format=true)-instance-method" class="signature"><strong>#check</strong>(v : Check::Validation, h : Hash, format = <span class="n">true</span>)</a>
+        <a href="#before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#before_check</strong>(v : Check::Validation, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
+        
+          <div class="summary"><p>Lifecycle method triggered before each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.check</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#check</strong>(v : Check::Validation, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
         
           <div class="summary"><p>Checks and clean the <code>Hash</code> for its fields corresponding to class variables that have a <code>.check_{{field}}</code> method.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#check(h:Hash,format=true)-instance-method" class="signature"><strong>#check</strong>(h : Hash, format = <span class="n">true</span>)</a>
+        <a href="#check(h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#check</strong>(h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
         
           <div class="summary"><p>Checks and clean the <code>Hash</code> for its fields corresponding to class variables that have a <code>.check_{{field}}</code> method.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#h_from_json(json:String%7CIO)-instance-method" class="signature"><strong>#h_from_json</strong>(json : String | IO)</a>
+        
+          <div class="summary"><p>Returns a <code>Hash</code> from a JSON input.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#map_json_keys:Hash(String,String)-instance-method" class="signature"><strong>#map_json_keys</strong> : Hash(String, String)</a>
+        
+          <div class="summary"><p>Macro that returns the mapping of the JSON fields</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_crystal_h(h:Hash):Hash-instance-method" class="signature"><strong>#to_crystal_h</strong>(h : Hash) : Hash</a>
+        
+          <div class="summary"><p>Returns a new <code>Hash</code> with all JSON keys converted to Crystal keys.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_json_h(h:Hash):Hash-instance-method" class="signature"><strong>#to_json_h</strong>(h : Hash) : Hash</a>
+        
+          <div class="summary"><p>Returns a new <code>Hash</code> with all Crystal keys converted to JSON keys.</p></div>
         
       </li>
     
@@ -241,24 +262,24 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,format=true):Hash-instance-method">
+    <div class="entry-detail" id="after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method">
       <div class="signature">
         
-        def <strong>after_check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, cleaned_h : Hash, format = <span class="n">true</span>) : Hash
+        def <strong>after_check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, cleaned_h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>) : Hash
 
-        <a class="method-permalink" href="#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,format=true):Hash-instance-method">#</a>
+        <a class="method-permalink" href="#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Lifecycle method triggered after each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,format=true)-instance-method">.check</a></code>.</p>
+          <p>Lifecycle method triggered after each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.check</a></code>.</p>
 
 <p>This method (in static call) must returns the cleaned <code>Hash</code>
 which is provided in the third argument.
 You can update this cleaned hash but you have to return it.</p>
 
 <pre><code><span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
-<span class="k">def</span> <span class="m">self</span>.after_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, format : <span class="t">Bool</span>) : <span class="t">Hash</span>
+<span class="k">def</span> <span class="m">self</span>.after_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span> <span class="o">=</span> <span class="n">true</span>, format : <span class="t">Bool</span> <span class="o">=</span> <span class="n">true</span>) : <span class="t">Hash</span>
   <span class="c"># Code...</span>
   pp cleaned_h
   cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
@@ -268,25 +289,23 @@ You can update this cleaned hash but you have to return it.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/fa8cdc362cd85e4d64ba4bbe0553616a1bf9c64e/src/checkable.cr#L234" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="before_check(v:Check::Validation,h:Hash,format=true)-instance-method">
+    <div class="entry-detail" id="before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">
       <div class="signature">
         
-        def <strong>before_check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, format = <span class="n">true</span>)
+        def <strong>before_check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)
 
-        <a class="method-permalink" href="#before_check(v:Check::Validation,h:Hash,format=true)-instance-method">#</a>
+        <a class="method-permalink" href="#before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Lifecycle method triggered before each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,format=true)-instance-method">.check</a></code>.</p>
+          <p>Lifecycle method triggered before each call of <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.check</a></code>.</p>
 
 <pre><code><span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
-<span class="k">def</span> <span class="m">self</span>.before_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, format : <span class="t">Bool</span>)
+<span class="k">def</span> <span class="m">self</span>.before_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, required : <span class="t">Bool</span> <span class="o">=</span> <span class="n">true</span>, format : <span class="t">Bool</span> <span class="o">=</span> <span class="n">true</span>)
   <span class="c"># Code...</span>
   pp h
 <span class="k">end</span></code></pre>
@@ -295,17 +314,15 @@ You can update this cleaned hash but you have to return it.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/fa8cdc362cd85e4d64ba4bbe0553616a1bf9c64e/src/checkable.cr#L218" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="check(v:Check::Validation,h:Hash,format=true)-instance-method">
+    <div class="entry-detail" id="check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">
       <div class="signature">
         
-        def <strong>check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, format = <span class="n">true</span>)
+        def <strong>check</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)
 
-        <a class="method-permalink" href="#check(v:Check::Validation,h:Hash,format=true)-instance-method">#</a>
+        <a class="method-permalink" href="#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -316,7 +333,7 @@ to class variables that have a <code>.check_{{field}}</code> method.</p>
 <p>It instantiates a <code><a href="../Check/Validation.html">Check::Validation</a></code> (if not provided) and calls all methods
 related to <code>.rules</code> and then methods defined with annotation <code><a href="../Check/Checker.html">Checker</a></code>.</p>
 
-<p>Lifecycle methods <code><a href="../Check/CheckableStatic.html#before_check(v:Check::Validation,h:Hash,format=true)-instance-method">.before_check</a></code> and <code><a href="../Check/CheckableStatic.html#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,format=true):Hash-instance-method">.after_check</a></code> that are called
+<p>Lifecycle methods <code><a href="../Check/CheckableStatic.html#before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.before_check</a></code> and <code><a href="../Check/CheckableStatic.html#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method">.after_check</a></code> that are called
 respectively at the beginning and at the end of the process.</p>
 
 <p><em>format</em> is used to tell cleaners generated by <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code>
@@ -326,17 +343,15 @@ to execute format method if it has been defined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/fa8cdc362cd85e4d64ba4bbe0553616a1bf9c64e/src/checkable.cr#L249" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="check(h:Hash,format=true)-instance-method">
+    <div class="entry-detail" id="check(h:Hash,required:Bool=true,format:Bool=true)-instance-method">
       <div class="signature">
         
-        def <strong>check</strong>(h : Hash, format = <span class="n">true</span>)
+        def <strong>check</strong>(h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)
 
-        <a class="method-permalink" href="#check(h:Hash,format=true)-instance-method">#</a>
+        <a class="method-permalink" href="#check(h:Hash,required:Bool=true,format:Bool=true)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -347,7 +362,7 @@ to class variables that have a <code>.check_{{field}}</code> method.</p>
 <p>It instantiates a <code><a href="../Check/Validation.html">Check::Validation</a></code> (if not provided) and calls all methods
 related to <code>.rules</code> and then methods defined with annotation <code><a href="../Check/Checker.html">Checker</a></code>.</p>
 
-<p>Lifecycle methods <code><a href="../Check/CheckableStatic.html#before_check(v:Check::Validation,h:Hash,format=true)-instance-method">.before_check</a></code> and <code><a href="../Check/CheckableStatic.html#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,format=true):Hash-instance-method">.after_check</a></code> that are called
+<p>Lifecycle methods <code><a href="../Check/CheckableStatic.html#before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.before_check</a></code> and <code><a href="../Check/CheckableStatic.html#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method">.after_check</a></code> that are called
 respectively at the beginning and at the end of the process.</p>
 
 <p><em>format</em> is used to tell cleaners generated by <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code>
@@ -357,7 +372,86 @@ to execute format method if it has been defined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/fa8cdc362cd85e4d64ba4bbe0553616a1bf9c64e/src/checkable.cr#L288" target="_blank">View source</a>]
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="h_from_json(json:String|IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>h_from_json</strong>(json : String | IO)
+
+        <a class="method-permalink" href="#h_from_json(json:String%7CIO)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a <code>Hash</code> from a JSON input.
+The return type is a tuple with a bool as a first argument indicating
+that the <code>JSON.parse</code> has been processed successfully or not and the 2nd
+argument is the <em>json</em> Hash.</p>
+
+<pre><code>ok, user_h <span class="o">=</span> <span class="t">User</span>.h_from_json(json) <span class="c"># =&gt; true, {&quot;username&quot; =&gt; &quot;Bob&quot;, &quot;email&quot; =&gt; &quot;user@example.com&quot;}</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="map_json_keys:Hash(String,String)-instance-method">
+      <div class="signature">
+        
+        def <strong>map_json_keys</strong> : Hash(String, String)
+
+        <a class="method-permalink" href="#map_json_keys:Hash(String,String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Macro that returns the mapping of the JSON fields</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_crystal_h(h:Hash):Hash-instance-method">
+      <div class="signature">
+        
+        def <strong>to_crystal_h</strong>(h : Hash) : Hash
+
+        <a class="method-permalink" href="#to_crystal_h(h:Hash):Hash-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new <code>Hash</code> with all JSON keys converted to Crystal keys.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_json_h(h:Hash):Hash-instance-method">
+      <div class="signature">
+        
+        def <strong>to_json_h</strong>(h : Hash) : Hash
+
+        <a class="method-permalink" href="#to_json_h(h:Hash):Hash-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a new <code>Hash</code> with all Crystal keys converted to JSON keys.</p>
+        </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
