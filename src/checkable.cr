@@ -80,12 +80,14 @@ module Check
   #
   #   property title : String
   #   property content : String
+  #   property url : String?
   #
   #   Check.rules(
   #     content: {
-  #       check: {
-  #         presence: {"Article content is required"},
-  #         between:  {"The article content must be between 10 and 20 000 characters", 10, 20_000},
+  #       required: true,
+  #       check:    {
+  #         not_empty: {"Article content is required"},
+  #         between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
   #         # ...
   #       },
   #       clean: {
@@ -93,6 +95,16 @@ module Check
   #         to:      :to_s,
   #         format:  ->(content : String) { content.strip },
   #         message: "Wrong type",
+  #       },
+  #     },
+  #     url: {
+  #       check: {
+  #         url: {"Article URL is invalid"},
+  #       },
+  #       clean: {
+  #         nilable: true,
+  #         type:    String,
+  #         to:      :to_s,
   #       },
   #     },
   #       # ...
@@ -115,10 +127,27 @@ module Check
   #
   # See also `Check.checkable`.
   macro rules(**fields)
+    private def self.validation_rules
+      {{fields}}
+    end
+
+    private def self.validation_required?(field) : Bool
+      fields = self.validation_rules
+      return false if fields[field].nil?
+      fields[field].fetch("required", false).as(Bool)
+    end
+
+    private def self.validation_nilable?(field) : Bool
+      fields = self.validation_rules
+      return false if fields[field].nil? || fields[field]["clean"].nil?
+      fields[field]["clean"].fetch("nilable", false).as(Bool)
+    end
+
     {% for field, rules in fields %}
       {% clean = rules["clean"] %}
       {% check = rules["check"] %}
       {% type = clean["type"] %}
+      {% nilable = clean["nilable"] %}
 
       # Returns *{{field}}* with the good type and formatted if *format* is `true`.
       # The return type is a tuple with a bool as a first argument indicating
@@ -129,10 +158,13 @@ module Check
       # ok, email = Checkable.clean_email(user_input["email"]) # => true, user@example.com
       # ```
       def self.clean_{{field}}(value, format = true) : Tuple(Bool, {{type}} | Nil)
+        # force real Nil type (hack for JSON::Any and equivalent)
+        value = nil if value == nil
+
         {% if to = clean["to"] %}
           # Check if the *value* has the method `{{to}}` and execute it if
-          # exists to cast the value in the good type.
-          if value.responds_to? {{to}}
+          # exists to cast the value in the good type (except if the value is nil and nilable).
+          if value.responds_to? {{to}} {% if nilable %} && !value.nil?{% end %}
             begin
               value = value.{{to.id}}
             rescue
@@ -163,22 +195,32 @@ module Check
 
       # Create a new `Check::Validation` and checks *{{field}}*.
       # For more infos check `.check_{{field}}(v : Check::Validation, value, format : Bool = true)`
-      def self.check_{{field}}(*, value, format : Bool = true) : Tuple(Check::Validation, {{type}} | Nil)
+      def self.check_{{field}}(
+        *,
+        value,
+        required : Bool = true,
+        format : Bool = true
+      ) : Tuple(Check::Validation, {{type}} | Nil)
         v = Check.new_validation
-        self.check_{{field}}(v, value, format)
+        self.check_{{field}}(v, value, required, format)
       end
 
       # Cleans and check *value*.
       # If *format* is `true` it tells `.clean_{{field}}` to execute the `format` function
       # for this field if it has been defined with `Check.rules`.
-      def self.check_{{field}}(v : Check::Validation, value, format : Bool = true) : Tuple(Check::Validation, {{type}} | Nil)
+      def self.check_{{field}}(
+        v : Check::Validation,
+        value,
+        required : Bool = true,
+        format : Bool = true
+      ) : Tuple(Check::Validation, {{type}} | Nil)
         # Cleans and formats the *value*
         ok, value = self.clean_{{field}}(value, format)
 
         # If clean has encountered an error, add error message and stop check here.
         if ok == false
           {% msg = clean["message"] || "Wrong type" %}
-          v.add_error {{field.stringify}}, {{msg}}
+          v.add_error {{field.stringify}}, {{msg}} {% if nilable || (check["not_null"].nil? && check["not_empty"].nil?) %}unless value.nil?{% end %}
           return v, value
         end
 
@@ -194,7 +236,10 @@ module Check
             {% else %}
               Valid.{{name.id}}? value, {{ args[1..-1].splat }}
             {% end %}
-          ) {% if name != "not_null" && name != "not_empty" %}unless value.nil?{% end %}
+          ) {% if nilable ||
+                    (check["not_null"].nil? && check["not_empty"].nil?) ||
+                    # required for the compiler
+                    (name != "not_null" && name != "not_empty") %}unless value.nil?{% end %}
         {% end %}
 
         {v, value}
@@ -206,16 +251,70 @@ module Check
   # The idea is to check a `Hash` against rules defined with `Check.rules`
   # plus executing custom checkers defined with `Checker` annotation.
   module CheckableStatic
+    # Macro that returns the mapping of the JSON fields
+    def map_json_keys : Hash(String, String)
+      map = {} of String => String
+
+      {% begin %}
+        {% for ivar in @type.instance_vars %}
+          {% ann = ivar.annotation(::JSON::Field) %}
+          {% unless ann && ann[:ignore] %}
+            map[{{ ((ann && ann[:key]) || ivar).id.stringify }}] = {{ivar.id.stringify}}
+          {% end %}
+        {% end %}
+      {% end %}
+      map
+    end
+
+    # Returns a new `Hash` with all JSON keys converted to Crystal keys.
+    def to_crystal_h(h : Hash) : Hash
+      cr_keys = map_json_keys
+
+      # From JSON keys to Crystal keys
+      h.transform_keys do |cr_k|
+        cr_keys[cr_k]? || cr_k
+      end
+    end
+
+    # Returns a new `Hash` with all Crystal keys converted to JSON keys.
+    def to_json_h(h : Hash) : Hash
+      cr_keys = map_json_keys
+
+      # From Crystal keys to JSON keys
+      h.transform_keys do |json_k|
+        cr_keys.key_for? json_k || json_k
+      end
+    end
+
+    # Returns a `Hash` from a JSON input.
+    # The return type is a tuple with a bool as a first argument indicating
+    # that the `JSON.parse` has been processed successfully or not and the 2nd
+    # argument is the *json* Hash.
+    #
+    # ```
+    # ok, user_h = User.h_from_json(json) # => true, {"username" => "Bob", "email" => "user@example.com"}
+    # ```
+    def h_from_json(json : String | IO)
+      return true, self.to_crystal_h(JSON.parse(json).as_h)
+    rescue
+      return false, nil
+    end
+
     # Lifecycle method triggered before each call of `.check`.
     #
     # ```
     # # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    # def self.before_check(v : Check::Validation, h, format : Bool)
+    # def self.before_check(v : Check::Validation, h, required : Bool = true, format : Bool = true)
     #   # Code...
     #   pp h
     # end
     # ```
-    def before_check(v : Check::Validation, h : Hash, format = true); end
+    def before_check(
+      v : Check::Validation,
+      h : Hash,
+      required : Bool = true,
+      format : Bool = true
+    ); end
 
     # Lifecycle method triggered after each call of `.check`.
     #
@@ -225,13 +324,18 @@ module Check
     #
     # ```
     # # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    # def self.after_check(v : Check::Validation, h, cleaned_h, format : Bool) : Hash
+    # def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool = true, format : Bool = true) : Hash
     #   # Code...
     #   pp cleaned_h
     #   cleaned_h # <= returns cleaned_h!
     # end
     # ```
-    def after_check(v : Check::Validation, h : Hash, cleaned_h : Hash, format = true) : Hash
+    def after_check(
+      v : Check::Validation,
+      h : Hash, cleaned_h : Hash,
+      required : Bool = true,
+      format : Bool = true
+    ) : Hash
       cleaned_h
     end
 
@@ -246,7 +350,7 @@ module Check
     #
     # *format* is used to tell cleaners generated by `Check.rules`
     # to execute format method if it has been defined.
-    def check(v : Check::Validation, h : Hash, format = true)
+    def check(v : Check::Validation, h : Hash, required : Bool = true, format : Bool = true)
       {% begin %}
       {% types = [] of Type %}
       {% fields = [] of String %}
@@ -261,33 +365,35 @@ module Check
       cleaned_h = Hash(String, {{types.join("|").id}}).new
 
       # Call lifecycle method before check
-      self.before_check v, h, format
+      self.before_check v, h, required, format
 
       # Call check methods for fields that are present in *h*
       # and populate `cleaned_h`
       {% for field, i in fields %}
-        if h.has_key? "{{field}}"
-          v, value = self.check_{{field}}(v, h["{{field}}"], format)
-          cleaned_h["{{field}}"] = value.as({{types[i]}})
+      {% field_name = field.stringify %}
+        # if hash has the field or this field MUST be checked when required is `true`
+        if h.has_key?({{field_name}}) || (required && self.validation_required?({{field_name}}))
+          v, value = self.check_{{field}}(v, h[{{field_name}}]?, required, format)
+          cleaned_h[{{field_name}}] = value.as({{types[i]}})
         end
       {% end %}
 
       # Check methods with `Check::Checker` annotation
       {% for method in @type.class.methods.select { |method| method.annotation(Checker) } %}
-        cleaned_h = {{method.name}} v, h, cleaned_h, format
+        cleaned_h = {{method.name}} v, h, cleaned_h, required, format
       {% end %}
 
       # Call lifecycle method `.after_check`
-      cleaned_h = self.after_check v, h, cleaned_h, format
+      cleaned_h = self.after_check v, h, cleaned_h, required, format
 
       {v, cleaned_h}
       {% end %}
     end
 
     # :ditto:
-    def check(h : Hash, format = true)
+    def check(h : Hash, required : Bool = true, format : Bool = true)
       v = Check.new_validation
-      check v, h, format
+      check v, h, required, format
     end
   end
 
@@ -299,21 +405,29 @@ module Check
     #
     # ```
     # # Triggered on instance: `user.check`
-    # def before_check(v : Check::Validation, format : Bool)
+    # def before_check(v : Check::Validation, required : Bool = true, format : Bool = true)
     #   # Code...
     # end
     # ```
-    def before_check(v : Check::Validation, format : Bool = true); end
+    def before_check(
+      v : Check::Validation,
+      required : Bool = true,
+      format : Bool = true
+    ); end
 
     # Lifecycle method triggered after each call of `#check`.
     #
     # ```
     # # Triggered on instance: `user.check`
-    # def after_check(v : Check::Validation, format : Bool)
+    # def after_check(v : Check::Validation, required : Bool = true, format : Bool = true)
     #   # Code...
     # end
     # ```
-    def after_check(v : Check::Validation, format : Bool = true); end
+    def after_check(
+      v : Check::Validation,
+      required : Bool = true,
+      format : Bool = true
+    ); end
 
     # Checks the instance fields and clean them.
     #
@@ -325,15 +439,15 @@ module Check
     #
     # *format* is used to tell cleaners generated by `Check.rules`
     # to execute format method if it has been defined.
-    def check(v : Check::Validation, format = true) : Validation
+    def check(v : Check::Validation, required : Bool = true, format : Bool = true) : Validation
       {% begin %}
 
       # Call lifecycle method before check
-      before_check v, format
+      before_check v, required, format
 
       # Check all fields that have a method `#check_{field}`
       {% for ivar in @type.instance_vars.select { |ivar| @type.class.has_method?("check_#{ivar}") } %}
-        v, value = self.class.check_{{ivar.name}}(v, {{ivar.name}}, format)
+        v, value = self.class.check_{{ivar.name}}(v, {{ivar.name}}, required, format)
 
         # If the field is not nilable and the value is nil,
         # it means that the clean method has failed
@@ -344,20 +458,20 @@ module Check
 
       # Check methods with `Check::Checker` annotation
       {% for method in @type.methods.select { |method| method.annotation(Checker) } %}
-        {{method.name}} v, format
+        {{method.name}} v, required, format
       {% end %}
 
       # Call lifecycle method `#after_check`
-      after_check v, format
+      after_check v, required, format
 
       v
       {% end %}
     end
 
     # :ditto:
-    def check(format = true) : Validation
+    def check(required : Bool = true, format : Bool = true) : Validation
       v = Check.new_validation
-      check v, format
+      check v, required, format
     end
   end
 end

@@ -14,7 +14,8 @@ module H
 
     Check.rules(
       email: {
-        check: {
+        required: true,
+        check:    {
           not_empty: {"Email should not be empty"},
           email:     {"It is not a valid email"},
         },
@@ -30,7 +31,7 @@ module H
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
         },
-        clean: {type: Int32, to: :to_i32},
+        clean: {type: Int32, to: :to_i32, nilable: true},
       }
     )
 
@@ -47,7 +48,8 @@ module H
 
     Check.rules(
       email: {
-        check: {
+        required: true,
+        check:    {
           not_empty: {"Email should not be empty"},
           email:     {"It is not a valid email"},
         },
@@ -63,7 +65,7 @@ module H
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
         },
-        clean: {type: Int32, to: :to_i32, message: "Wrong type"},
+        clean: {type: Int32, to: :to_i32, message: "Wrong type", nilable: true},
       }
     )
 
@@ -126,19 +128,19 @@ module H
     # Lifecycle methods
     # ---------------------------------------------------------------------------
 
-    def before_check(v, format)
+    def before_check(v, required, format)
       self.before_check_called = true
     end
 
-    def after_check(v, format)
+    def after_check(v, required, format)
       self.after_check_called = true
     end
 
-    def self.before_check(v, h, format)
+    def self.before_check(v, h, required, format)
       @@before_check_called = true
     end
 
-    def self.after_check(v, h, cleaned_h, format)
+    def self.after_check(v, h, cleaned_h, required, format)
       @@after_check_called = true
       cleaned_h
     end
@@ -149,13 +151,13 @@ module H
 
     # Called by the instance.
     @[Check::Checker]
-    def custom_checker(v, format)
+    def custom_checker(v, required, format)
       self.custom_checker_called = true
     end
 
     # Called statically.
     @[Check::Checker]
-    def self.custom_checker(v, h, cleaned_h, format)
+    def self.custom_checker(v, h, cleaned_h, required, format)
       @@custom_checker_called = true
       cleaned_h
     end
@@ -182,14 +184,21 @@ module H
 
   # ----------------------------------------------------------------------------
 
-  def self.should_hooks_be_called
-    H::CheckableTest.after_check_called.should be_true
-    H::CheckableTest.before_check_called.should be_true
-    H::CheckableTest.custom_checker_called.should be_true
-    H::CheckableTest.check_nothing_called.should be_false
+  def self.should_hooks_be_called(klass : CheckableTest.class)
+    klass.after_check_called.should be_true
+    klass.before_check_called.should be_true
+    klass.custom_checker_called.should be_true
+    klass.check_nothing_called.should be_false
   end
 
-  def self.should_hooks_be_called(checkable)
+  def self.should_hooks_be_called
+    CheckableTest.after_check_called.should be_true
+    CheckableTest.before_check_called.should be_true
+    CheckableTest.custom_checker_called.should be_true
+    CheckableTest.check_nothing_called.should be_false
+  end
+
+  def self.should_hooks_be_called(checkable : CheckableTest)
     checkable.after_check_called.should be_true
     checkable.before_check_called.should be_true
     checkable.custom_checker_called.should be_true
@@ -197,13 +206,20 @@ module H
   end
 
   def self.should_hooks_not_be_called
-    H::CheckableTest.after_check_called.should be_false
-    H::CheckableTest.before_check_called.should be_false
-    H::CheckableTest.custom_checker_called.should be_false
-    H::CheckableTest.check_nothing_called.should be_false
+    CheckableTest.after_check_called.should be_false
+    CheckableTest.before_check_called.should be_false
+    CheckableTest.custom_checker_called.should be_false
+    CheckableTest.check_nothing_called.should be_false
   end
 
-  def self.should_hooks_not_be_called(checkable)
+  def self.should_hooks_not_be_called(klass : CheckableTest.class)
+    klass.after_check_called.should be_false
+    klass.before_check_called.should be_false
+    klass.custom_checker_called.should be_false
+    klass.check_nothing_called.should be_false
+  end
+
+  def self.should_hooks_not_be_called(checkable : CheckableTest)
     checkable.after_check_called.should be_false
     checkable.before_check_called.should be_false
     checkable.custom_checker_called.should be_false

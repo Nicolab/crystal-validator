@@ -80,9 +80,13 @@ class User
 
     property email : String
     property age : Int32
+    property bio : String?
 
     Check.rules(
+      # required
       email: {
+        required: true,
+
         # Checker (all validators are supported)
         check: {
           not_empty: {"Email is required"},
@@ -107,14 +111,24 @@ class User
           message: "Oops! Wrong type.",
         },
       },
+
+      # required
       age: {
+        required: true,
         check: {
-          not_null: {"Age is required"},
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
         },
         clean: {type: Int32, to: :to_i32, message: "Unable to cast to Int32"},
-      }
+      },
+
+      # nilable
+      bio: {
+        check: {
+          between: {"The user bio must be between 2 and 400 characters.", 2, 400},
+        },
+        clean: {type: String, to: :to_s, nilable: true},
+      },
     )
 
     def initialize(@email, @age); end
@@ -124,23 +138,23 @@ class User
     # ---------------------------------------------------------------------------
 
     # Triggered on instance: `user.check`
-    def before_check(v : Check::Validation, format : Bool)
+    def before_check(v : Check::Validation, required : Bool, format : Bool)
       # Code...
     end
 
     # Triggered on instance: `user.check`
-    def after_check(v : Check::Validation, format : Bool)
+    def after_check(v : Check::Validation, required : Bool, format : Bool)
       # Code...
     end
 
     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    def self.before_check(v : Check::Validation, h, format : Bool)
+    def self.before_check(v : Check::Validation, h, required : Bool, format : Bool)
       # Code...
       pp h
     end
 
     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    def self.after_check(v : Check::Validation, h, cleaned_h, format : Bool)
+    def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
       # Code...
       pp cleaned_h
       cleaned_h # <= returns cleaned_h!
@@ -152,13 +166,13 @@ class User
 
     # Triggered on instance: `user.check`
     @[Check::Checker]
-    def custom_checker(v, format)
+    def custom_checker(v : Check::Validation, required : Bool, format : Bool)
       self.custom_checker_called = true
     end
 
      # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
     @[Check::Checker]
-    def self.custom_checker(v, h, cleaned_h, format)
+    def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
       @@custom_checker_called = true
       cleaned_h # <= returns cleaned_h!
     end
@@ -309,6 +323,10 @@ puts email # => "demo@example.org"
 If the email was taken from a union type (`json["email"]?`), the returned `email` variable would be a `String` too.
 
 See [more examples](https://github.com/Nicolab/crystal-validator/tree/master/examples).
+
+> NOTE: Require more explanations about `required`, `nilable` rules.
+> Also about the converters JSON / Crystal Hash: `h_from_json`, `to_json_h`, `to_crystal_h`.
+> In the meantime see the [API doc](https://nicolab.github.io/crystal-validator/Check/Checkable.html).
 
 ### Validation#check
 
