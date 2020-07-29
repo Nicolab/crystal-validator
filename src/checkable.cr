@@ -12,13 +12,13 @@ module Check
   # ```
   # # Triggered by the instance.
   # @[Check::Checker]
-  # def custom_checker(v, format)
+  # def custom_checker(v : Check::Validation, required : Bool, format : Bool)
   #   puts "custom checker triggered on instance"
   # end
   #
   # # Triggered statically.
   # @[Check::Checker]
-  # def self.custom_checker(v, h, cleaned_h, format)
+  # def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
   #   puts "custom checker triggered statically"
   #   cleaned_h
   # end
@@ -44,8 +44,8 @@ module Check
   #   Check.rules(
   #     content: {
   #       check: {
-  #         presence: {"Article content is required"},
-  #         between:  {"The article content must be between 10 and 20 000 characters", 10, 20_000},
+  #         not_empty: {"Article content is required"},
+  #         between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
   #         # ...
   #       },
   #       clean: {
@@ -102,9 +102,13 @@ module Check
   #         url: {"Article URL is invalid"},
   #       },
   #       clean: {
+  #         # `nilable` means omited if not provided,
+  #         # regardless of Crystal type (nilable or not)
   #         nilable: true,
-  #         type:    String,
-  #         to:      :to_s,
+  #         # Crystal type
+  #         type: String,
+  #         # Converter to the expected typed value
+  #         to: :to_s,
   #       },
   #     },
   #       # ...
@@ -173,6 +177,10 @@ module Check
           end
         {% end %}
 
+        # Format if the value as the correct (Crystal) type.
+        # `| Nil` allows to format in the case of a nilable value (example `String?`)
+        # where the `type` option of `clean` rules has been defined on the precise
+        # Crystal type (example `String`).
         if value.is_a? {{type}} | Nil
           {% if format = clean["format"] %}
             # If *format* is true then call it to format *value*.

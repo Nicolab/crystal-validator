@@ -98,7 +98,7 @@ class User
           # Data type
           type: String,
 
-          # Converter (if union or other)
+          # Converter (if union or other) to the expected value type.
           # Example if the input value is i32, but i64 is expected
           # Here is a String
           to: :to_s,
@@ -127,7 +127,13 @@ class User
         check: {
           between: {"The user bio must be between 2 and 400 characters.", 2, 400},
         },
-        clean: {type: String, to: :to_s, nilable: true},
+        clean: {
+          type: String,
+          to: :to_s,
+          # `nilable` means omited if not provided,
+          # regardless of Crystal type (nilable or not)
+          nilable: true
+        },
       },
     )
 
