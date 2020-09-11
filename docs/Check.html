@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="validator">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="validator">
+  <title>Check - validator master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          validator
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="validator/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="validator/Check" data-name="check">
+      <a href="Check.html">Check</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Check/Checkable" data-name="check::checkable">
+      <a href="Check/Checkable.html">Checkable</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/CheckableStatic" data-name="check::checkablestatic">
+      <a href="Check/CheckableStatic.html">CheckableStatic</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Checker" data-name="check::checker">
+      <a href="Check/Checker.html">Checker</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Errors" data-name="check::errors">
+      <a href="Check/Errors.html">Errors</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
+      <a href="Check/Validation.html">Validation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="validator/Valid" data-name="valid">
+      <a href="Valid.html">Valid</a>
+      
+    </li>
+  
+  <li class="parent " data-id="validator/Validator" data-name="validator">
+      <a href="Validator.html">Validator</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Validator/Error" data-name="validator::error">
+      <a href="Validator/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Check
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Standalone check module that provides a practical workflow for validations.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/check.cr#L11" target="_blank">
+        check.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/checkable.cr#L9" target="_blank">
+        checkable.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new_validation(errors:Errors)-class-method" class="signature"><strong>.new_validation</strong>(errors : Errors)</a>
+        
+          <div class="summary"><p>Initializes a new <code><a href="Check/Validation.html">Validation</a></code> instance to combine a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new_validation-class-method" class="signature"><strong>.new_validation</strong></a>
+        
+          <div class="summary"><p>Initializes a new <code><a href="Check/Validation.html">Validation</a></code> instance to combine a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="macro-summary" class="anchor" href="#macro-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#checkable-macro" class="signature"><strong>checkable</strong></a>
+        
+          <div class="summary"><p>A mixin to make a class checkable.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rules(**fields)-macro" class="signature"><strong>rules</strong>(**fields)</a>
+        
+          <div class="summary"><p>Generates <code>check</code>, <code>check_{{field}}</code> and <code>clean_{{field}}</code> methods for <em>fields</em> (class variables).</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="new_validation(errors:Errors)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new_validation</strong>(errors : <a href="Check/Errors.html">Errors</a>)
+
+        <a class="method-permalink" href="#new_validation(errors:Errors)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes a new <code><a href="Check/Validation.html">Validation</a></code> instance to combine
+a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).
+using an existing <em>errors</em> <code>Hash</code> (<code><a href="Check/Errors.html">Check::Errors</a></code>).</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation existing_errors</code></pre>
+
+<p>Same as:</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span> existing_errors</code></pre>
+
+<p>Example to combine two hashes of validation errors:</p>
+
+<pre><code>preview_validation <span class="o">=</span> <span class="t">Check</span>.new_validation
+v <span class="o">=</span> <span class="t">Check</span>.new_validation preview_validation.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/check.cr#L359" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new_validation-class-method">
+      <div class="signature">
+        
+        def self.<strong>new_validation</strong>
+
+        <a class="method-permalink" href="#new_validation-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes a new <code><a href="Check/Validation.html">Validation</a></code> instance to combine
+a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+
+<p>Same as:</p>
+
+<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/check.cr#L335" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="macro-detail" class="anchor" href="#macro-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Detail
+  </h2>
+  
+    <div class="entry-detail" id="checkable-macro">
+      <div class="signature">
+        
+        macro <strong>checkable</strong>
+
+        <a class="method-permalink" href="#checkable-macro">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>A mixin to make a class checkable.
+This mixin includes <code><a href="Check/Checkable.html">Checkable</a></code> and <code><a href="Check/CheckableStatic.html">CheckableStatic</a></code>.
+It must be used in conjonction with <code><a href="Check.html#rules(**fields)-macro">Check.rules</a></code>.</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="k">class</span> <span class="t">Article</span>
+  <span class="c"># Mixin</span>
+  <span class="t">Check</span>.checkable
+
+  property title : <span class="t">String</span>
+  property content : <span class="t">String</span>
+
+  <span class="t">Check</span>.rules(
+    content: {
+      check: {
+        not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
+        between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
+        <span class="c"># ...</span>
+      },
+      clean: {
+        <span class="k">type</span>:    <span class="t">String</span>,
+        to:      <span class="n">:to_s</span>,
+        format:  ->(content : <span class="t">String</span>) { content.strip },
+        message: <span class="s">&quot;Wrong type&quot;</span>,
+      },
+    },
+  )
+<span class="k">end</span>
+
+<span class="c"># Triggered on all data</span>
+v, article <span class="o">=</span> <span class="t">Article</span>.check(input_data)
+
+<span class="c"># Triggered on a value</span>
+v, content <span class="o">=</span> <span class="t">Article</span>.check_content(input_data[<span class="s">&quot;content&quot;</span>]?)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/checkable.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rules(**fields)-macro">
+      <div class="signature">
+        
+        macro <strong>rules</strong>(**fields)
+
+        <a class="method-permalink" href="#rules(**fields)-macro">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generates <code>check</code>, <code>check_{{field}}</code> and <code>clean_{{field}}</code> methods for <em>fields</em> (class variables).</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="k">class</span> <span class="t">Article</span>
+  <span class="c"># Mixin</span>
+  <span class="t">Check</span>.checkable
+
+  property title : <span class="t">String</span>
+  property content : <span class="t">String</span>
+  property url : <span class="t">String</span>?
+
+  <span class="t">Check</span>.rules(
+    content: {
+      required: <span class="n">true</span>,
+      check:    {
+        not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
+        between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
+        <span class="c"># ...</span>
+      },
+      clean: {
+        <span class="k">type</span>:    <span class="t">String</span>,
+        to:      <span class="n">:to_s</span>,
+        format:  ->(content : <span class="t">String</span>) { content.strip },
+        message: <span class="s">&quot;Wrong type&quot;</span>,
+      },
+    },
+    url: {
+      check: {
+        url: {<span class="s">&quot;Article URL is invalid&quot;</span>},
+      },
+      clean: {
+        <span class="c"># `nilable` means omited if not provided,</span>
+        <span class="c"># regardless of Crystal type (nilable or not)</span>
+        nilable: <span class="n">true</span>,
+        <span class="c"># Crystal type</span>
+        <span class="k">type</span>: <span class="t">String</span>,
+        <span class="c"># Converter to the expected typed value</span>
+        to: <span class="n">:to_s</span>,
+      },
+    },
+      <span class="c"># ...</span>
+)
+<span class="k">end</span>
+
+<span class="c"># Triggered on all data</span>
+v, article <span class="o">=</span> <span class="t">Article</span>.check(input_data)
+
+<span class="c"># Triggered on all fields of an instance</span>
+article <span class="o">=</span> <span class="t">Article</span>.<span class="k">new</span>(title: <span class="s">&quot;foo&quot;</span>, content: <span class="s">&quot;bar&quot;</span>)
+v <span class="o">=</span> article.check
+
+<span class="c"># Triggered on a value</span>
+v, content <span class="o">=</span> <span class="t">Article</span>.check_content(input_data[<span class="s">&quot;content&quot;</span>]?)
+
+<span class="c"># Cast and clean a value</span>
+ok, content <span class="o">=</span> <span class="t">Article</span>.clean_content(input_data[<span class="s">&quot;content&quot;</span>]?)</code></pre>
+
+<p>See also <code><a href="Check.html#checkable-macro">Check.checkable</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/fe0d31532016b14d61671178767dc58de67ba1b2/src/checkable.cr#L133" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

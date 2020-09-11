@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="validator">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="validator">
+  <title>validator master</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          validator
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="validator/toplevel" data-name="top level namespace">
+      <a href="toplevel.html">Top Level Namespace</a>
+      
+    </li>
+  
+  <li class="parent " data-id="validator/Check" data-name="check">
+      <a href="Check.html">Check</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Check/Checkable" data-name="check::checkable">
+      <a href="Check/Checkable.html">Checkable</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/CheckableStatic" data-name="check::checkablestatic">
+      <a href="Check/CheckableStatic.html">CheckableStatic</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Checker" data-name="check::checker">
+      <a href="Check/Checker.html">Checker</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Errors" data-name="check::errors">
+      <a href="Check/Errors.html">Errors</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
+      <a href="Check/Validation.html">Validation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="validator/Valid" data-name="valid">
+      <a href="Valid.html">Valid</a>
+      
+    </li>
+  
+  <li class="parent " data-id="validator/Validator" data-name="validator">
+      <a href="Validator.html">Validator</a>
+      
+        <ul>
+  
+  <li class=" " data-id="validator/Validator/Error" data-name="validator::error">
+      <a href="Validator/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="validator" class="anchor" href="#validator">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>validator</h1>
+
+<p><a href="https://travis-ci.com/Nicolab/crystal-validator" target="_blank"><img src="https://travis-ci.com/Nicolab/crystal-validator.svg?branch=master" alt="Build Status"/></a> <a href="https://github.com/Nicolab/crystal-validator/releases" target="_blank"><img src="https://img.shields.io/github/release/Nicolab/crystal-validator.svg" alt="GitHub release"/></a> <a href="https://nicolab.github.io/crystal-validator/" target="_blank"><img src="https://img.shields.io/badge/docs-available-brightgreen.svg" alt="Docs"/></a></p>
+
+<p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> data validation module.&lt;br>
+Very simple and efficient, all validations return <code>true</code> or <code>false</code>.</p>
+
+<p>Also <a href="#check" target="_blank">validator/check</a> (not exposed by default) provides:</p>
+
+<ul><li>Error message handling intended for the end user.</li><li>Also (optional) a powerful and productive system of validation rules.
+  With self-generated granular methods for cleaning and checking data.</li></ul>
+
+<p><strong>Validator</strong> respects the <a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank">KISS principle</a> and the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank">Unix Philosophy</a>. It's a great basis tool for doing your own validation logic on top of it.</p>
+
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+
+<ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
+
+<pre><code class="language-yaml">dependencies:
+  validator:
+    github: nicolab/crystal-validator
+    version: ~> 1.1.0 # Check the latest version!</code></pre>
+
+<ol><li>Run <code>shards install</code></li></ol>
+
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+
+<ul><li><a href="https://nicolab.github.io/crystal-validator/" target="_blank">Validator - API docs</a></li></ul>
+
+<p>There are 3 main ways to use <em>validator</em>:</p>
+
+<ul><li>As a simple validator to check rules (eg: email, url, min, max, presence, in, ...) which return a boolean.</li><li>As a more advanced validation system which will check a series of rules and returns all validation errors encountered with custom or standard messages.</li><li>As a system of validation rules (inspired by the <em>Laravel framework's Validator</em>)
+  which makes data cleaning and data validation in Crystal very easy!
+  With self-generated granular methods for cleaning and checking data of each field.</li></ul>
+
+<p>By default the <strong>validator</strong> module expose only <code><a href="Validator.html">Validator</a></code> and <code><a href="Valid.html">Valid</a></code> (alias) in the scope:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator&quot;</span>
+
+<span class="t">Valid</span>.email? <span class="s">&quot;contact@example.org&quot;</span> <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.url? <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
+<span class="t">Valid</span>.my_validator? <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span></code></pre>
+
+<p>An (optional) expressive validation flavor, <code><a href="toplevel.html#is(name,*args)-macro">is</a></code> available as an alternative.
+Not exposed by default, it must be imported:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/is&quot;</span>
+
+is <span class="n">:email?</span>, <span class="s">&quot;contact@example.org&quot;</span> <span class="c"># =&gt; true</span>
+is <span class="n">:url?</span>, <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
+is <span class="n">:my_validator?</span>, <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span>
+
+
+<span class="c"># raises an error if the email is not valid</span>
+is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&quot;</span> <span class="c"># =&gt; Validator::Error</span></code></pre>
+
+<p><code><a href="toplevel.html#is(name,*args)-macro">is</a></code> is a macro, no overhead during the runtime 🚀
+ By the nature of the macros, you can't pass the <em>validator</em> name dynamically with a variable like that <code>is(validator_name, "my value to validate", arg)</code>.
+ But of course you can pass arguments with variables <code>is(:validator_name?, arg1, arg2)</code>.</p>
+
+<ul><li><a href="https://nicolab.github.io/crystal-validator/" target="_blank">Validator - API docs</a></li></ul>
+
+<h3><a id="validation-rules" class="anchor" href="#validation-rules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Validation rules</h3>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="k">class</span> <span class="t">User</span>
+    <span class="c"># Mixin</span>
+    <span class="t">Check</span>.checkable
+
+    property email : <span class="t">String</span>
+    property age : <span class="t">Int32</span>
+    property bio : <span class="t">String</span>?
+
+    <span class="t">Check</span>.rules(
+      <span class="c"># required</span>
+      email: {
+        required: <span class="n">true</span>,
+
+        <span class="c"># Checker (all validators are supported)</span>
+        check: {
+          not_empty: {<span class="s">&quot;Email is required&quot;</span>},
+          email:     {<span class="s">&quot;It is not a valid email&quot;</span>},
+        },
+
+        <span class="c"># Cleaner</span>
+        clean: {
+          <span class="c"># Data type</span>
+          <span class="k">type</span>: <span class="t">String</span>,
+
+          <span class="c"># Converter (if union or other) to the expected value type.</span>
+          <span class="c"># Example if the input value is i32, but i64 is expected</span>
+          <span class="c"># Here is a String</span>
+          to: <span class="n">:to_s</span>,
+
+          <span class="c"># Formatter (any Crystal Proc)</span>
+          format: -><span class="k">self</span>.format_email(<span class="t">String</span>),
+
+          <span class="c"># Error message</span>
+          <span class="c"># Default is &quot;Wrong type&quot; but it can be customized</span>
+          message: <span class="s">&quot;Oops! Wrong type.&quot;</span>,
+        },
+      },
+
+      <span class="c"># required</span>
+      age: {
+        required: <span class="n">true</span>,
+        check: {
+          min:     {<span class="s">&quot;Age should be more than 18&quot;</span>, <span class="n">18</span>},
+          between: {<span class="s">&quot;Age should be between 25 and 35&quot;</span>, <span class="n">25</span>, <span class="n">35</span>},
+        },
+        clean: {<span class="k">type</span>: <span class="t">Int32</span>, to: <span class="n">:to_i32</span>, message: <span class="s">&quot;Unable to cast to Int32&quot;</span>},
+      },
+
+      <span class="c"># nilable</span>
+      bio: {
+        check: {
+          between: {<span class="s">&quot;The user bio must be between 2 and 400 characters.&quot;</span>, <span class="n">2</span>, <span class="n">400</span>},
+        },
+        clean: {
+          <span class="k">type</span>: <span class="t">String</span>,
+          to: <span class="n">:to_s</span>,
+          <span class="c"># `nilable` means omited if not provided,</span>
+          <span class="c"># regardless of Crystal type (nilable or not)</span>
+          nilable: <span class="n">true</span>
+        },
+      },
+    )
+
+    <span class="k">def</span> <span class="m">initialize</span>(@email, @age); <span class="k">end</span>
+
+    <span class="c"># ---------------------------------------------------------------------------</span>
+    <span class="c"># Lifecycle methods (hooks)</span>
+    <span class="c"># ---------------------------------------------------------------------------</span>
+
+    <span class="c"># Triggered on instance: `user.check`</span>
+    <span class="k">def</span> <span class="m">before_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      <span class="c"># Code...</span>
+    <span class="k">end</span>
+
+    <span class="c"># Triggered on instance: `user.check`</span>
+    <span class="k">def</span> <span class="m">after_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      <span class="c"># Code...</span>
+    <span class="k">end</span>
+
+    <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+    <span class="k">def</span> <span class="m">self</span>.before_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      <span class="c"># Code...</span>
+      pp h
+    <span class="k">end</span>
+
+    <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+    <span class="k">def</span> <span class="m">self</span>.after_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      <span class="c"># Code...</span>
+      pp cleaned_h
+      cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
+    <span class="k">end</span>
+
+    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="c">#  Custom checkers</span>
+    <span class="c"># --------------------------------------------------------------------------</span>
+
+    <span class="c"># Triggered on instance: `user.check`</span>
+    @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
+    <span class="k">def</span> <span class="m">custom_checker</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      <span class="k">self</span>.custom_checker_called <span class="o">=</span> <span class="n">true</span>
+    <span class="k">end</span>
+
+     <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+    @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
+    <span class="k">def</span> <span class="m">self</span>.custom_checker(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+      @@custom_checker_called <span class="o">=</span> <span class="n">true</span>
+      cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
+    <span class="k">end</span>
+
+    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="c">#  Formatters</span>
+    <span class="c"># --------------------------------------------------------------------------</span>
+
+    <span class="c"># Format (convert) email.</span>
+    <span class="k">def</span> <span class="m">self</span>.format_email(email)
+      puts <span class="s">&quot;mail stripped&quot;</span>
+      email.strip
+    <span class="k">end</span>
+
+    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="c"># Normal methods</span>
+    <span class="c"># --------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="m">foo</span>()
+      <span class="c"># Code...</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="m">self</span>.bar(v)
+      <span class="c"># Code...</span>
+    <span class="k">end</span>
+
+    <span class="c"># ...</span>
+  <span class="k">end</span></code></pre>
+
+<p><strong>Check</strong> with this example class (<code>User</code>):</p>
+
+<pre><code class="language-crystal"><span class="c"># Check a Hash (statically)</span>
+v, user_h <span class="o">=</span> <span class="t">User</span>.check(input_h)
+
+pp v <span class="c"># =&gt; Validation instance</span>
+pp v.valid?
+pp v.errors
+
+pp user_h <span class="c"># =&gt; Casted and cleaned Hash</span>
+
+<span class="c"># Check a Hash (on instance)</span>
+user <span class="o">=</span> user.<span class="k">new</span>(<span class="s">&quot;demo@example.org&quot;</span>, <span class="n">38</span>)
+
+v <span class="o">=</span> user.check <span class="c"># =&gt; Validation instance</span>
+pp v.valid?
+pp v.errors
+
+<span class="c"># Check field</span>
+v, email <span class="o">=</span> <span class="t">User</span>.check_email(value: <span class="s">&quot;demo@example.org&quot;</span>)
+v, age <span class="o">=</span> <span class="t">User</span>.check_age(value: <span class="n">42</span>)
+
+v, email <span class="o">=</span> <span class="t">User</span>.check_email(value: <span class="s">&quot;demo@example.org &quot;</span>, format: <span class="n">true</span>)
+v, email <span class="o">=</span> <span class="t">User</span>.check_email(value: <span class="s">&quot;demo@example.org &quot;</span>, format: <span class="n">false</span>)
+
+<span class="c"># Using an existing Validation instance</span>
+v <span class="o">=</span> <span class="t">Check</span>.new_validation
+v, email <span class="o">=</span> <span class="t">User</span>.check_email(v, value: <span class="s">&quot;demo@example.org&quot;</span>)</code></pre>
+
+<p><strong>Clean</strong> with this example class (<code>User</code>):</p>
+
+<pre><code class="language-crystal"><span class="c"># `check` method cleans all values of the Hash (or JSON::Any),</span>
+<span class="c"># before executing the validation rules</span>
+v, user_h <span class="o">=</span> <span class="t">User</span>.check(input_h)
+
+pp v <span class="c"># =&gt; Validation instance</span>
+pp v.valid?
+pp v.errors
+
+pp user_h <span class="c"># =&gt; Casted and cleaned Hash</span>
+
+<span class="c"># Cast and clean field</span>
+ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot;demo@example.org&quot;</span>)
+ok, age <span class="o">=</span> <span class="t">User</span>.clean_age(value: <span class="n">42</span>)
+
+ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot;demo@example.org &quot;</span>, format: <span class="n">true</span>)
+ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot;demo@example.org &quot;</span>, format: <span class="n">false</span>)
+
+puts <span class="s">&quot;${email} is casted and cleaned&quot;</span> <span class="k">if</span> ok
+<span class="c"># or</span>
+puts <span class="s">&quot;Email type error&quot;</span> <span class="k">unless</span> ok</code></pre>
+
+<ul><li><code>clean_*</code> methods are useful to caste a union value (like <code>Hash</code> or <code>JSON::Any</code>).</li><li>Also <code>clean_*</code> methods are optional and handy for formatting values, such as the strip on the email in the example <code>User</code> class.</li></ul>
+
+<p>More details about cleaning, casting, formatting and return values:</p>
+
+<p>By default <code>format</code> is <code>true</code>, to disable:</p>
+
+<pre><code class="language-crystal">ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot;demo@example.org&quot;</span>, format: <span class="n">false</span>)
+<span class="c"># or</span>
+ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(<span class="s">&quot;demo@example.org&quot;</span>, <span class="n">false</span>)</code></pre>
+
+<p>Always use named argument if there is only one (the <code>value</code>):</p>
+
+<pre><code class="language-crystal">ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot;demo@example.org&quot;</span>)</code></pre>
+
+<p><code>ok</code> is a boolean value that reports whether the cast succeeded. Like the type assertions in <em>Go</em> (lang).
+But the <code>ok</code> value is returned in first (like in <em>Elixir</em> lang) for easy handling of multiple return values (<code>Tuple</code>).</p>
+
+<p>Example with multiple values returned:</p>
+
+<pre><code class="language-crystal">ok, value1, value2 <span class="o">=</span> <span class="t">User</span>.clean_my_tuple({<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>})</code></pre>
+
+<p>Considering the example class above (<code>User</code>).
+As a reminder, the email field has been defined with the formatter below:</p>
+
+<pre><code class="language-crystal"><span class="t">Check</span>.rules(
+  email: {
+    clean: {
+      <span class="k">type</span>:    <span class="t">String</span>,
+      to:      <span class="n">:to_s</span>,
+      format:  -><span class="k">self</span>.format_email(<span class="t">String</span>), <span class="c"># &lt;= Here!</span>
+      message: <span class="s">&quot;Wrong type&quot;</span>,
+    },
+  },
+)
+
+<span class="c"># ...</span>
+
+<span class="c"># Format (convert) email.</span>
+<span class="k">def</span> <span class="m">self</span>.format_email(email)
+  puts <span class="s">&quot;mail stripped&quot;</span>
+  email.strip
+<span class="k">end</span></code></pre>
+
+<p>So <code>clean_email</code> cast to <code>String</code> and strip the value <code>" demo@example.org "</code>:</p>
+
+<pre><code class="language-crystal"><span class="c"># Email value with one space before and one space after</span>
+ok, email <span class="o">=</span> <span class="t">User</span>.clean_email(value: <span class="s">&quot; demo@example.org &quot;</span>)
+
+puts email <span class="c"># =&gt; &quot;demo@example.org&quot;</span></code></pre>
+
+<p>If the email was taken from a union type (<code>json["email"]?</code>), the returned <code>email</code> variable would be a <code>String</code> too.</p>
+
+<p>See <a href="https://github.com/Nicolab/crystal-validator/tree/master/examples" target="_blank">more examples</a>.</p>
+
+<blockquote>NOTE: Require more explanations about <code>required</code>, <code>nilable</code> rules.
+> Also about the converters JSON / Crystal Hash: <code>h_from_json</code>, <code>to_json_h</code>, <code>to_crystal_h</code>.
+> In the meantime see the <a href="https://nicolab.github.io/crystal-validator/Check/Checkable.html" target="_blank">API doc</a>.</blockquote>
+
+<h3><a id="validationcheck" class="anchor" href="#validationcheck">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Validation#check</h3>
+
+<p>To perform a series of validations with error handling, the <a href="https://nicolab.github.io/crystal-validator/Check.html" target="_blank">validator/check</a> module offers this possibility 👍</p>
+
+<p>A <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html" target="_blank">Validation</a> instance provides the means to write sequential checks, fine-tune each micro-validation with their own rules and custom error message, the possibility to retrieve all error messages, etc.</p>
+
+<blockquote><code>Validation</code> is also used with <code>Check.rules</code> and <code>Check.checkable</code>
+  that provide a powerful and productive system of validation rules
+  which makes data cleaning and data validation in Crystal very easy.
+  With self-generated granular methods for cleaning and checking data.</blockquote>
+
+<p>To use the checker (<code>check</code>) includes in the <code>Validation</code> class:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="c"># Validates the *user* data received in the HTTP controller or other.</span>
+<span class="k">def</span> <span class="m">validate_user</span>(user : <span class="t">Hash</span>) : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>
+  v <span class="o">=</span> <span class="t">Check</span>.new_validation
+
+  <span class="c"># -- email</span>
+
+  <span class="c"># Hash key can be a String or a Symbol</span>
+  v.check <span class="n">:email</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="n">:email</span>, user
+
+  v.check <span class="s">&quot;email&quot;</span>, <span class="s">&quot;The email is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="s">&quot;email&quot;</span>, user
+  v.check <span class="s">&quot;email&quot;</span>, <span class="s">&quot;</span><span class="i">#{</span>user[<span class="s">&quot;email&quot;</span>]<span class="i">}</span><span class="s"> is an invalid email.&quot;</span>, is <span class="n">:email?</span>, user[<span class="s">&quot;email&quot;</span>]
+
+  <span class="c"># -- username</span>
+
+  v.check <span class="s">&quot;username&quot;</span>, <span class="s">&quot;The username is required.&quot;</span>, is <span class="n">:presence?</span>, <span class="s">&quot;username&quot;</span>, user
+
+  v.check(
+    <span class="s">&quot;username&quot;</span>,
+    <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
+    is <span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>
+  )
+
+  v.check(
+    <span class="s">&quot;username&quot;</span>,
+    <span class="s">&quot;The username must contain a maximum of 20 characters.&quot;</span>,
+    is <span class="n">:max?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">20</span>
+  )
+<span class="k">end</span>
+
+v <span class="o">=</span> validate_user user
+
+pp v.valid? <span class="c"># =&gt; true (or false)</span>
+
+<span class="c"># Inverse of v.valid?</span>
+<span class="k">if</span> v.errors.empty?
+  <span class="k">return</span> <span class="s">&quot;no error&quot;</span>
+<span class="k">end</span>
+
+<span class="c"># Print all the errors (if any)</span>
+pp v.errors
+
+<span class="c"># It&#39;s a Hash of Array</span>
+errors <span class="o">=</span> v.errors
+
+puts errors.size
+puts errors.first_value
+
+errors.each <span class="k">do</span> <span class="o">|</span>key, messages<span class="o">|</span>
+  puts key   <span class="c"># =&gt; &quot;username&quot;</span>
+  puts messages <span class="c"># =&gt; [&quot;The username is required.&quot;, &quot;etc...&quot;]</span>
+<span class="k">end</span></code></pre>
+
+<p>3 methods <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary" target="_blank">#check</a>:</p>
+
+<pre><code class="language-crystal"><span class="c"># check(key : Symbol | String, valid : Bool)</span>
+<span class="c"># Using default error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>)
+)
+
+<span class="c"># check(key : Symbol | String, message : String, valid : Bool)</span>
+<span class="c"># Using custom error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>)
+)
+
+<span class="c"># check(key : Symbol | String, valid : Bool, message : String)</span>
+<span class="c"># Using custom error message</span>
+v.check(
+  <span class="s">&quot;username&quot;</span>,
+  is(<span class="n">:min?</span>, user[<span class="s">&quot;username&quot;</span>], <span class="n">2</span>),
+  <span class="s">&quot;The username must contain at least 2 characters.&quot;</span>
+)</code></pre>
+
+<p><code><a href="Check.html">Check</a></code> is a simple and lightweight wrapper.
+The <code><a href="Check/Validation.html">Check::Validation</a></code> is agnostic of the checked data,
+of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).</p>
+
+<blockquote>Use case example:
+  Before saving to the database or process user data for a particular task,
+  the custom error messages can be used for the end user response.</blockquote>
+
+<p>But a <code>Validation</code> instance can be used just to store validation errors:</p>
+
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
+v.add_error(<span class="s">&quot;foo&quot;</span>, <span class="s">&quot;foo error!&quot;</span>)
+pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quot;]}</span></code></pre>
+
+<blockquote>See also <code>Check.rules</code> and <code>Check.checkable</code>.</blockquote>
+
+<p>Let your imagination run wild to add your logic around it.</p>
+
+<h3><a id="custom-validator" class="anchor" href="#custom-validator">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Custom validator</h3>
+
+<p>Just add your own method to register a custom <em>validator</em> or to overload an existing <em>validator</em>.</p>
+
+<pre><code class="language-crystal"><span class="k">module</span> <span class="t">Validator</span>
+  <span class="c"># My custom validator</span>
+  <span class="k">def</span> <span class="m">self</span>.my_validator?(value, arg : <span class="t">String</span>, another_arg : <span class="t">Int32</span>) : <span class="t">Bool</span>
+    <span class="c"># write here the logic of your validator...</span>
+    <span class="k">return</span> <span class="n">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c"># Call it</span>
+puts <span class="t">Valid</span>.my_validator?(<span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span>) <span class="c"># =&gt; true</span>
+
+<span class="c"># or with the `is` flavor</span>
+puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to validate&quot;</span>, <span class="s">&quot;hello&quot;</span>, <span class="n">42</span> <span class="c"># =&gt; true</span></code></pre>
+
+<p>Using the custom validator with the validation rules:</p>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+
+<span class="k">class</span> <span class="t">Article</span>
+  <span class="c"># Mixin</span>
+  <span class="t">Check</span>.checkable
+
+  property title : <span class="t">String</span>
+  property content : <span class="t">String</span>
+
+  <span class="t">Check</span>.rules(
+    content: {
+      <span class="c"># Now the custom validator is available</span>
+      check: {
+        my_validator: {<span class="s">&quot;My validator error message&quot;</span>},
+        between: {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
+        <span class="c"># ...</span>
+      },
+    },
+  )
+<span class="k">end</span>
+
+<span class="c"># Triggered with all data</span>
+v, article <span class="o">=</span> <span class="t">Article</span>.check(input_data)
+
+<span class="c"># Triggered with one value</span>
+v, content <span class="o">=</span> <span class="t">Article</span>.check_content(input_data[<span class="s">&quot;content&quot;</span>]?)</code></pre>
+
+<h2><a id="conventions" class="anchor" href="#conventions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Conventions</h2>
+
+<ul><li>The word "validator" is the method to make a "validation" (value validation).</li><li>A <em>validator</em> returns <code>true</code> if the value (or/and the condition) is valid, <code>false</code> if not.</li><li>The first argument(s) is (are) the value(s) to be validated.</li><li>Always add the <code>Bool</code> return type to a <em>validator</em>.</li><li>Always add the suffix <code>?</code> to the method name of a <em>validator</em>.</li><li>If possible, indicates the type of the <em>validator</em> arguments.</li><li>Spec: Battle tested.</li><li><a href="https://en.wikipedia.org/wiki/KISS_principle" target="_blank">KISS</a> and <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank">Unix Philosophy</a>.</li></ul>
+
+<h2><a id="development" class="anchor" href="#development">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Development</h2>
+
+<pre><code class="language-sh">crystal spec
+crystal tool format</code></pre>
+
+<blockquote>TODO: add <code>ameba</code>?</blockquote>
+
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+
+<ol><li>Fork it (&lt;https://github.com/nicolab/crystal-validator/fork>)</li><li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li><li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li><li>Push to the branch (<code>git push origin my-new-feature</code>)</li><li>Create a new Pull Request</li></ol>
+
+<h2><a id="license" class="anchor" href="#license">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>LICENSE</h2>
+
+<p><a href="https://github.com/Nicolab/crystal-validator/blob/master/LICENSE" target="_blank">MIT</a> (c) 2020, Nicolas Talle.</p>
+
+<h2><a id="author" class="anchor" href="#author">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Author</h2>
+
+<p>| <a href="https://github.com/sponsors/Nicolab" target="_blank"><img src="https://www.gravatar.com/avatar/d7dd0f4769f3aa48a3ecb308f0b457fc?s=64" alt="Nicolas Tallefourtane - Nicolab.net"/></a> |
+|---|
+| <a href="https://github.com/sponsors/Nicolab" target="_blank">Nicolas Talle</a> |
+| <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PGRH4ZXP36GUC" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Make a donation via Paypal"/></a> |</p>
+
+<blockquote>Thanks to <a href="https://github.com/ilourt" target="_blank">ilourt</a> for his great work on <code>checkable</code> mixins (clean_<em>, check_</em>, ...).</blockquote>
+</div>
+</body>
+</html>
