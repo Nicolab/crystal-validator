@@ -16,15 +16,34 @@ module Validator
     value > another_value
   end
 
+  # Validates that the size of the *value* (`String` or `Array`)
+  # is greater than *limit* number.
+  def self.gt?(value : String | Array, limit : Int) : Bool
+    value.size > limit
+  end
+
   # Validates that the *value* is equal to or greater than *another_value*.
   # > Similar to `#min`.
   def self.gte?(value, another_value) : Bool
     value >= another_value
   end
 
+  # Validates that the size of the *value* (`String` or `Array`)
+  # is greater than *min* number.
+  # > Similar to `#min`.
+  def self.gte?(value : String | Array, min : Int) : Bool
+    value.size >= min
+  end
+
   # Validates that the *value* is lesser than *another_value*.
   def self.lt?(value, another_value) : Bool
     value < another_value
+  end
+
+  # Validates that the size of the *value* (`String` or `Array`)
+  # is lesser than *limit* number.
+  def self.lt?(value : String | Array, limit : Int) : Bool
+    value.size < limit
   end
 
   # Validates that the *value* is equal to or lesser than *another_value*.
@@ -33,16 +52,35 @@ module Validator
     value <= another_value
   end
 
+  # Validates that the size of the *value* (`String` or `Array`)
+  # is equal or lesser than *max* number.
+  # > Similar to `#max`.
+  def self.lte?(value : String | Array, max : Int) : Bool
+    value.size <= max
+  end
+
   # Validates that the *value* is equal to or greater than *min* (inclusive).
   # > Similar to `#gte`.
   def self.min?(value, min) : Bool
     value >= min
   end
 
+  # :ditto:
+  # > Based on the size of the `String`.
+  def self.min?(value : String | Array, min : Int) : Bool
+    value.size >= min
+  end
+
   # Validates that the *value* is equal to or lesser than *max* (inclusive).
   # > Similar to `#lte`.
   def self.max?(value, max) : Bool
     value <= max
+  end
+
+  # :ditto:
+  # > Based on the size of the `String`.
+  def self.max?(value : String | Array, max : Int) : Bool
+    value.size <= max
   end
 
   # Validates that the *value* is between (inclusive) *min* and *max*.

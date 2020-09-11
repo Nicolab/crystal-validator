@@ -74,6 +74,14 @@ describe "Valid#gt?" do
     Valid.gt?(:b, :ab).should be_true
     is(:gt?, :b, :ab).should be_true
     is!(:gt?, :b, :ab).should be_true
+
+    Valid.gt?("abc", 2).should be_true
+    is(:gt?, "abc", 2).should be_true
+    is!(:gt?, "abc", 2).should be_true
+
+    Valid.gt?(["a", "b", "c"], 2).should be_true
+    is(:gt?, ["a", "b", "c"], 2).should be_true
+    is!(:gt?, ["a", "b", "c"], 2).should be_true
   end
 
   it "should return false if not greater than" do
@@ -104,6 +112,14 @@ describe "Valid#gt?" do
     Valid.gt?(:ab, :b).should be_false
     is(:gt?, :ab, :b).should be_false
     is_error :gt? { is!(:gt?, :ab, :b) }
+
+    Valid.gt?("abc", 3).should be_false
+    is(:gt?, "abc", 3).should be_false
+    is_error :gt? { is!(:gt?, "abc", 3) }
+
+    Valid.gt?(["a", "b", "c"], 3).should be_false
+    is(:gt?, ["a", "b", "c"], 3).should be_false
+    is_error :gt? { is!(:gt?, ["a", "b", "c"], 3) }
   end
 end
 
@@ -136,6 +152,14 @@ describe "Valid#gte?" do
     Valid.gte?(:b, :ab).should be_true
     is(:gte?, :b, :ab).should be_true
     is!(:gte?, :b, :ab).should be_true
+
+    Valid.gte?("abc", 2).should be_true
+    is(:gte?, "abc", 2).should be_true
+    is!(:gte?, "abc", 2).should be_true
+
+    Valid.gte?(["a", "b", "c"], 2).should be_true
+    is(:gte?, ["a", "b", "c"], 2).should be_true
+    is!(:gte?, ["a", "b", "c"], 2).should be_true
   end
 
   it "should return false if not greater than" do
@@ -162,6 +186,14 @@ describe "Valid#gte?" do
     Valid.gte?(:ab, :b).should be_false
     is(:gte?, :ab, :b).should be_false
     is_error :gte? { is!(:gte?, :ab, :b) }
+
+    Valid.gte?("abc", 4).should be_false
+    is(:gte?, "abc", 4).should be_false
+    is_error :gte? { is!(:gte?, "abc", 4) }
+
+    Valid.gte?(["a", "b", "c"], 4).should be_false
+    is(:gte?, ["a", "b", "c"], 4).should be_false
+    is_error :gte? { is!(:gte?, ["a", "b", "c"], 4) }
   end
 
   # --------------------------------------------------------------------------#
@@ -182,6 +214,14 @@ describe "Valid#gte?" do
     Valid.gte?(:ok, :ok).should be_true
     is(:gte?, :ok, :ok).should be_true
     is!(:gte?, :ok, :ok).should be_true
+
+    Valid.gte?("abc", 3).should be_true
+    is(:gte?, "abc", 3).should be_true
+    is!(:gte?, "abc", 3).should be_true
+
+    Valid.gte?(["a", "b", "c"], 3).should be_true
+    is(:gte?, ["a", "b", "c"], 3).should be_true
+    is!(:gte?, ["a", "b", "c"], 3).should be_true
   end
 end
 
@@ -214,6 +254,14 @@ describe "Valid#lt?" do
     Valid.lt?(:ab, :b).should be_true
     is(:lt?, :ab, :b).should be_true
     is!(:lt?, :ab, :b).should be_true
+
+    Valid.lt?("abc", 4).should be_true
+    is(:lt?, "abc", 4).should be_true
+    is!(:lt?, "abc", 4).should be_true
+
+    Valid.lt?(["a", "b", "c"], 4).should be_true
+    is(:lt?, ["a", "b", "c"], 4).should be_true
+    is!(:lt?, ["a", "b", "c"], 4).should be_true
   end
 
   it "should return false if not lesser than" do
@@ -244,6 +292,30 @@ describe "Valid#lt?" do
     Valid.lt?(:b, :ab).should be_false
     is(:lt?, :b, :ab).should be_false
     is_error :lt? { is!(:lt?, :b, :ab) }
+
+    Valid.lt?("abc", 3).should be_false
+    is(:lt?, "abc", 3).should be_false
+    is_error :lt? { is!(:lt?, "abc", 3) }
+
+    Valid.lt?(["a", "b", "c"], 3).should be_false
+    is(:lt?, ["a", "b", "c"], 3).should be_false
+    is_error :lt? { is!(:lt?, ["a", "b", "c"], 3) }
+
+    Valid.lt?("abc", 2).should be_false
+    is(:lt?, "abc", 2).should be_false
+    is_error :lt? { is!(:lt?, "abc", 2) }
+
+    Valid.lt?(["a", "b", "c"], 2).should be_false
+    is(:lt?, ["a", "b", "c"], 2).should be_false
+    is_error :lt? { is!(:lt?, ["a", "b", "c"], 2) }
+
+    Valid.lt?("abc", 0).should be_false
+    is(:lt?, "abc", 0).should be_false
+    is_error :lt? { is!(:lt?, "abc", 0) }
+
+    Valid.lt?(["a", "b", "c"], 0).should be_false
+    is(:lt?, ["a", "b", "c"], 0).should be_false
+    is_error :lt? { is!(:lt?, ["a", "b", "c"], 0) }
   end
 end
 
@@ -276,6 +348,14 @@ describe "Valid#lte?" do
     Valid.lte?(:ab, :b).should be_true
     is(:lte?, :ab, :b).should be_true
     is!(:lte?, :ab, :b).should be_true
+
+    Valid.lte?("abc", 4).should be_true
+    is(:lte?, "abc", 4).should be_true
+    is!(:lte?, "abc", 4).should be_true
+
+    Valid.lte?(["a", "b", "c"], 4).should be_true
+    is(:lte?, ["a", "b", "c"], 4).should be_true
+    is!(:lte?, ["a", "b", "c"], 4).should be_true
   end
 
   it "should return false if not lesser than" do
@@ -306,6 +386,22 @@ describe "Valid#lte?" do
     Valid.lte?(:b, :ab).should be_false
     is(:lte?, :b, :ab).should be_false
     is_error :lte? { is!(:lte?, :b, :ab) }
+
+    Valid.lte?("abc", 2).should be_false
+    is(:lte?, "abc", 2).should be_false
+    is_error :lte? { is!(:lte?, "abc", 2) }
+
+    Valid.lte?(["a", "b", "c"], 2).should be_false
+    is(:lte?, ["a", "b", "c"], 2).should be_false
+    is_error :lte? { is!(:lte?, ["a", "b", "c"], 2) }
+
+    Valid.lte?("abc", 0).should be_false
+    is(:lte?, "abc", 0).should be_false
+    is_error :lte? { is!(:lte?, "abc", 0) }
+
+    Valid.lte?(["a", "b", "c"], 0).should be_false
+    is(:lte?, ["a", "b", "c"], 0).should be_false
+    is_error :lte? { is!(:lte?, ["a", "b", "c"], 0) }
   end
 
   # --------------------------------------------------------------------------#
@@ -326,12 +422,28 @@ describe "Valid#lte?" do
     Valid.lte?(:ok, :ok).should be_true
     is(:lte?, :ok, :ok).should be_true
     is!(:lte?, :ok, :ok).should be_true
+
+    Valid.lte?("abc", 3).should be_true
+    is(:lte?, "abc", 3).should be_true
+    is!(:lte?, "abc", 3).should be_true
+
+    Valid.lte?(["a", "b", "c"], 3).should be_true
+    is(:lte?, ["a", "b", "c"], 3).should be_true
+    is!(:lte?, ["a", "b", "c"], 3).should be_true
   end
 
   it "should return false if inequality" do
     Valid.lte?(2, 1).should be_false
     is(:lte?, 2, 1).should be_false
     is_error :lte? { is!(:lte?, 2, 1) }
+
+    Valid.lte?("abc", 2).should be_false
+    is(:lte?, "abc", 2).should be_false
+    is_error :lte? { is!(:lte?, "abc", 2) }
+
+    Valid.lte?(["a", "b", "c"], 2).should be_false
+    is(:lte?, ["a", "b", "c"], 2).should be_false
+    is_error :lte? { is!(:lte?, ["a", "b", "c"], 2) }
   end
 end
 
@@ -360,6 +472,14 @@ describe "Valid#min?" do
     Valid.min?(:b, :ab).should be_true
     is(:min?, :b, :ab).should be_true
     is!(:min?, :b, :ab).should be_true
+
+    Valid.min?("abc", 2).should be_true
+    is(:min?, "abc", 2).should be_true
+    is!(:min?, "abc", 2).should be_true
+
+    Valid.min?(["a", "b", "c"], 2).should be_true
+    is(:min?, ["a", "b", "c"], 2).should be_true
+    is!(:min?, ["a", "b", "c"], 2).should be_true
   end
 
   it "should return false if not greater than" do
@@ -386,6 +506,14 @@ describe "Valid#min?" do
     Valid.min?(:ab, :b).should be_false
     is(:min?, :ab, :b).should be_false
     is_error :min? { is!(:min?, :ab, :b) }
+
+    Valid.min?("abc", 4).should be_false
+    is(:min?, "abc", 4).should be_false
+    is_error :min? { is!(:min?, "abc", 4) }
+
+    Valid.min?(["a", "b", "c"], 4).should be_false
+    is(:min?, ["a", "b", "c"], 4).should be_false
+    is_error :min? { is!(:min?, ["a", "b", "c"], 4) }
   end
 
   # --------------------------------------------------------------------------#
@@ -406,6 +534,14 @@ describe "Valid#min?" do
     Valid.min?(:ok, :ok).should be_true
     is(:min?, :ok, :ok).should be_true
     is!(:min?, :ok, :ok).should be_true
+
+    Valid.min?("abc", 3).should be_true
+    is(:min?, "abc", 3).should be_true
+    is!(:min?, "abc", 3).should be_true
+
+    Valid.min?(["a", "b", "c"], 3).should be_true
+    is(:min?, ["a", "b", "c"], 3).should be_true
+    is!(:min?, ["a", "b", "c"], 3).should be_true
   end
 end
 
@@ -434,6 +570,14 @@ describe "Valid#max?" do
     Valid.max?(:ab, :b).should be_true
     is(:max?, :ab, :b).should be_true
     is!(:max?, :ab, :b).should be_true
+
+    Valid.max?("abc", 4).should be_true
+    is(:max?, "abc", 4).should be_true
+    is!(:max?, "abc", 4).should be_true
+
+    Valid.max?(["a", "b", "c"], 4).should be_true
+    is(:max?, ["a", "b", "c"], 4).should be_true
+    is!(:max?, ["a", "b", "c"], 4).should be_true
   end
 
   it "should return false if not lesser than" do
@@ -460,6 +604,22 @@ describe "Valid#max?" do
     Valid.max?(:b, :ab).should be_false
     is(:max?, :b, :ab).should be_false
     is_error :max? { is!(:max?, :b, :ab) }
+
+    Valid.max?("abc", 2).should be_false
+    is(:max?, "abc", 2).should be_false
+    is_error :max? { is!(:max?, "abc", 2) }
+
+    Valid.max?(["a", "b", "c"], 2).should be_false
+    is(:max?, ["a", "b", "c"], 2).should be_false
+    is_error :max? { is!(:max?, ["a", "b", "c"], 2) }
+
+    Valid.max?("abc", 0).should be_false
+    is(:max?, "abc", 0).should be_false
+    is_error :max? { is!(:max?, "abc", 0) }
+
+    Valid.max?(["a", "b", "c"], 0).should be_false
+    is(:max?, ["a", "b", "c"], 0).should be_false
+    is_error :max? { is!(:max?, ["a", "b", "c"], 0) }
   end
 
   # --------------------------------------------------------------------------#
@@ -480,6 +640,14 @@ describe "Valid#max?" do
     Valid.max?(:ok, :ok).should be_true
     is(:max?, :ok, :ok).should be_true
     is!(:max?, :ok, :ok).should be_true
+
+    Valid.max?("abc", 3).should be_true
+    is(:max?, "abc", 3).should be_true
+    is!(:max?, "abc", 3).should be_true
+
+    Valid.max?(["a", "b", "c"], 3).should be_true
+    is(:max?, ["a", "b", "c"], 3).should be_true
+    is!(:max?, ["a", "b", "c"], 3).should be_true
   end
 end
 
