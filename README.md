@@ -173,13 +173,13 @@ class User
     # Triggered on instance: `user.check`
     @[Check::Checker]
     def custom_checker(v : Check::Validation, required : Bool, format : Bool)
-      self.custom_checker_called = true
+      # Code...
     end
 
      # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
     @[Check::Checker]
     def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
-      @@custom_checker_called = true
+      # Code...
       cleaned_h # <= returns cleaned_h!
     end
 
