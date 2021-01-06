@@ -60,6 +60,13 @@ module H
           message: "Wrong type",
         },
       },
+      username: {
+        required: "Username is required",
+        check:    {
+          min: {"Length must be more than 2", 2},
+        },
+        clean: {type: String},
+      },
       age: {
         check: {
           min:     {"Age should be more than 18", 18},
@@ -70,6 +77,7 @@ module H
     )
 
     property email : String
+    property username : String?
     property age : Int32?
 
     # ---------------------------------------------------------------------------

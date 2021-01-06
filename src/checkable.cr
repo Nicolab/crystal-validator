@@ -138,7 +138,7 @@ module Check
     private def self.validation_required?(field) : Bool
       fields = self.validation_rules
       return false if fields[field].nil?
-      fields[field].fetch("required", false).as(Bool)
+      fields[field].fetch("required", false) == false ? false : true
     end
 
     private def self.validation_nilable?(field) : Bool
@@ -380,9 +380,16 @@ module Check
       {% for field, i in fields %}
       {% field_name = field.stringify %}
         # if hash has the field or this field MUST be checked when required is `true`
-        if h.has_key?({{field_name}}) || (required && self.validation_required?({{field_name}}))
+        if h.has_key?({{field_name}})
           v, value = self.check_{{field}}(v, h[{{field_name}}]?, required, format)
           cleaned_h[{{field_name}}] = value.as({{types[i]}})
+        elsif required && self.validation_required?({{field_name}})
+          msg = if (required_msg = self.validation_rules[{{field_name}}].fetch(:required, nil)) && required_msg.is_a?(String)
+            required_msg.as(String)
+          else
+            "This field is required"
+          end
+          v.add_error {{field_name}}, msg
         end
       {% end %}
 
