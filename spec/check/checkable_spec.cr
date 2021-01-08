@@ -377,10 +377,11 @@ describe "Checkable" do
   describe ".check" do
     it "should check (valid) hash" do
       h = {
-        "email" => "falsemail@mail.com ",
-        "age"   => "30",
-        "p"     => 'a',
-        "c"     => H::CheckableTest.new("plop", nil),
+        "email"    => "falsemail@mail.com ",
+        "username" => "john_doe",
+        "age"      => "30",
+        "p"        => 'a',
+        "c"        => H::CheckableTest.new("plop", nil),
       }
 
       # Test initial state
@@ -396,7 +397,7 @@ describe "Checkable" do
       h.same? cleaned_h
 
       # Casted and formatted
-      cleaned_h.should eq({"email" => "falsemail@mail.com", "age" => 30})
+      cleaned_h.should eq({"email" => "falsemail@mail.com", "username" => "john_doe", "age" => 30})
 
       # Lifecycle hooks
       H.should_hooks_be_called
@@ -419,7 +420,7 @@ describe "Checkable" do
       v.should be_a(Check::Validation)
       v.valid?.should be_false
       # Custom error message defined in the email rule (CheckableTest)
-      v.errors.should eq({"email" => ["It is not a valid email"]})
+      v.errors.should eq({"email" => ["It is not a valid email"], "username" => ["Username is required"]})
 
       # Works by ref
       h.same? cleaned_h
@@ -458,7 +459,7 @@ describe "Checkable" do
       H.should_hooks_be_called
     end
 
-    it "should check and not populate a class field not nilable and not supplied in a Hash with required: true" do
+    it "should check and not populate a class field not supplied in a Hash with required: true" do
       h = {
         "age" => "30",
         "p"   => 'a',
@@ -472,14 +473,47 @@ describe "Checkable" do
 
       v.should be_a(Check::Validation)
       v.valid?.should be_false
-      # Custom error message defined in the email rule (CheckableTest)
-      v.errors.should eq({"email" => ["Email should not be empty", "It is not a valid email"]})
+
+      # Default email message and
+      # custom required message defined in the username rule (CheckableTest)
+      v.errors.should eq({
+        "email"    => ["This field is required"],
+        "username" => ["Username is required"],
+      })
 
       # Works by ref
       h.same? cleaned_h
 
       # Casted and cleaned
-      cleaned_h.should eq({"email" => "", "age" => 30})
+      cleaned_h.should eq({"age" => 30})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+    end
+
+    it "should check if a key is present and \
+    do not add error if its value is nil and field nilable" do
+      h = {
+        "email"    => "false@mail.com",
+        "username" => nil,
+        "age"      => "30",
+        "p"        => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+
+      # *required* `true` (explicit)
+      v, cleaned_h = H::CheckableTest.check h, required: true
+
+      v.should be_a(Check::Validation)
+      v.valid?.should be_true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # Casted and cleaned
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil, "age" => 30})
 
       # Lifecycle hooks
       H.should_hooks_be_called
@@ -488,8 +522,9 @@ describe "Checkable" do
     it "should not populate a field (age) if not provided in a Hash with required: true" do
       h = {
         # should be formatted
-        "email" => "false@mail.com ",
-        "p"     => 'a',
+        "email"    => "false@mail.com ",
+        "username" => nil,
+        "p"        => 'a',
       }
 
       # Test initial state
@@ -504,7 +539,7 @@ describe "Checkable" do
       h.same? cleaned_h
 
       # hash fields not in the rules are removed
-      cleaned_h.should eq({"email" => "false@mail.com"})
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil})
 
       # Lifecycle hooks
       H.should_hooks_be_called
@@ -559,12 +594,13 @@ describe "Checkable" do
       H.should_hooks_be_called
     end
 
-    it "should preserve nilable field (age) and other when it is nil required: true" do
+    it "should preserve nilable field (age, username) and other when it is nil required: true" do
       h = {
         # should be formatted
-        "email" => " false@mail.com ",
-        "age"   => nil,
-        "p"     => 'a',
+        "email"    => " false@mail.com ",
+        "username" => nil,
+        "age"      => nil,
+        "p"        => 'a',
       }
 
       # Test initial state
@@ -579,7 +615,7 @@ describe "Checkable" do
       h.same? cleaned_h
 
       # hash fields not in the rules are removed and other are preserved
-      cleaned_h.should eq({"email" => "false@mail.com", "age" => nil})
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil, "age" => nil})
 
       # Lifecycle hooks
       H.should_hooks_be_called

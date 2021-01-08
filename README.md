@@ -114,7 +114,7 @@ class User
 
       # required
       age: {
-        required: true,
+        required: "Age is required", # Custom message
         check: {
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
