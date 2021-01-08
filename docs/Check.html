@@ -391,7 +391,7 @@ v, content <span class="o">=</span> <span class="t">Article</span>.check_content
 
   <span class="t">Check</span>.rules(
     content: {
-      required: <span class="n">true</span>,
+      required: <span class="s">&quot;Content is required&quot;</span>, <span class="c"># or `true` to use the default error message</span>
       check:    {
         not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
         between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},

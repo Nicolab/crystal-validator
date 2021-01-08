@@ -147,7 +147,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 <pre><code class="language-yaml">dependencies:
   validator:
     github: nicolab/crystal-validator
-    version: ~> 1.1.0 # Check the latest version!</code></pre>
+    version: ~> 1.2.0 # Check the latest version!</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
 
@@ -240,7 +240,7 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
 
       <span class="c"># required</span>
       age: {
-        required: <span class="n">true</span>,
+        required: <span class="s">&quot;Age is required&quot;</span>, <span class="c"># Custom message</span>
         check: {
           min:     {<span class="s">&quot;Age should be more than 18&quot;</span>, <span class="n">18</span>},
           between: {<span class="s">&quot;Age should be between 25 and 35&quot;</span>, <span class="n">25</span>, <span class="n">35</span>},
