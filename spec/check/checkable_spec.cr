@@ -474,7 +474,8 @@ describe "Checkable" do
       v.should be_a(Check::Validation)
       v.valid?.should be_false
 
-      # Custom error message defined in the email rule (CheckableTest)
+      # Default email message and
+      # custom required message defined in the username rule (CheckableTest)
       v.errors.should eq({
         "email"    => ["This field is required"],
         "username" => ["Username is required"],
@@ -490,7 +491,8 @@ describe "Checkable" do
       H.should_hooks_be_called
     end
 
-    it "should check if a key is present and do not send error if its value is nil and field nilable" do
+    it "should check if a key is present and \
+    do not add error if its value is nil and field nilable" do
       h = {
         "email"    => "false@mail.com",
         "username" => nil,
@@ -592,7 +594,7 @@ describe "Checkable" do
       H.should_hooks_be_called
     end
 
-    it "should preserve nilable field (age) and other when it is nil required: true" do
+    it "should preserve nilable field (age, username) and other when it is nil required: true" do
       h = {
         # should be formatted
         "email"    => " false@mail.com ",

@@ -84,7 +84,7 @@ module Check
   #
   #   Check.rules(
   #     content: {
-  #       required: true,
+  #       required: "Content is required", # or `true` to use the default error message
   #       check:    {
   #         not_empty: {"Article content is required"},
   #         between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
@@ -228,7 +228,11 @@ module Check
         # If clean has encountered an error, add error message and stop check here.
         if ok == false
           {% msg = clean["message"] || "Wrong type" %}
-          v.add_error {{field.stringify}}, {{msg}} {% if nilable || (check["not_null"].nil? && check["not_empty"].nil?) %}unless value.nil?{% end %}
+          v.add_error(
+            {{field.stringify}},
+            {{msg}}
+          ) {% if nilable || (check["not_null"].nil? && check["not_empty"].nil?) %}unless value.nil?{% end %}
+
           return v, value
         end
 
@@ -247,7 +251,8 @@ module Check
           ) {% if nilable ||
                     (check["not_null"].nil? && check["not_empty"].nil?) ||
                     # required for the compiler
-                    (name != "not_null" && name != "not_empty") %}unless value.nil?{% end %}
+                    (name != "not_null" && name != "not_empty") %}unless value.nil?
+            {% end %}
         {% end %}
 
         {v, value}
@@ -379,16 +384,21 @@ module Check
       # and populate `cleaned_h`
       {% for field, i in fields %}
       {% field_name = field.stringify %}
-        # if hash has the field or this field MUST be checked when required is `true`
+        # if hash has the field
         if h.has_key?({{field_name}})
           v, value = self.check_{{field}}(v, h[{{field_name}}]?, required, format)
           cleaned_h[{{field_name}}] = value.as({{types[i]}})
+
+        # or if this field MUST be checked when required
         elsif required && self.validation_required?({{field_name}})
-          msg = if (required_msg = self.validation_rules[{{field_name}}].fetch(:required, nil)) && required_msg.is_a?(String)
+          required_msg = self.validation_rules[{{field_name}}].fetch(:required, nil)
+
+          msg = if required_msg && required_msg.is_a?(String)
             required_msg.as(String)
           else
             "This field is required"
           end
+
           v.add_error {{field_name}}, msg
         end
       {% end %}
