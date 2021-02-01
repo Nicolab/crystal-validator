@@ -54,7 +54,7 @@ require "./validators/*"
 #
 # Make a series of checks, with a customized error message for each case.
 #
-# ```crystal
+# ```
 # require "validator/check"
 #
 # check = Check.new
@@ -65,7 +65,7 @@ require "./validators/*"
 #
 # Just add your own method to register a custom *validator* or to overload an existing *validator*.
 #
-# ```crystal
+# ```
 # module Validator
 #   # My custom validator
 #   def self.my_validator?(value, arg : String, another_arg : Int32) : Bool
