@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="validator">
-  <title>Check::Errors - validator master-dev</title>
+  <title>Check::ValidationError - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -76,7 +76,7 @@
       
     </li>
   
-  <li class=" current" data-id="validator/Check/Errors" data-name="check::errors">
+  <li class=" " data-id="validator/Check/Errors" data-name="check::errors">
       <a href="../Check/Errors.html">Errors</a>
       
     </li>
@@ -86,7 +86,7 @@
       
     </li>
   
-  <li class=" " data-id="validator/Check/ValidationError" data-name="check::validationerror">
+  <li class=" current" data-id="validator/Check/ValidationError" data-name="check::validationerror">
       <a href="../Check/ValidationError.html">ValidationError</a>
       
     </li>
@@ -125,10 +125,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">alias</span> Check::Errors
+  <span class="kind">class</span> Check::ValidationError
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Check/ValidationError.html">Check::ValidationError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -142,23 +144,10 @@
     Overview
   </h2>
 
-  <p>Validation errors.
-It's a <code>Hash</code> used as a container of errors, in order to handle them easily.</p>
-
-<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
-pp v.errors</code></pre>
+  <p>Validation error.
+To carry <code><a href="../Check/Errors.html">Errors</a></code> into an <code>Exception</code>.</p>
 
 
-
-  <h2>
-    <a id="alias-definition" class="anchor" href="#alias-definition">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Alias Definition
-  </h2>
-  <code>Hash(String | Symbol, Array(String))</code>
 
 
 
@@ -185,9 +174,45 @@ pp v.errors</code></pre>
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(errors:Errors,message=&quot;Validationerror&quot;)-class-method" class="signature"><strong>.new</strong>(errors : Errors, message = <span class="s">&quot;Validation error&quot;</span>)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#errors:Errors-instance-method" class="signature"><strong>#errors</strong> : Errors</a>
+        
+          <div class="summary"><p>Returns <code><a href="../Check/Errors.html">Errors</a></code> container (<code>Hash</code>).</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -195,12 +220,95 @@ pp v.errors</code></pre>
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(errors:Errors,message=&quot;Validationerror&quot;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(errors : <a href="../Check/Errors.html">Errors</a>, message = <span class="s">&quot;Validation error&quot;</span>)
+
+        <a class="method-permalink" href="#new(errors:Errors,message=&quot;Validationerror&quot;)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="errors:Errors-instance-method">
+      <div class="signature">
+        
+        def <strong>errors</strong> : <a href="../Check/Errors.html">Errors</a>
+
+        <a class="method-permalink" href="#errors:Errors-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code><a href="../Check/Errors.html">Errors</a></code> container (<code>Hash</code>).</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

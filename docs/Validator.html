@@ -3,21 +3,16 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="generator" content="Crystal Docs 0.35.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="validator">
+
 
 
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="validator">
+  <meta name="repository-name" content="validator">
   <title>Validator - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
@@ -25,6 +20,11 @@
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -83,6 +83,11 @@
   
   <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
       <a href="Check/Validation.html">Validation</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/ValidationError" data-name="check::validationerror">
+      <a href="Check/ValidationError.html">ValidationError</a>
       
     </li>
   
@@ -137,10 +142,10 @@
     Overview
   </h2>
 
-  <p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org" target="_blank">Crystal</a> data validation module.
+  <p>∠(・.-)―〉 →◎ <code>validator</code> is a <a href="https://crystal-lang.org">Crystal</a> data validation module.
 Very simple and efficient, all validations return <code>true</code> or <code>false</code>.</p>
 
-<p>Also <a href="https://nicolab.github.io/crystal-validator/Check.html" target="_blank">validator/check</a>
+<p>Also <a href="https://nicolab.github.io/crystal-validator/Check.html">validator/check</a>
 (not exposed by default) provides error message handling intended for the end user.</p>
 
 <p>There are 2 main ways to use <em>validator</em>:</p>
@@ -150,7 +155,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 
 <p>By default the <strong>validator</strong> module expose only <code><a href="Validator.html">Validator</a></code> and <code><a href="Valid.html">Valid</a></code> (alias) in the scope:</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator&quot;</span>
 
 <span class="t">Valid</span>.email? <span class="s">&quot;contact@example.org&quot;</span>                        <span class="c"># =&gt; true</span>
 <span class="t">Valid</span>.url? <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
@@ -159,7 +164,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 <p>An (optional) expressive validation flavor, <code><a href="toplevel.html#is(name,*args)-macro">is</a></code> available as an alternative.  \
 Not exposed by default, it must be imported:</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator/is&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/is&quot;</span>
 
 is <span class="n">:email?</span>, <span class="s">&quot;contact@example.org&quot;</span>                        <span class="c"># =&gt; true</span>
 is <span class="n">:url?</span>, <span class="s">&quot;https://github.com/Nicolab/crystal-validator&quot;</span> <span class="c"># =&gt; true</span>
@@ -213,7 +218,7 @@ puts is <span class="n">:my_validator?</span>, <span class="s">&quot;value to va
 
 <p>Using the custom validator with the validation rules:</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
 <span class="k">class</span> <span class="t">Article</span>
   <span class="c"># Mixin</span>
@@ -1359,7 +1364,7 @@ a representation of a hexadecimal slice of Bytes.</p>
           <p>Validates that the <code>String</code> <em>value</em> does denote
 a representation of a hexadecimal color.</p>
 
-<pre><code><span class="t">Valid</span>.hex_color? <span class="s">&quot;#fff&quot;</span> => <span class="n">true</span>
+<pre><code class="language-crystal"><span class="t">Valid</span>.hex_color? <span class="s">&quot;#fff&quot;</span> => <span class="n">true</span>
 <span class="t">Valid</span>.hex_color? <span class="s">&quot;#ffffff&quot;</span> => <span class="n">true</span></code></pre>
         </div>
       

@@ -3,21 +3,16 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="generator" content="Crystal Docs 0.35.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="validator">
+
 
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="validator">
+  <meta name="repository-name" content="validator">
   <title>Check::Validation - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
@@ -25,6 +20,11 @@
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -83,6 +83,11 @@
   
   <li class=" current" data-id="validator/Check/Validation" data-name="check::validation">
       <a href="../Check/Validation.html">Validation</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/ValidationError" data-name="check::validationerror">
+      <a href="../Check/ValidationError.html">ValidationError</a>
       
     </li>
   
@@ -153,7 +158,7 @@ With self-generated granular methods for cleaning and checking data.</blockquote
 
 <p>To use the checker (<code><a href="../Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#check</a></code>) includes in the <code><a href="../Check/Validation.html">Validation</a></code> class:</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
 <span class="c"># Validates the *user* data received in the HTTP controller or other.</span>
 <span class="k">def</span> <span class="m">validate_user</span>(user : <span class="t">Hash</span>) : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>
@@ -207,9 +212,9 @@ errors.each <span class="k">do</span> <span class="o">|</span>key, messages<span
   puts messages <span class="c"># =&gt; [&quot;The username is required.&quot;, &quot;etc...&quot;]</span>
 <span class="k">end</span></code></pre>
 
-<p>3 methods <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary" target="_blank">#check</a>:</p>
+<p>3 methods <a href="https://nicolab.github.io/crystal-validator/Check/Validation.html#instance-method-summary">#check</a>:</p>
 
-<pre><code><span class="c"># check(key : Symbol | String, valid : Bool)</span>
+<pre><code class="language-crystal"><span class="c"># check(key : Symbol | String, valid : Bool)</span>
 <span class="c"># Using default standard error message</span>
 v.check(
   <span class="s">&quot;username&quot;</span>,
@@ -242,7 +247,7 @@ of the context (model, controller, CSV file, HTTP data, socket data, JSON, etc).
 
 <p>But a <code><a href="../Check/Validation.html">Validation</a></code> instance can be used just to store validation errors:</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 v.add_error(<span class="s">&quot;foo&quot;</span>, <span class="s">&quot;foo error!&quot;</span>)
 pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quot;]}</span></code></pre>
 
@@ -360,6 +365,13 @@ pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quo
       </li>
     
       <li class="entry-summary">
+        <a href="#to_exception-instance-method" class="signature"><strong>#to_exception</strong></a>
+        
+          <div class="summary"><p>Creates a new instance of <code><a href="../Check/ValidationError.html">ValidationError</a></code> (<code>Exception</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#valid?-instance-method" class="signature"><strong>#valid?</strong></a>
         
           <div class="summary"><p>Returns <code>true</code> if there is no error, <code>false</code> if there is one or more errors.</p></div>
@@ -418,11 +430,11 @@ pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quo
           
           <p>Initializes a validation using an existing <em>errors</em> <code>Hash</code> (<code><a href="../Check/Errors.html">Check::Errors</a></code>).</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
 
 <p>Same as:</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
         </div>
       
       <br/>
@@ -443,11 +455,11 @@ pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quo
           
           <p>Initializes a validation.</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
 
 <p>Same as:</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
         </div>
       
       <br/>
@@ -482,7 +494,7 @@ pp v.errors <span class="c"># =&gt; {&quot;foo&quot; =&gt; [&quot;foo error!&quo
           
           <p>Add a validation error.</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 v.add_error(<span class="n">:foo</span>, <span class="s">&quot;Foo error!&quot;</span>)
 pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;Foo error!&quot;]}</span></code></pre>
 
@@ -509,7 +521,7 @@ pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;Foo error!&quot;]}</span>
 
 <blockquote>By default a standard message is used.</blockquote>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 v.add_error(<span class="n">:foo</span>)
 pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;\&quot;foo\&quot; is not valid.&quot;]}</span></code></pre>
 
@@ -537,7 +549,7 @@ pp v.errors <span class="c"># =&gt; {:foo =&gt; [&quot;\&quot;foo\&quot; is not 
 <p>If <em>valid</em> is <code>false</code>, the error <em>message</em> is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
 Nothing if <em>valid</em> is <code>true</code>.</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 
 <span class="c"># -- email</span>
 
@@ -585,7 +597,7 @@ pp v.errors</code></pre>
 <p>If <em>valid</em> is <code>false</code>, the error <em>message</em> is added in the <code><a href="../Check/Validation.html#errors:Errors-instance-method">#errors</a></code>.
 Nothing if <em>valid</em> is <code>true</code>.</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 
 <span class="c"># -- email</span>
 
@@ -635,7 +647,7 @@ Nothing if <em>valid</em> is <code>true</code>.</p>
 
 <blockquote>Unlike other <code><a href="../Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">#check</a></code> methods, with this one a default standard message is used.</blockquote>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 
 v.check(<span class="s">&quot;email&quot;</span>, <span class="t">Valid</span>.presence?(<span class="s">&quot;email&quot;</span>, user))
 v.check(<span class="s">&quot;email&quot;</span>, <span class="t">Valid</span>.email?(user[<span class="s">&quot;email&quot;</span>]?))
@@ -662,8 +674,27 @@ pp v.errors</code></pre>
           
           <p>Errors container.</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation
 pp v.errors</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_exception-instance-method">
+      <div class="signature">
+        
+        def <strong>to_exception</strong>
+
+        <a class="method-permalink" href="#to_exception-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new instance of <code><a href="../Check/ValidationError.html">ValidationError</a></code> (<code>Exception</code>).</p>
         </div>
       
       <br/>
@@ -684,7 +715,7 @@ pp v.errors</code></pre>
           
           <p>Returns <code>true</code> if there is no error, <code>false</code> if there is one or more errors.</p>
 
-<pre><code>pp v.errors <span class="k">if</span> <span class="o">!</span>v.valid?
+<pre><code class="language-crystal">pp v.errors <span class="k">if</span> <span class="o">!</span>v.valid?
 <span class="c"># or with another flavor ;-)</span>
 pp v.errors <span class="k">unless</span> v.valid?</code></pre>
         </div>

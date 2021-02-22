@@ -3,21 +3,16 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="generator" content="Crystal Docs 0.35.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="validator">
+
 
 
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="validator">
+  <meta name="repository-name" content="validator">
   <title>Check - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
@@ -25,6 +20,11 @@
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -83,6 +83,11 @@
   
   <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
       <a href="Check/Validation.html">Validation</a>
+      
+    </li>
+  
+  <li class=" " data-id="validator/Check/ValidationError" data-name="check::validationerror">
+      <a href="Check/ValidationError.html">ValidationError</a>
       
     </li>
   
@@ -256,15 +261,15 @@
 a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).
 using an existing <em>errors</em> <code>Hash</code> (<code><a href="Check/Errors.html">Check::Errors</a></code>).</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation existing_errors</code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation existing_errors</code></pre>
 
 <p>Same as:</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span> existing_errors</code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span> existing_errors</code></pre>
 
 <p>Example to combine two hashes of validation errors:</p>
 
-<pre><code>preview_validation <span class="o">=</span> <span class="t">Check</span>.new_validation
+<pre><code class="language-crystal">preview_validation <span class="o">=</span> <span class="t">Check</span>.new_validation
 v <span class="o">=</span> <span class="t">Check</span>.new_validation preview_validation.errors</code></pre>
         </div>
       
@@ -287,11 +292,11 @@ v <span class="o">=</span> <span class="t">Check</span>.new_validation preview_v
           <p>Initializes a new <code><a href="Check/Validation.html">Validation</a></code> instance to combine
 a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CString,message:String,valid:Bool):Validation-instance-method">Validation#check</a></code>).</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span>.new_validation</code></pre>
 
 <p>Same as:</p>
 
-<pre><code>v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
+<pre><code class="language-crystal">v <span class="o">=</span> <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>.<span class="k">new</span></code></pre>
         </div>
       
       <br/>
@@ -328,7 +333,7 @@ a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CStri
 This mixin includes <code><a href="Check/Checkable.html">Checkable</a></code> and <code><a href="Check/CheckableStatic.html">CheckableStatic</a></code>.
 It must be used in conjonction with <code><a href="Check.html#rules(**fields)-macro">Check.rules</a></code>.</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
 <span class="k">class</span> <span class="t">Article</span>
   <span class="c"># Mixin</span>
@@ -379,7 +384,7 @@ v, content <span class="o">=</span> <span class="t">Article</span>.check_content
           
           <p>Generates <code>check</code>, <code>check_{{field}}</code> and <code>clean_{{field}}</code> methods for <em>fields</em> (class variables).</p>
 
-<pre><code><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
 <span class="k">class</span> <span class="t">Article</span>
   <span class="c"># Mixin</span>
