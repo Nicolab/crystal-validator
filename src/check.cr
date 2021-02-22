@@ -18,6 +18,19 @@ module Check
   # ```
   alias Errors = Hash(Symbol | String, Array(String))
 
+  # Validation error.
+  # To carry `Errors` into an `Exception`.
+  class ValidationError < Exception
+    def initialize(@errors : Errors, @message = "Validation error")
+      @message = "#{@message}s" if @errors.size > 1 && @message.as(String).ends_with?("error")
+    end
+
+    # Returns `Errors` container (`Hash`).
+    def errors : Errors
+      @errors
+    end
+  end
+
   # Combines a series of checks into one validation instance,
   # with a customized error message for each case.
   #
@@ -317,6 +330,11 @@ module Check
     def check(key : Symbol | String, valid : Bool) : Validation
       add_error(key, "") unless valid
       self
+    end
+
+    # Creates a new instance of `ValidationError` (`Exception`).
+    def to_exception
+      ValidationError.new @errors
     end
   end
 

@@ -12,6 +12,39 @@ describe "Check" do
     Check::Errors.new.is_a?(Hash).should be_true
   end
 
+  describe "ValidationError" do
+    it "should create Exception taking Errors container" do
+      v = Check.new_validation
+      v.add_error "my_field", "Oops"
+
+      ex = Check::ValidationError.new v.errors
+      ex.should be_a Check::ValidationError
+      ex.should be_a Exception
+      ex.errors.should be_a Check::Errors
+      ex.errors.size.should eq 1
+      ex.errors["my_field"].should eq ["Oops"]
+      ex.message.should eq "Validation error"
+    end
+
+    it "should support custom message, pluralize it if ends with error" do
+      v = Check.new_validation
+      v.add_error "my_field", "Oops"
+
+      ex = Check::ValidationError.new v.errors
+      ex.errors.size.should eq 1
+      ex.message.should eq "Validation error"
+
+      v.add_error "my_field2", "Oops"
+      ex = Check::ValidationError.new v.errors
+      ex.errors.size.should eq 2
+      ex.message.should eq "Validation errors"
+
+      ex = Check::ValidationError.new v.errors, "Bad validation"
+      ex.errors.size.should eq 2
+      ex.message.should eq "Bad validation"
+    end
+  end
+
   it "#new_validation" do
     v = Check.new_validation
     v.class.should eq Check::Validation
@@ -97,6 +130,18 @@ describe "Check" do
 
       v.check(:ok, is(:eq?, 0, 1))
       v.valid?.should be_false
+    end
+
+    it "#to_exception" do
+      v = Check.new_validation
+      v.add_error "my_field", "Oops"
+
+      ex = v.to_exception
+      ex.should be_a Check::ValidationError
+      ex.should be_a Exception
+      ex.errors.should be_a Check::Errors
+      ex.errors.size.should eq 1
+      ex.errors["my_field"].should eq ["Oops"]
     end
 
     it "#check with string and symbol keys" do
