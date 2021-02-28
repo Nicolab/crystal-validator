@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.35.1">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="validator">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="validator">
-  <title>Check - validator master-dev</title>
+  <title>Check - validator master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        master
       </span>
     </div>
   </div>
@@ -166,6 +166,20 @@
     Defined in:
   </h2>
   
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/check.cr#L11" target="_blank">
+        check.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L9" target="_blank">
+        checkable.cr
+      </a>
+    
+    <br/>
+  
 
 
 
@@ -276,6 +290,8 @@ v <span class="o">=</span> <span class="t">Check</span>.new_validation preview_v
       <br/>
       <div>
         
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/check.cr#L377" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -301,6 +317,8 @@ a series of checks (<code><a href="Check/Validation.html#check(key:Symbol%7CStri
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/check.cr#L353" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -369,6 +387,8 @@ v, content <span class="o">=</span> <span class="t">Article</span>.check_content
       <br/>
       <div>
         
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L67" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -394,17 +414,29 @@ v, content <span class="o">=</span> <span class="t">Article</span>.check_content
   property content : <span class="t">String</span>
   property url : <span class="t">String</span>?
 
+  <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.after_check_content(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    puts <span class="s">&quot;after_check_content&quot;</span>
+    puts <span class="s">&quot;Valid? </span><span class="i">#{</span>v.valid?<span class="i">}</span><span class="s">&quot;</span>
+    content
+  <span class="k">end</span>
+
   <span class="t">Check</span>.rules(
     content: {
-      required: <span class="s">&quot;Content is required&quot;</span>, <span class="c"># or `true` to use the default error message</span>
-      check:    {
+      required:     <span class="s">&quot;Content is required&quot;</span>, <span class="c"># or `true` to use the default error message</span>
+      before_check: ->(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>) {
+        puts <span class="s">&quot;before_check_content&quot;</span>
+        content
+      },
+      after_check: <span class="n">:after_check_email</span>,
+      check:       {
         not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
         between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
         <span class="c"># ...</span>
       },
       clean: {
-        <span class="k">type</span>:    <span class="t">String</span>,
-        to:      <span class="n">:to_s</span>,
+        <span class="k">type</span>: <span class="t">String</span>,
+        to:   <span class="n">:to_s</span>,
+        <span class="c"># Proc or method name (Symbol)</span>
         format:  ->(content : <span class="t">String</span>) { content.strip },
         message: <span class="s">&quot;Wrong type&quot;</span>,
       },
@@ -445,6 +477,8 @@ ok, content <span class="o">=</span> <span class="t">Article</span>.clean_conten
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L145" target="_blank">View source</a>]
         
       </div>
     </div>
