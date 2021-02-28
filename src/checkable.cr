@@ -82,17 +82,29 @@ module Check
   #   property content : String
   #   property url : String?
   #
+  #   private def self.after_check_content(v : Check::Validation, content : String?, required : Bool, format : Bool)
+  #     puts "after_check_content"
+  #     puts "Valid? #{v.valid?}"
+  #     content
+  #   end
+  #
   #   Check.rules(
   #     content: {
-  #       required: "Content is required", # or `true` to use the default error message
-  #       check:    {
+  #       required:     "Content is required", # or `true` to use the default error message
+  #       before_check: ->(v : Check::Validation, content : String?, required : Bool, format : Bool) {
+  #         puts "before_check_content"
+  #         content
+  #       },
+  #       after_check: :after_check_email,
+  #       check:       {
   #         not_empty: {"Article content is required"},
   #         between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
   #         # ...
   #       },
   #       clean: {
-  #         type:    String,
-  #         to:      :to_s,
+  #         type: String,
+  #         to:   :to_s,
+  #         # Proc or method name (Symbol)
   #         format:  ->(content : String) { content.strip },
   #         message: "Wrong type",
   #       },
@@ -186,7 +198,12 @@ module Check
             # If *format* is true then call it to format *value*.
             if format
               begin
-                return true, {{format}}.call(value)
+                return true,
+                {% if format.is_a? SymbolLiteral %}
+                  {{format.id}}(value)
+                {% else %}
+                  {{format}}.call(value)
+                {% end %}
               rescue
                 return false, nil
               end
@@ -236,6 +253,15 @@ module Check
           return v, value
         end
 
+        # Lifecycle: hook before_check_field
+        {% if before_check = rules["before_check"] %}
+          {% if before_check.is_a? SymbolLiteral %}
+            value = {{before_check.id}}(v, value, required, format)
+          {% else %}
+            value = {{before_check}}.call(v, value, required, format)
+          {% end %}
+        {% end %}
+
         # Check against each rule provided.
         # Each rule is executed if *value* is not `nil` except for `not_null` and `not_empty`
         # which is executed even if the *value* is `nil`
@@ -253,6 +279,15 @@ module Check
                     # required for the compiler
                     (name != "not_null" && name != "not_empty") %}unless value.nil?
             {% end %}
+        {% end %}
+
+        # Lifecycle: hook after_check_field
+        {% if after_check = rules["after_check"] %}
+          {% if after_check.is_a? SymbolLiteral %}
+            value = {{after_check.id}}(v, value, required, format)
+          {% else %}
+            value = {{after_check}}.call(v, value, required, format)
+          {% end %}
         {% end %}
 
         {v, value}
@@ -404,7 +439,7 @@ module Check
       {% end %}
 
       # Check methods with `Check::Checker` annotation
-      {% for method in @type.class.methods.select { |method| method.annotation(Checker) } %}
+      {% for method in @type.class.methods.select(&.annotation(Checker)) %}
         cleaned_h = {{method.name}} v, h, cleaned_h, required, format
       {% end %}
 
@@ -482,7 +517,7 @@ module Check
       {% end %}
 
       # Check methods with `Check::Checker` annotation
-      {% for method in @type.methods.select { |method| method.annotation(Checker) } %}
+      {% for method in @type.methods.select(&.annotation(Checker)) %}
         {{method.name}} v, required, format
       {% end %}
 

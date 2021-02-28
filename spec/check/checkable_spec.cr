@@ -361,6 +361,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called(checkable)
+      H.should_hooks_check_email_not_be_called
 
       v = checkable.check
 
@@ -371,6 +372,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called(checkable)
+      H.should_hooks_check_email_be_called
     end
   end
 
@@ -386,6 +388,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       # Default *format* is `true'
       v, cleaned_h = H::CheckableTest.check h
@@ -401,6 +404,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
 
     it "should check (invalid) hash" do
@@ -413,6 +417,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       # *format* `false`
       v, cleaned_h = H::CheckableTest.check h, format: false
@@ -430,6 +435,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
   end
 
@@ -442,6 +448,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       # *required* `false`
       v, cleaned_h = H::CheckableTest.check h, required: false
@@ -457,6 +464,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
     end
 
     it "should check and not populate a class field not supplied in a Hash with required: true" do
@@ -467,6 +475,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       # *required* `true` (explicit)
       v, cleaned_h = H::CheckableTest.check h, required: true
@@ -489,6 +498,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
     end
 
     it "should check if a key is present and \
@@ -502,6 +512,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       # *required* `true` (explicit)
       v, cleaned_h = H::CheckableTest.check h, required: true
@@ -517,6 +528,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
 
     it "should not populate a field (age) if not provided in a Hash with required: true" do
@@ -529,6 +541,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       v, cleaned_h = H::CheckableTest.check h, required: true
 
@@ -543,6 +556,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
 
     it "should not populate the fields if not provided in a Hash with required: false" do
@@ -552,6 +566,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       v, cleaned_h = H::CheckableTest.check h, required: false
 
@@ -566,6 +581,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
     end
   end
 
@@ -578,6 +594,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       v, cleaned_h = H::CheckableTest.check h, required: false
 
@@ -592,6 +609,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
     end
 
     it "should preserve nilable field (age, username) and other when it is nil required: true" do
@@ -605,6 +623,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       v, cleaned_h = H::CheckableTest.check h, required: true
 
@@ -619,6 +638,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
 
     it "should preserve nilable field (age) and other when it is nil required: false" do
@@ -631,6 +651,7 @@ describe "Checkable" do
 
       # Test initial state
       H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
 
       v, cleaned_h = H::CheckableTest.check h, required: false
 
@@ -645,6 +666,7 @@ describe "Checkable" do
 
       # Lifecycle hooks
       H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
     end
   end
 

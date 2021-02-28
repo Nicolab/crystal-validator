@@ -6,3 +6,10 @@ authors:
   - Nicolas Talle <dev@nicolab.net>
 
 license: MIT
+
+targets:
+  validator:
+    main: src/validator.cr
+
+crystalline:
+  main: spec/spec_helper.cr

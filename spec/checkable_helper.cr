@@ -12,6 +12,11 @@ module H
     # Mixin
     Check.checkable
 
+    property email : String
+    property age : Int32?
+
+    def initialize(@email, @age); end
+
     Check.rules(
       email: {
         required: true,
@@ -34,11 +39,6 @@ module H
         clean: {type: Int32, to: :to_i32, nilable: true},
       }
     )
-
-    property email : String
-    property age : Int32?
-
-    def initialize(@email, @age); end
   end
 
   # Test class.
@@ -48,15 +48,20 @@ module H
 
     Check.rules(
       email: {
-        required: true,
-        check:    {
+        required:     true,
+        before_check: :before_check_email,
+        after_check:  ->(v : Check::Validation, value : String?, required : Bool, format : Bool) {
+          @@after_check_email_called = true
+          value
+        },
+        check: {
           not_empty: {"Email should not be empty"},
           email:     {"It is not a valid email"},
         },
         clean: {
           type:    String,
           to:      :to_s,
-          format:  ->self.format_email(String),
+          format:  :format_email,
           message: "Wrong type",
         },
       },
@@ -91,6 +96,8 @@ module H
 
     @@before_check_called : Bool = false
     @@after_check_called : Bool = false
+    @@before_check_email_called : Bool = false
+    @@after_check_email_called : Bool = false
     @@custom_checker_called : Bool = false
     @@check_nothing_called : Bool = false
 
@@ -106,6 +113,8 @@ module H
     def self.reset_hooks_state
       @@before_check_called = false
       @@after_check_called = false
+      @@before_check_email_called = false
+      @@after_check_email_called = false
       @@custom_checker_called = false
       @@check_nothing_called = false
     end
@@ -116,6 +125,14 @@ module H
 
     def self.after_check_called
       @@after_check_called
+    end
+
+    def self.before_check_email_called
+      @@before_check_email_called
+    end
+
+    def self.after_check_email_called
+      @@after_check_email_called
     end
 
     def self.custom_checker_called
@@ -136,21 +153,26 @@ module H
     # Lifecycle methods
     # ---------------------------------------------------------------------------
 
-    def before_check(v, required, format)
+    private def before_check(v, required, format)
       self.before_check_called = true
     end
 
-    def after_check(v, required, format)
+    private def after_check(v, required, format)
       self.after_check_called = true
     end
 
-    def self.before_check(v, h, required, format)
+    private def self.before_check(v, h, required, format)
       @@before_check_called = true
     end
 
-    def self.after_check(v, h, cleaned_h, required, format)
+    private def self.after_check(v, h, cleaned_h, required, format)
       @@after_check_called = true
       cleaned_h
+    end
+
+    private def self.before_check_email(v, value, required, format)
+      @@before_check_email_called = true
+      value
     end
 
     # ---------------------------------------------------------------------------
@@ -159,13 +181,13 @@ module H
 
     # Called by the instance.
     @[Check::Checker]
-    def custom_checker(v, required, format)
+    private def custom_checker(v, required, format)
       self.custom_checker_called = true
     end
 
     # Called statically.
     @[Check::Checker]
-    def self.custom_checker(v, h, cleaned_h, required, format)
+    private def self.custom_checker(v, h, cleaned_h, required, format)
       @@custom_checker_called = true
       cleaned_h
     end
@@ -193,44 +215,72 @@ module H
   # ----------------------------------------------------------------------------
 
   def self.should_hooks_be_called(klass : CheckableTest.class)
-    klass.after_check_called.should be_true
     klass.before_check_called.should be_true
+    klass.after_check_called.should be_true
     klass.custom_checker_called.should be_true
     klass.check_nothing_called.should be_false
   end
 
   def self.should_hooks_be_called
-    CheckableTest.after_check_called.should be_true
     CheckableTest.before_check_called.should be_true
+    CheckableTest.after_check_called.should be_true
     CheckableTest.custom_checker_called.should be_true
     CheckableTest.check_nothing_called.should be_false
   end
 
   def self.should_hooks_be_called(checkable : CheckableTest)
-    checkable.after_check_called.should be_true
     checkable.before_check_called.should be_true
+    checkable.after_check_called.should be_true
     checkable.custom_checker_called.should be_true
     checkable.check_nothing_called.should be_false
   end
 
   def self.should_hooks_not_be_called
-    CheckableTest.after_check_called.should be_false
     CheckableTest.before_check_called.should be_false
+    CheckableTest.after_check_called.should be_false
     CheckableTest.custom_checker_called.should be_false
     CheckableTest.check_nothing_called.should be_false
   end
 
   def self.should_hooks_not_be_called(klass : CheckableTest.class)
-    klass.after_check_called.should be_false
     klass.before_check_called.should be_false
+    klass.after_check_called.should be_false
     klass.custom_checker_called.should be_false
     klass.check_nothing_called.should be_false
   end
 
   def self.should_hooks_not_be_called(checkable : CheckableTest)
-    checkable.after_check_called.should be_false
     checkable.before_check_called.should be_false
+    checkable.after_check_called.should be_false
     checkable.custom_checker_called.should be_false
     checkable.check_nothing_called.should be_false
+  end
+
+  # ----------------------------------------------------------------------------
+
+  def self.should_hooks_check_email_be_called
+    self.should_before_check_email_be_called
+    self.should_after_check_email_be_called
+  end
+
+  def self.should_hooks_check_email_not_be_called
+    self.should_before_check_email_not_be_called
+    self.should_after_check_email_not_be_called
+  end
+
+  def self.should_before_check_email_be_called
+    CheckableTest.before_check_email_called.should be_true
+  end
+
+  def self.should_before_check_email_not_be_called
+    CheckableTest.before_check_email_called.should be_false
+  end
+
+  def self.should_after_check_email_be_called
+    CheckableTest.after_check_email_called.should be_true
+  end
+
+  def self.should_after_check_email_not_be_called
+    CheckableTest.after_check_email_called.should be_false
   end
 end

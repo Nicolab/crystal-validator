@@ -87,6 +87,18 @@ class User
       email: {
         required: true,
 
+        # Optional lifecycle hook to be executed on `check_email` call.
+        # Before the `check` rules, just after `clean_email` called inside `check_email`.
+        # Proc or method name (here is a Proc)
+        before_check: ->(v : Check::Validation, content : String?, required : Bool, format : Bool) {
+           puts "before_check_content"
+           content
+        },
+
+        # Optional lifecycle hook to be executed on `check_email` call, after the `check` rules.
+        # Proc or method name (here is the method name)
+        after_check: :after_check_email
+
         # Checker (all validators are supported)
         check: {
           not_empty: {"Email is required"},
@@ -103,8 +115,8 @@ class User
           # Here is a String
           to: :to_s,
 
-          # Formatter (any Crystal Proc)
-          format: ->self.format_email(String),
+          # Formatter (any Crystal Proc) or method name (Symbol)
+          format: :format_email,
 
           # Error message
           # Default is "Wrong type" but it can be customized
@@ -144,26 +156,33 @@ class User
     # ---------------------------------------------------------------------------
 
     # Triggered on instance: `user.check`
-    def before_check(v : Check::Validation, required : Bool, format : Bool)
+    private def before_check(v : Check::Validation, required : Bool, format : Bool)
       # Code...
     end
 
     # Triggered on instance: `user.check`
-    def after_check(v : Check::Validation, required : Bool, format : Bool)
+    private def after_check(v : Check::Validation, required : Bool, format : Bool)
       # Code...
     end
 
     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    def self.before_check(v : Check::Validation, h, required : Bool, format : Bool)
+    private def self.before_check(v : Check::Validation, h, required : Bool, format : Bool)
       # Code...
       pp h
     end
 
     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
+    private def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
       # Code...
       pp cleaned_h
       cleaned_h # <= returns cleaned_h!
+    end
+
+    # Triggered on a static call and on instance call: `User.check_email(value)`, `User.check(h)`, `user.check`.
+    private def self.after_check_content(v : Check::Validation, content : String?, required : Bool, format : Bool)
+      puts "after_check_content"
+      puts "Valid? #{v.valid?}"
+      content
     end
 
     # --------------------------------------------------------------------------
@@ -172,13 +191,13 @@ class User
 
     # Triggered on instance: `user.check`
     @[Check::Checker]
-    def custom_checker(v : Check::Validation, required : Bool, format : Bool)
+    private def custom_checker(v : Check::Validation, required : Bool, format : Bool)
       # Code...
     end
 
      # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
     @[Check::Checker]
-    def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
+    private def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
       # Code...
       cleaned_h # <= returns cleaned_h!
     end
