@@ -21,7 +21,7 @@ Also [validator/check](#check) (not exposed by default) provides:
 dependencies:
   validator:
     github: nicolab/crystal-validator
-    version: ~> 1.4.0 # Check the latest version!
+    version: ~> 1.5.0 # Check the latest version!
 ```
 
 2. Run `shards install`

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.35.1">
-<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="validator">
 
 
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="validator">
-  <title>Check::CheckableStatic - validator master</title>
+  <title>Check::CheckableStatic - validator master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master
+        master-dev
       </span>
     </div>
   </div>
@@ -168,13 +168,6 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
     Defined in:
   </h2>
   
-    
-      <a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L301" target="_blank">
-        checkable.cr
-      </a>
-    
-    <br/>
-  
 
 
 
@@ -218,7 +211,21 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
       <li class="entry-summary">
         <a href="#check(h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#check</strong>(h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
         
-          <div class="summary"><p>Checks and clean the <code>Hash</code> for its fields corresponding to class variables that have a <code>.check_{{field}}</code> method.</p></div>
+          <div class="summary"><p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code> if the validation fails or if the clean has not been processed successfully.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check!(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#check!</strong>(v : Check::Validation, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
+        
+          <div class="summary"><p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code> if the validation fails or if the clean has not been processed successfully.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check!(h:Hash,required:Bool=true,format:Bool=true)-instance-method" class="signature"><strong>#check!</strong>(h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)</a>
+        
+          <div class="summary"><p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code> if the validation fails or if the clean has not been processed successfully.</p></div>
         
       </li>
     
@@ -301,8 +308,6 @@ You can update this cleaned hash but you have to return it.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L381" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -327,8 +332,6 @@ You can update this cleaned hash but you have to return it.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L360" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -359,8 +362,6 @@ to execute format method if it has been defined.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L401" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -374,23 +375,58 @@ to execute format method if it has been defined.</p>
       
         <div class="doc">
           
-          <p>Checks and clean the <code>Hash</code> for its fields corresponding
-to class variables that have a <code>.check_{{field}}</code> method.</p>
+          <p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code>
+if the validation fails or if the clean has not been processed successfully.</p>
 
-<p>It instantiates a <code><a href="../Check/Validation.html">Check::Validation</a></code> (if not provided) and calls all methods
-related to <code>.rules</code> and then methods defined with annotation <code><a href="../Check/Checker.html">Checker</a></code>.</p>
-
-<p>Lifecycle methods <code><a href="../Check/CheckableStatic.html#before_check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">.before_check</a></code> and <code><a href="../Check/CheckableStatic.html#after_check(v:Check::Validation,h:Hash,cleaned_h:Hash,required:Bool=true,format:Bool=true):Hash-instance-method">.after_check</a></code> that are called
-respectively at the beginning and at the end of the process.</p>
-
-<p><em>format</em> is used to tell cleaners generated by <code><a href="../Check.html#rules(**fields)-macro">Check.rules</a></code>
-to execute format method if it has been defined.</p>
+<pre><code class="language-crystal">cleaned_h <span class="o">=</span> <span class="t">MyCheckable</span>.check!(h)</code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L454" target="_blank">View source</a>]
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check!(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">
+      <div class="signature">
+        
+        def <strong>check!</strong>(v : <a href="../Check/Validation.html">Check::Validation</a>, h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)
+
+        <a class="method-permalink" href="#check!(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code>
+if the validation fails or if the clean has not been processed successfully.</p>
+
+<pre><code class="language-crystal">cleaned_h <span class="o">=</span> <span class="t">MyCheckable</span>.check!(v, h)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check!(h:Hash,required:Bool=true,format:Bool=true)-instance-method">
+      <div class="signature">
+        
+        def <strong>check!</strong>(h : Hash, required : Bool = <span class="n">true</span>, format : Bool = <span class="n">true</span>)
+
+        <a class="method-permalink" href="#check!(h:Hash,required:Bool=true,format:Bool=true)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../Check/CheckableStatic.html#check(v:Check::Validation,h:Hash,required:Bool=true,format:Bool=true)-instance-method">#check</a></code> but this method raises a <code><a href="../Check/ValidationError.html">Check::ValidationError</a></code>
+if the validation fails or if the clean has not been processed successfully.</p>
+
+<pre><code class="language-crystal">cleaned_h <span class="o">=</span> <span class="t">MyCheckable</span>.check!(h)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -416,8 +452,6 @@ argument is the <em>json</em> Hash.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L345" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -436,8 +470,6 @@ argument is the <em>json</em> Hash.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L303" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -458,8 +490,6 @@ argument is the <em>json</em> Hash.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L318" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -478,8 +508,6 @@ argument is the <em>json</em> Hash.</p>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Nicolab/crystal-validator/blob/d97d76fbacd2427338e0178b4c926270338c820e/src/checkable.cr#L328" target="_blank">View source</a>]
         
       </div>
     </div>
