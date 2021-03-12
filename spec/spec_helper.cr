@@ -11,8 +11,6 @@ require "../src/validator"
 require "../src/is"
 require "../src/check"
 
-require "./checkable_helper"
-
 # Spec helpers.
 module H; end
 

@@ -5,7 +5,8 @@
 # information and documentation: https://github.com/Nicolab/crystal-validator
 # ------------------------------------------------------------------------------
 
-require "../spec_helper"
+require "../../spec_helper"
+require "./checkable_helper"
 
 module H
   # Test class.
