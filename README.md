@@ -240,6 +240,9 @@ pp v.errors
 
 pp user_h # => Casted and cleaned Hash
 
+# Same but raise if there is a validation error
+user_h = User.check!(input_h)
+
 # Check a Hash (on instance)
 user = user.new("demo@example.org", 38)
 
@@ -247,9 +250,18 @@ v = user.check # => Validation instance
 pp v.valid?
 pp v.errors
 
+# Same but raise if there is a validation error
+user.check! # => Validation instance
+
+# Example with an active record model
+user.check!.save
+
 # Check field
 v, email = User.check_email(value: "demo@example.org")
 v, age = User.check_age(value: 42)
+
+# Same but raise if there is a validation error
+email = User.check_email!(value: "demo@example.org")
 
 v, email = User.check_email(value: "demo@example.org ", format: true)
 v, email = User.check_email(value: "demo@example.org ", format: false)
@@ -257,6 +269,9 @@ v, email = User.check_email(value: "demo@example.org ", format: false)
 # Using an existing Validation instance
 v = Check.new_validation
 v, email = User.check_email(v, value: "demo@example.org")
+
+# Same but raise if there is a validation error
+email = User.check_email!(v, value: "demo@example.org")
 ```
 
 __Clean__ with this example class (`User`):
@@ -310,6 +325,9 @@ Example with multiple values returned:
 
 ```crystal
 ok, value1, value2 = User.clean_my_tuple({1, 2, 3})
+
+# Same but raise if there is a validation error
+value1, value2 = User.clean_my_tuple!({1, 2, 3})
 ```
 
 Considering the example class above (`User`).
@@ -341,6 +359,12 @@ So `clean_email` cast to `String` and strip the value `" demo@example.org "`:
 ```crystal
 # Email value with one space before and one space after
 ok, email = User.clean_email(value: " demo@example.org ")
+
+puts email # => "demo@example.org"
+
+# Same but raise if there is a validation error
+# Email value with one space before and one space after
+email = User.clean_email!(value: " demo@example.org ")
 
 puts email # => "demo@example.org"
 ```

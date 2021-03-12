@@ -31,6 +31,19 @@ describe "Checkable" do
         cleaned_h.should eq({"email" => "my@email.com", "age" => 30})
       end
 
+      it "should check! (valid)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        h = {"email" => email, "age" => "30"}
+
+        cleaned_h = H::CheckableSimpleTest.check!(h)
+
+        # Works by ref
+        h.same? cleaned_h
+
+        # Casted and formatted
+        cleaned_h.should eq({"email" => "my@email.com", "age" => 30})
+      end
+
       it "should check (invalid) with format" do
         email : JSON::Any = JSON::Any.new " my@email.com "
         h = {"email" => email, "age" => "20"}
@@ -47,6 +60,18 @@ describe "Checkable" do
 
         # Not valid but casted and formatted for handling data if needed
         cleaned_h.should eq({"email" => "my@email.com", "age" => 20})
+      end
+
+      it "should check! (invalid) with format" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        h = {"email" => email, "age" => "20"}
+
+        ex = expect_raises(Check::ValidationError, "Validation error") do
+          H::CheckableSimpleTest.check!(h)
+        end
+
+        ex.errors.size.should eq 1
+        ex.errors.should eq({"age" => ["Age should be between 25 and 35"]})
       end
 
       it "should check (invalid) without format" do
@@ -69,6 +94,21 @@ describe "Checkable" do
         # Not valid but casted and formatted for handling data if needed
         cleaned_h.should eq({"email" => " my@email.com ", "age" => 20})
       end
+
+      it "should check! (invalid) without format" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        h = {"email" => email, "age" => "20"}
+
+        ex = expect_raises(Check::ValidationError, "Validation error") do
+          H::CheckableSimpleTest.check!(h, format: false)
+        end
+
+        ex.errors.size.should eq 2
+        ex.errors.should eq({
+          "email" => ["It is not a valid email"],
+          "age"   => ["Age should be between 25 and 35"],
+        })
+      end
     end
 
     context "check on instance" do
@@ -81,6 +121,18 @@ describe "Checkable" do
 
         v.should be_a(Check::Validation)
         v.valid?.should be_true
+
+        # Formatted
+        checkable.email.should eq email.strip
+        checkable.age.should eq age
+      end
+
+      it "should check! (valid) with format" do
+        email = " my@email.com "
+        age = 30
+
+        checkable = H::CheckableSimpleTest.new email, age
+        checkable.check!.should be checkable
 
         # Formatted
         checkable.email.should eq email.strip
@@ -104,6 +156,24 @@ describe "Checkable" do
         checkable.age.should eq age
       end
 
+      it "should check! (invalid) with format" do
+        email = " my@email.com "
+        age = 20
+
+        checkable = H::CheckableSimpleTest.new email, age
+
+        ex = expect_raises(Check::ValidationError, "Validation error") do
+          checkable.check!
+        end
+
+        ex.errors.size.should eq 1
+        ex.errors.should eq({"age" => ["Age should be between 25 and 35"]})
+
+        # Not valid but formatted for handling data if needed
+        checkable.email.should eq email.strip
+        checkable.age.should eq age
+      end
+
       it "should check (invalid) without format" do
         email = " my@email.com "
         age = 20
@@ -115,6 +185,26 @@ describe "Checkable" do
         v.valid?.should be_false
         v.errors.size.should eq 2
         v.errors.should eq({
+          "email" => ["It is not a valid email"],
+          "age"   => ["Age should be between 25 and 35"],
+        })
+
+        # Not valid but formatted for handling data if needed
+        checkable.email.should eq email
+        checkable.age.should eq age
+      end
+
+      it "should check! (invalid) without format" do
+        email = " my@email.com "
+        age = 20
+
+        checkable = H::CheckableSimpleTest.new email, age
+        ex = expect_raises(Check::ValidationError, "Validation error") do
+          checkable.check! format: false
+        end
+
+        ex.errors.size.should eq 2
+        ex.errors.should eq({
           "email" => ["It is not a valid email"],
           "age"   => ["Age should be between 25 and 35"],
         })
@@ -143,6 +233,25 @@ describe "Checkable" do
 
         ok.should be_true
         value.class.should eq(String)
+        value.should_not be_nil # not a union
+        value.should eq(email.as_s.strip)
+      end
+
+      it "should cast and format (clean_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+
+        # Implicit *format*: default is `true`
+        value = H::CheckableTest.clean_email!(email)
+
+        value.class.should eq(String)
+        value.should_not be_nil # not a union
+        value.should eq(email.as_s.strip)
+
+        # Explicit *format*
+        value = H::CheckableTest.clean_email!(email, true)
+
+        value.class.should eq(String)
+        value.should_not be_nil # not a union
         value.should eq(email.as_s.strip)
       end
 
@@ -151,6 +260,14 @@ describe "Checkable" do
         ok, value = H::CheckableTest.clean_email(email, false)
 
         ok.should be_true
+        value.class.should eq(String)
+        value.should eq(email.as_s)
+      end
+
+      it "should only cast (clean_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        value = H::CheckableTest.clean_email!(email, false)
+
         value.class.should eq(String)
         value.should eq(email.as_s)
       end
@@ -171,6 +288,22 @@ describe "Checkable" do
         v, value = H::CheckableTest.check_email(value: email, format: true)
 
         v.valid?.should be_true
+        value.class.should eq(String)
+        value.should eq(email.as_s.strip)
+      end
+
+      it "should success to check with the formatting of a malformed value (check_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+
+        # Implicit *format*: default is `true`
+        value = H::CheckableTest.check_email!(value: email)
+
+        value.class.should eq(String)
+        value.should eq(email.as_s.strip)
+
+        # Explicit *format*
+        value = H::CheckableTest.check_email!(value: email, format: true)
+
         value.class.should eq(String)
         value.should eq(email.as_s.strip)
       end
@@ -249,6 +382,31 @@ describe "Checkable" do
         H.should_hooks_not_be_called(checkable)
       end
 
+      it "should cast and format (clean_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        checkable = H::CheckableTest.new "", nil
+
+        # Test initial state
+        H.should_hooks_not_be_called(checkable)
+
+        # Implicit *format*: default is `true`
+        value = checkable.class.clean_email!(email)
+
+        value.class.should eq(String)
+        value.class.should_not be_nil # not a union
+        value.should eq(email.as_s.strip)
+
+        # Explicit *format*
+        value = checkable.class.clean_email!(email, format: true)
+
+        value.class.should eq(String)
+        value.class.should_not be_nil # not a union
+        value.should eq(email.as_s.strip)
+
+        # Test final state
+        H.should_hooks_not_be_called(checkable)
+      end
+
       it "should only cast" do
         email : JSON::Any = JSON::Any.new " my@email.com "
         checkable = H::CheckableTest.new "", nil
@@ -260,6 +418,23 @@ describe "Checkable" do
 
         ok.should be_true
         value.class.should eq(String)
+        value.should eq(email.as_s)
+
+        # Test final state
+        H.should_hooks_not_be_called(checkable)
+      end
+
+      it "should only cast (clean_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        checkable = H::CheckableTest.new "", nil
+
+        # Test initial state
+        H.should_hooks_not_be_called(checkable)
+
+        value = checkable.class.clean_email!(email, format: false)
+
+        value.class.should eq(String)
+        value.class.should_not be_nil
         value.should eq(email.as_s)
 
         # Test final state
@@ -286,6 +461,29 @@ describe "Checkable" do
         v, value = checkable.class.check_email(value: email, format: true)
 
         v.valid?.should be_true
+        value.class.should eq(String)
+        value.should eq(email.as_s.strip)
+
+        # Test final state
+        H.should_hooks_not_be_called(checkable)
+      end
+
+      it "should success to check with the formatting of a malformed value (check_{{field}}!)" do
+        email : JSON::Any = JSON::Any.new " my@email.com "
+        checkable = H::CheckableTest.new "", nil
+
+        # Test initial state
+        H.should_hooks_not_be_called(checkable)
+
+        # Implicit *format*: default is `true`
+        value = checkable.class.check_email!(value: email)
+
+        value.class.should eq(String)
+        value.should eq(email.as_s.strip)
+
+        # Explicit *format*
+        value = checkable.class.check_email!(value: email, format: true)
+
         value.class.should eq(String)
         value.should eq(email.as_s.strip)
 
@@ -374,6 +572,25 @@ describe "Checkable" do
       H.should_hooks_be_called(checkable)
       H.should_hooks_check_email_be_called
     end
+
+    it "should call generated and custom checkers and lifecycle methods (check!)" do
+      checkable = H::CheckableTest.new "wrong@mail", nil
+
+      # Test initial state
+      H.should_hooks_not_be_called(checkable)
+      H.should_hooks_check_email_not_be_called
+
+      ex = expect_raises(Check::ValidationError, "Validation error") do
+        checkable.check!
+      end
+
+      # Custom error message defined in the email rule (CheckableTest)
+      ex.errors.should eq({"email" => ["It is not a valid email"]})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called(checkable)
+      H.should_hooks_check_email_be_called
+    end
   end
 
   describe ".check" do
@@ -407,6 +624,33 @@ describe "Checkable" do
       H.should_hooks_check_email_be_called
     end
 
+    it "should check (valid) hash (check!)" do
+      h = {
+        "email"    => "falsemail@mail.com ",
+        "username" => "john_doe",
+        "age"      => "30",
+        "p"        => 'a',
+        "c"        => H::CheckableTest.new("plop", nil),
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      # Default *format* is `true'
+      cleaned_h = H::CheckableTest.check! h
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # Casted and formatted
+      cleaned_h.should eq({"email" => "falsemail@mail.com", "username" => "john_doe", "age" => 30})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
+    end
+
     it "should check (invalid) hash" do
       h = {
         "email" => "falsemail@mail.com ",
@@ -420,18 +664,12 @@ describe "Checkable" do
       H.should_hooks_check_email_not_be_called
 
       # *format* `false`
-      v, cleaned_h = H::CheckableTest.check h, format: false
+      ex = expect_raises(Check::ValidationError, "Validation error") do
+        H::CheckableTest.check! h, format: false
+      end
 
-      v.should be_a(Check::Validation)
-      v.valid?.should be_false
       # Custom error message defined in the email rule (CheckableTest)
-      v.errors.should eq({"email" => ["It is not a valid email"], "username" => ["Username is required"]})
-
-      # Works by ref
-      h.same? cleaned_h
-
-      # Casted but not formatted
-      cleaned_h.should eq({"email" => "falsemail@mail.com ", "age" => 30})
+      ex.errors.should eq({"email" => ["It is not a valid email"], "username" => ["Username is required"]})
 
       # Lifecycle hooks
       H.should_hooks_be_called
@@ -455,6 +693,31 @@ describe "Checkable" do
 
       v.should be_a(Check::Validation)
       v.valid?.should be_true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # Casted and cleaned
+      cleaned_h.should eq({"age" => 30})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
+    end
+
+    it "should not check a class type not nilable and not supplied in a Hash \
+    with required: false (check!)" do
+      h = {
+        "age" => "30",
+        "p"   => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      # *required* `false`
+      cleaned_h = H::CheckableTest.check! h, required: false
 
       # Works by ref
       h.same? cleaned_h
@@ -531,6 +794,33 @@ describe "Checkable" do
       H.should_hooks_check_email_be_called
     end
 
+    it "should check if a key is present and \
+    do not add error if its value is nil and field nilable (check!)" do
+      h = {
+        "email"    => "false@mail.com",
+        "username" => nil,
+        "age"      => "30",
+        "p"        => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      # *required* `true` (explicit)
+      cleaned_h = H::CheckableTest.check! h, required: true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # Casted and cleaned
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil, "age" => 30})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
+    end
+
     it "should not populate a field (age) if not provided in a Hash with required: true" do
       h = {
         # should be formatted
@@ -547,6 +837,31 @@ describe "Checkable" do
 
       v.should be_a(Check::Validation)
       v.valid?.should be_true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # hash fields not in the rules are removed
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
+    end
+
+    it "should not populate a field (age) if not provided in a Hash with required: true (check!)" do
+      h = {
+        # should be formatted
+        "email"    => "false@mail.com ",
+        "username" => nil,
+        "p"        => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      cleaned_h = H::CheckableTest.check! h, required: true
 
       # Works by ref
       h.same? cleaned_h
@@ -583,6 +898,28 @@ describe "Checkable" do
       H.should_hooks_be_called
       H.should_hooks_check_email_not_be_called
     end
+
+    it "should not populate the fields if not provided in a Hash with required: false (check!)" do
+      h = {
+        "p" => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      cleaned_h = H::CheckableTest.check! h, required: false
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # hash fields not in the rules are removed and other are preserved
+      cleaned_h.size.should eq(0)
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
+    end
   end
 
   describe "clean: nilable option" do
@@ -600,6 +937,29 @@ describe "Checkable" do
 
       v.should be_a(Check::Validation)
       v.valid?.should be_true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # hash fields not in the rules are removed
+      cleaned_h.should eq({"age" => nil})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_not_be_called
+    end
+
+    it "should preserve nilable field (age) when it is nil required: false (check!)" do
+      h = {
+        "age" => nil,
+        "p"   => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      cleaned_h = H::CheckableTest.check! h, required: false
 
       # Works by ref
       h.same? cleaned_h
@@ -641,6 +1001,32 @@ describe "Checkable" do
       H.should_hooks_check_email_be_called
     end
 
+    it "should preserve nilable field (age, username) and other when it is nil required: true (check!)" do
+      h = {
+        # should be formatted
+        "email"    => " false@mail.com ",
+        "username" => nil,
+        "age"      => nil,
+        "p"        => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      cleaned_h = H::CheckableTest.check! h, required: true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # hash fields not in the rules are removed and other are preserved
+      cleaned_h.should eq({"email" => "false@mail.com", "username" => nil, "age" => nil})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
+    end
+
     it "should preserve nilable field (age) and other when it is nil required: false" do
       h = {
         # should be formatted
@@ -657,6 +1043,31 @@ describe "Checkable" do
 
       v.should be_a(Check::Validation)
       v.valid?.should be_true
+
+      # Works by ref
+      h.same? cleaned_h
+
+      # hash fields not in the rules are removed and other are preserved
+      cleaned_h.should eq({"email" => "false@mail.com", "age" => nil})
+
+      # Lifecycle hooks
+      H.should_hooks_be_called
+      H.should_hooks_check_email_be_called
+    end
+
+    it "should preserve nilable field (age) and other when it is nil required: false (check!)" do
+      h = {
+        # should be formatted
+        "email" => " false@mail.com ",
+        "age"   => nil,
+        "p"     => 'a',
+      }
+
+      # Test initial state
+      H.should_hooks_not_be_called
+      H.should_hooks_check_email_not_be_called
+
+      cleaned_h = H::CheckableTest.check! h, required: false
 
       # Works by ref
       h.same? cleaned_h

@@ -165,13 +165,25 @@ module Check
       {% type = clean["type"] %}
       {% nilable = clean["nilable"] %}
 
+      # Same as `clean_{{field}}` but this method raises a `Validator::Error`
+      # if the clean has not been processed successfully.
+      #
+      # ```
+      # email = MyCheckable.clean_email!(user_input["email"]) # => user@example.com
+      # ```
+      def self.clean_{{field}}!(value, format = true) : {{type}}
+        ok, value = self.clean_{{field}}(value, format)
+        raise Validator::Error.new %(Cannot clean the "{{field}}" field) unless ok
+        value.as({{type}})
+      end
+
       # Returns *{{field}}* with the good type and formatted if *format* is `true`.
       # The return type is a tuple with a bool as a first argument indicating
       # that the clean has been processed successfully or not and the 2nd
       # argument is the *value* cleaned.
       #
       # ```
-      # ok, email = Checkable.clean_email(user_input["email"]) # => true, user@example.com
+      # ok, email = MyCheckable.clean_email(user_input["email"]) # => true, user@example.com
       # ```
       def self.clean_{{field}}(value, format = true) : Tuple(Bool, {{type}} | Nil)
         # force real Nil type (hack for JSON::Any and equivalent)
@@ -218,6 +230,14 @@ module Check
         {false, nil}
       end
 
+      # Checks *value* and returns it cleaned.
+      # This method raises a `Check::ValidationError` if the validation fails.
+      def self.check_{{field}}!(*, value, required : Bool = true, format : Bool = true) : {{type}}
+        v, value = self.check_{{field}}(value: value, required: required, format: format)
+        raise v.to_exception unless v.valid?
+        value.as({{type}})
+      end
+
       # Create a new `Check::Validation` and checks *{{field}}*.
       # For more infos check `.check_{{field}}(v : Check::Validation, value, format : Bool = true)`
       def self.check_{{field}}(
@@ -228,6 +248,19 @@ module Check
       ) : Tuple(Check::Validation, {{type}} | Nil)
         v = Check.new_validation
         self.check_{{field}}(v, value, required, format)
+      end
+
+      # Checks *value* and returns it cleaned.
+      # This method raises a `Check::ValidationError` if the validation fails.
+      def self.check_{{field}}!(
+        v : Check::Validation,
+        value,
+        required : Bool = true,
+        format : Bool = true
+      ) : {{type}}
+        v, value = self.check_{{field}}(v, value, required, format)
+        raise v.to_exception unless v.valid?
+        value.as({{type}})
       end
 
       # Cleans and check *value*.
@@ -387,6 +420,18 @@ module Check
       cleaned_h
     end
 
+    # Same as `check` but this method raises a `Check::ValidationError`
+    # if the validation fails or if the clean has not been processed successfully.
+    #
+    # ```
+    # cleaned_h = MyCheckable.check!(v, h)
+    # ```
+    def check!(v : Check::Validation, h : Hash, required : Bool = true, format : Bool = true)
+      v, cleaned_h = check(v, h, required, format)
+      raise v.to_exception unless v.valid?
+      cleaned_h
+    end
+
     # Checks and clean the `Hash` for its fields corresponding
     # to class variables that have a `.check_{{field}}` method.
     #
@@ -450,6 +495,18 @@ module Check
       {% end %}
     end
 
+    # Same as `check` but this method raises a `Check::ValidationError`
+    # if the validation fails or if the clean has not been processed successfully.
+    #
+    # ```
+    # cleaned_h = MyCheckable.check!(h)
+    # ```
+    def check!(h : Hash, required : Bool = true, format : Bool = true)
+      v, cleaned_h = check(h, required, format)
+      raise v.to_exception unless v.valid?
+      cleaned_h
+    end
+
     # :ditto:
     def check(h : Hash, required : Bool = true, format : Bool = true)
       v = Check.new_validation
@@ -489,6 +546,27 @@ module Check
       format : Bool = true
     ); end
 
+    # Same as `check` but this method raises a `Check::ValidationError`
+    # if the validation fails or if the clean has not been processed successfully.
+    #
+    # ```
+    # v = Validation.new_validation
+    # myCheckable.check!(v) # => Returns the current instance.
+    # ```
+    #
+    # This method returns `self`, so it chainable :)
+    #
+    # ```
+    # v = Validation.new_validation
+    # user.email = "me@example.org"
+    # user.check!(v).save
+    # ```
+    def check!(v : Check::Validation, required : Bool = true, format : Bool = true) : self
+      v = check(v, required, format)
+      raise v.to_exception unless v.valid?
+      self
+    end
+
     # Checks the instance fields and clean them.
     #
     # It instantiates a `Check::Validation` (if not provided) and calls all methods
@@ -526,6 +604,25 @@ module Check
 
       v
       {% end %}
+    end
+
+    # Same as `check` but this method raises a `Check::ValidationError`
+    # if the validation fails or if the clean has not been processed successfully.
+    #
+    # ```
+    # myCheckable.check! # => Returns the current instance.
+    # ```
+    #
+    # This method returns `self`, so it chainable :)
+    #
+    # ```
+    # user.email = "me@example.org"
+    # user.check!.save
+    # ```
+    def check!(required : Bool = true, format : Bool = true) : self
+      v = check(required, format)
+      raise v.to_exception unless v.valid?
+      self
     end
 
     # :ditto:
