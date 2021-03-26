@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    container:
+      image: crystallang/crystal:1.0.0
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install shards
+        run: shards install
+
+      - name: Ameba
+        run: ./bin/ameba
+
+      - name: Test
+        run: crystal spec
+
+      - name: Check the code format
+        run: crystal tool format --check ./src ./spec
+
+      - name: Check FIXME/TODO
+        run: |
+          ! grep --color -Enr 'FIXME|TODO' src/*.cr
+          ! grep --color -Enr 'FIXME|TODO' spec/*.cr
+
+      - name: "Check 'spec focus: true'"
+        run: |
+          ! grep --color -Enr 'focus: true do' spec/*.cr
+
+      - name: Check long lines
+        run: |
+          ! grep --color -Enr '.{120}' src/**.cr
+          ! grep --color -Enr '.{120}' spec/**.cr

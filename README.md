@@ -1,6 +1,6 @@
 # validator
 
-[![Build Status](https://travis-ci.com/Nicolab/crystal-validator.svg?branch=master)](https://travis-ci.com/Nicolab/crystal-validator) [![GitHub release](https://img.shields.io/github/release/Nicolab/crystal-validator.svg)](https://github.com/Nicolab/crystal-validator/releases) [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://nicolab.github.io/crystal-validator/)
+[![CI Status](https://github.com/Nicolab/crystal-validator/workflows/CI/badge.svg?branch=master)](https://github.com/Nicolab/crystal-validator/actions) [![GitHub release](https://img.shields.io/github/release/Nicolab/crystal-validator.svg)](https://github.com/Nicolab/crystal-validator/releases) [![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://nicolab.github.io/crystal-validator/)
 
 ∠(・.-)―〉 →◎ `validator` is a [Crystal](https://crystal-lang.org) data validation module.<br>
 Very simple and efficient, all validations return `true` or `false`.
@@ -21,7 +21,7 @@ Also [validator/check](#check) (not exposed by default) provides:
 dependencies:
   validator:
     github: nicolab/crystal-validator
-    version: ~> 1.5.0 # Check the latest version!
+    version: ~> 1.6.0 # Check the latest version!
 ```
 
 2. Run `shards install`
