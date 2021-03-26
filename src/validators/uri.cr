@@ -84,7 +84,7 @@ module Validator
   end
 
   # Validates that the *value* is an IPv6.
-  def self.ipv6?(value : String) : Bool
+  def self.ipv6?(value : String) : Bool # ameba:disable Metrics/CyclomaticComplexity
     addr_and_zone = [value]
 
     # ipv6 addresses could have scoped architecture

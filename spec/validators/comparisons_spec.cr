@@ -823,10 +823,10 @@ describe "Valid#size?" do
       is(:size?, tuple, 3).should be_true
       is!(:size?, tuple, 3).should be_true
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, 3).should be_true
-      is(:size?, namedTuple, 3).should be_true
-      is!(:size?, namedTuple, 3).should be_true
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, 3).should be_true
+      is(:size?, named_tuple, 3).should be_true
+      is!(:size?, named_tuple, 3).should be_true
     end
 
     it "should return false if size is not equal" do
@@ -849,10 +849,10 @@ describe "Valid#size?" do
       is(:size?, tuple, 4).should be_false
       is_error :size? { is!(:size?, tuple, 4) }
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, 2).should be_false
-      is(:size?, namedTuple, 2).should be_false
-      is_error :size? { is!(:size?, namedTuple, 2) }
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, 2).should be_false
+      is(:size?, named_tuple, 2).should be_false
+      is_error :size? { is!(:size?, named_tuple, 2) }
     end
   end
 
@@ -877,10 +877,10 @@ describe "Valid#size?" do
       is(:size?, tuple, "3").should be_true
       is!(:size?, tuple, "3").should be_true
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, "3").should be_true
-      is(:size?, namedTuple, "3").should be_true
-      is!(:size?, namedTuple, "3").should be_true
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, "3").should be_true
+      is(:size?, named_tuple, "3").should be_true
+      is!(:size?, named_tuple, "3").should be_true
     end
 
     it "should return false if size is not equal" do
@@ -903,10 +903,10 @@ describe "Valid#size?" do
       is(:size?, tuple, "4").should be_false
       is_error :size? { is!(:size?, tuple, "4") }
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, "2").should be_false
-      is(:size?, namedTuple, "2").should be_false
-      is_error :size? { is!(:size?, namedTuple, "2") }
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, "2").should be_false
+      is(:size?, named_tuple, "2").should be_false
+      is_error :size? { is!(:size?, named_tuple, "2") }
     end
   end
 
@@ -951,14 +951,14 @@ describe "Valid#size?" do
       is(:size?, tuple, [2, 3]).should be_true
       is!(:size?, tuple, [2, 3]).should be_true
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, [3]).should be_true
-      is(:size?, namedTuple, [3]).should be_true
-      is!(:size?, namedTuple, [3]).should be_true
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, [3]).should be_true
+      is(:size?, named_tuple, [3]).should be_true
+      is!(:size?, named_tuple, [3]).should be_true
 
-      Valid.size?(namedTuple, [3, 2]).should be_true
-      is(:size?, namedTuple, [3, 2]).should be_true
-      is!(:size?, namedTuple, [3, 2]).should be_true
+      Valid.size?(named_tuple, [3, 2]).should be_true
+      is(:size?, named_tuple, [3, 2]).should be_true
+      is!(:size?, named_tuple, [3, 2]).should be_true
     end
 
     it "should return false if size is not equal" do
@@ -997,14 +997,14 @@ describe "Valid#size?" do
       is(:size?, tuple, [1, 4]).should be_false
       is_error :size? { is!(:size?, tuple, [1, 4]) }
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, [2]).should be_false
-      is(:size?, namedTuple, [2]).should be_false
-      is_error :size? { is!(:size?, namedTuple, [2]) }
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, [2]).should be_false
+      is(:size?, named_tuple, [2]).should be_false
+      is_error :size? { is!(:size?, named_tuple, [2]) }
 
-      Valid.size?(namedTuple, [2, 4]).should be_false
-      is(:size?, namedTuple, [2, 4]).should be_false
-      is_error :size? { is!(:size?, namedTuple, [2, 4]) }
+      Valid.size?(named_tuple, [2, 4]).should be_false
+      is(:size?, named_tuple, [2, 4]).should be_false
+      is_error :size? { is!(:size?, named_tuple, [2, 4]) }
     end
   end
 
@@ -1049,14 +1049,14 @@ describe "Valid#size?" do
       is(:size?, tuple, ["2", "3"]).should be_true
       is!(:size?, tuple, ["2", "3"]).should be_true
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, ["3"]).should be_true
-      is(:size?, namedTuple, ["3"]).should be_true
-      is!(:size?, namedTuple, ["3"]).should be_true
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, ["3"]).should be_true
+      is(:size?, named_tuple, ["3"]).should be_true
+      is!(:size?, named_tuple, ["3"]).should be_true
 
-      Valid.size?(namedTuple, ["3", "2"]).should be_true
-      is(:size?, namedTuple, ["3", "2"]).should be_true
-      is!(:size?, namedTuple, ["3", "2"]).should be_true
+      Valid.size?(named_tuple, ["3", "2"]).should be_true
+      is(:size?, named_tuple, ["3", "2"]).should be_true
+      is!(:size?, named_tuple, ["3", "2"]).should be_true
     end
 
     it "should return false if size is not equal" do
@@ -1095,14 +1095,14 @@ describe "Valid#size?" do
       is(:size?, tuple, ["1", "4"]).should be_false
       is_error :size? { is!(:size?, tuple, ["1", "4"]) }
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, ["2"]).should be_false
-      is(:size?, namedTuple, ["2"]).should be_false
-      is_error :size? { is!(:size?, namedTuple, ["2"]) }
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, ["2"]).should be_false
+      is(:size?, named_tuple, ["2"]).should be_false
+      is_error :size? { is!(:size?, named_tuple, ["2"]) }
 
-      Valid.size?(namedTuple, ["2", "4"]).should be_false
-      is(:size?, namedTuple, ["2", "4"]).should be_false
-      is_error :size? { is!(:size?, namedTuple, ["2", "4"]) }
+      Valid.size?(named_tuple, ["2", "4"]).should be_false
+      is(:size?, named_tuple, ["2", "4"]).should be_false
+      is_error :size? { is!(:size?, named_tuple, ["2", "4"]) }
     end
   end
 
@@ -1159,18 +1159,18 @@ describe "Valid#size?" do
       is(:size?, tuple, 0..4).should be_true
       is!(:size?, tuple, 0..4).should be_true
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, 3..10).should be_true
-      is(:size?, namedTuple, 3..10).should be_true
-      is!(:size?, namedTuple, 3..10).should be_true
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, 3..10).should be_true
+      is(:size?, named_tuple, 3..10).should be_true
+      is!(:size?, named_tuple, 3..10).should be_true
 
-      Valid.size?(namedTuple, 0..3).should be_true
-      is(:size?, namedTuple, 0..3).should be_true
-      is!(:size?, namedTuple, 0..3).should be_true
+      Valid.size?(named_tuple, 0..3).should be_true
+      is(:size?, named_tuple, 0..3).should be_true
+      is!(:size?, named_tuple, 0..3).should be_true
 
-      Valid.size?(namedTuple, 1..4).should be_true
-      is(:size?, namedTuple, 1..4).should be_true
-      is!(:size?, namedTuple, 1..4).should be_true
+      Valid.size?(named_tuple, 1..4).should be_true
+      is(:size?, named_tuple, 1..4).should be_true
+      is!(:size?, named_tuple, 1..4).should be_true
     end
 
     it "should return false if size is not equal" do
@@ -1209,14 +1209,14 @@ describe "Valid#size?" do
       is(:size?, tuple, 0..2).should be_false
       is_error :size? { is!(:size?, tuple, 0..2) }
 
-      namedTuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
-      Valid.size?(namedTuple, 0...3).should be_false
-      is(:size?, namedTuple, 0...3).should be_false
-      is_error :size? { is!(:size?, namedTuple, 0...3) }
+      named_tuple = {name: "Valid", year: 2020, dad: "Nicolas Talle"}
+      Valid.size?(named_tuple, 0...3).should be_false
+      is(:size?, named_tuple, 0...3).should be_false
+      is_error :size? { is!(:size?, named_tuple, 0...3) }
 
-      Valid.size?(namedTuple, 4..6).should be_false
-      is(:size?, namedTuple, 4..6).should be_false
-      is_error :size? { is!(:size?, namedTuple, 4..6) }
+      Valid.size?(named_tuple, 4..6).should be_false
+      is(:size?, named_tuple, 4..6).should be_false
+      is_error :size? { is!(:size?, named_tuple, 4..6) }
     end
   end
 end

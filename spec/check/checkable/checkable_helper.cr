@@ -50,7 +50,7 @@ module H
       email: {
         required:     true,
         before_check: :before_check_email,
-        after_check:  ->(v : Check::Validation, value : String?, required : Bool, format : Bool) {
+        after_check:  ->(_v : Check::Validation, value : String?, _required : Bool, _format : Bool) {
           @@after_check_email_called = true
           value
         },
