@@ -55,6 +55,10 @@ module Check
   #       message: "Wrong type",
   #     },
   #   }
+  #
+  #   def initialize(@title, @content)
+  #     init_props
+  #   end
   # end
   #
   # # Triggered on all data

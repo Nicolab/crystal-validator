@@ -146,7 +146,9 @@ class User
     },
   }
 
-  def initialize(@email, @age); end
+  def initialize(@email, @age)
+    init_props
+  end
 
   # ---------------------------------------------------------------------------
   # Lifecycle methods (hooks)
