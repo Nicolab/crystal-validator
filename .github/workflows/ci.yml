@@ -30,14 +30,15 @@ jobs:
 
       - name: Check FIXME/TODO
         run: |
-          ! grep --color -Enr 'FIXME|TODO' src/*.cr
-          ! grep --color -Enr 'FIXME|TODO' spec/*.cr
+          ! grep --color -Enr --include="*.cr" 'FIXME|TODO' src
+          ! grep --color -Enr --include="*.cr" 'FIXME|TODO' spec
 
       - name: "Check 'spec focus: true'"
         run: |
-          ! grep --color -Enr 'focus: true do' spec/*.cr
+          ! grep --color -Enr --include="*.cr" 'focus: true do' spec
+          ! grep --color -Enr --include="*.cr" 'ftest_' spec
 
       - name: Check long lines
         run: |
-          ! grep --color -Enr '.{120}' src/**.cr
-          ! grep --color -Enr '.{120}' spec/**.cr
+          ! grep --color -Enr --include="*.cr" '.{121}' src
+          ! grep --color -Enr --include="*.cr" '.{121}' spec
