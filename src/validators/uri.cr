@@ -11,14 +11,17 @@ module Validator
   @@rx_email = /^[a-zA-Z0-9]+[a-zA-Z0-9_\.\-]*@#{@@rx_domain_part}$/
   @@rx_url = /^http(?:s)?\:\/\/#{@@rx_domain_part}[a-zA-Z0-9:%-_\+.~#!?&\/\/=]*$/
   @@rx_magnet_uri = /^magnet\:\?xt\=urn\:[a-z0-9]+\:[a-z0-9]{32,40}\&dn\=.+\&tr\=.+/i
-  @@rx_ipv4 = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
+  @@rx_ipv4_end = "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
+  @@rx_ipv4 = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}#{@@rx_ipv4_end}$/
   @@rx_ipv6_block = /^[0-9A-F]{1,4}$/i
 
   @@rx_mac_addr = /^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/
   @@rx_mac_addr_no_colons = /^([0-9a-fA-F]){12}$/
   @@rx_mac_addr_with_hyphen = /^([0-9a-fA-F][0-9a-fA-F]-){5}([0-9a-fA-F][0-9a-fA-F])$/
   @@rx_mac_addr_with_spaces = /^([0-9a-fA-F][0-9a-fA-F]\s){5}([0-9a-fA-F][0-9a-fA-F])$/
-  @@rx_mac_addr_with_dots = /^([0-9a-fA-F]{4}).([0-9a-fA-F]{4}).([0-9a-fA-F]{4})$/ # Validates that the *value* is a domain or subdomain.
+
+  # Validates that the *value* is a domain or subdomain.
+  @@rx_mac_addr_with_dots = /^([0-9a-fA-F]{4}).([0-9a-fA-F]{4}).([0-9a-fA-F]{4})$/
 
   def self.domain?(value : String) : Bool
     size = value.size
