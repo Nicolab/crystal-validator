@@ -81,6 +81,11 @@
       
     </li>
   
+  <li class=" " data-id="validator/Check/Prop" data-name="check::prop">
+      <a href="Check/Prop.html">Prop</a>
+      
+    </li>
+  
   <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
       <a href="Check/Validation.html">Validation</a>
       
@@ -203,160 +208,157 @@ is! <span class="n">:email?</span>, <span class="s">&quot;contact@@example..org&
   </svg>
 </a>Validation rules</h3>
 
+<p>The validation rules can be defined directly when defining properties (with <code>getter</code> or <code>property</code>).
+Or with the macro <code>Check.rules</code>. Depending on preference, it's the same under the hood.</p>
+
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;validator/check&quot;</span>
 
 <span class="k">class</span> <span class="t">User</span>
-    <span class="c"># Mixin</span>
-    <span class="t">Check</span>.checkable
+  <span class="c"># Mixin</span>
+  <span class="t">Check</span>.checkable
 
-    property email : <span class="t">String</span>
-    property age : <span class="t">Int32</span>
-    property bio : <span class="t">String</span>?
+  <span class="c"># required</span>
+  property email : <span class="t">String</span>, {
+    required: <span class="n">true</span>,
 
-    <span class="t">Check</span>.rules(
-      <span class="c"># required</span>
-      email: {
-        required: <span class="n">true</span>,
-
-        <span class="c"># Optional lifecycle hook to be executed on `check_email` call.</span>
-        <span class="c"># Before the `check` rules, just after `clean_email` called inside `check_email`.</span>
-        <span class="c"># Proc or method name (here is a Proc)</span>
-        before_check: ->(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>) {
-           puts <span class="s">&quot;before_check_content&quot;</span>
-           content
-        },
-
-        <span class="c"># Optional lifecycle hook to be executed on `check_email` call, after the `check` rules.</span>
-        <span class="c"># Proc or method name (here is the method name)</span>
-        after_check: <span class="n">:after_check_email</span>
-
-        <span class="c"># Checker (all validators are supported)</span>
-        check: {
-          not_empty: {<span class="s">&quot;Email is required&quot;</span>},
-          email:     {<span class="s">&quot;It is not a valid email&quot;</span>},
-        },
-
-        <span class="c"># Cleaner</span>
-        clean: {
-          <span class="c"># Data type</span>
-          <span class="k">type</span>: <span class="t">String</span>,
-
-          <span class="c"># Converter (if union or other) to the expected value type.</span>
-          <span class="c"># Example if the input value is i32, but i64 is expected</span>
-          <span class="c"># Here is a String</span>
-          to: <span class="n">:to_s</span>,
-
-          <span class="c"># Formatter (any Crystal Proc) or method name (Symbol)</span>
-          format: <span class="n">:format_email</span>,
-
-          <span class="c"># Error message</span>
-          <span class="c"># Default is &quot;Wrong type&quot; but it can be customized</span>
-          message: <span class="s">&quot;Oops! Wrong type.&quot;</span>,
-        },
-      },
-
-      <span class="c"># required</span>
-      age: {
-        required: <span class="s">&quot;Age is required&quot;</span>, <span class="c"># Custom message</span>
-        check: {
-          min:     {<span class="s">&quot;Age should be more than 18&quot;</span>, <span class="n">18</span>},
-          between: {<span class="s">&quot;Age should be between 25 and 35&quot;</span>, <span class="n">25</span>, <span class="n">35</span>},
-        },
-        clean: {<span class="k">type</span>: <span class="t">Int32</span>, to: <span class="n">:to_i32</span>, message: <span class="s">&quot;Unable to cast to Int32&quot;</span>},
-      },
-
-      <span class="c"># nilable</span>
-      bio: {
-        check: {
-          between: {<span class="s">&quot;The user bio must be between 2 and 400 characters.&quot;</span>, <span class="n">2</span>, <span class="n">400</span>},
-        },
-        clean: {
-          <span class="k">type</span>: <span class="t">String</span>,
-          to: <span class="n">:to_s</span>,
-          <span class="c"># `nilable` means omited if not provided,</span>
-          <span class="c"># regardless of Crystal type (nilable or not)</span>
-          nilable: <span class="n">true</span>
-        },
-      },
-    )
-
-    <span class="k">def</span> <span class="m">initialize</span>(@email, @age); <span class="k">end</span>
-
-    <span class="c"># ---------------------------------------------------------------------------</span>
-    <span class="c"># Lifecycle methods (hooks)</span>
-    <span class="c"># ---------------------------------------------------------------------------</span>
-
-    <span class="c"># Triggered on instance: `user.check`</span>
-    <span class="k">private</span> <span class="k">def</span> <span class="m">before_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-    <span class="k">end</span>
-
-    <span class="c"># Triggered on instance: `user.check`</span>
-    <span class="k">private</span> <span class="k">def</span> <span class="m">after_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-    <span class="k">end</span>
-
-    <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
-    <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.before_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-      pp h
-    <span class="k">end</span>
-
-    <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
-    <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.after_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-      pp cleaned_h
-      cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
-    <span class="k">end</span>
-
-    <span class="c"># Triggered on a static call and on instance call: `User.check_email(value)`, `User.check(h)`, `user.check`.</span>
-    <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.after_check_content(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      puts <span class="s">&quot;after_check_content&quot;</span>
-      puts <span class="s">&quot;Valid? </span><span class="i">#{</span>v.valid?<span class="i">}</span><span class="s">&quot;</span>
+    <span class="c"># Optional lifecycle hook to be executed on `check_email` call.</span>
+    <span class="c"># Before the `check` rules, just after `clean_email` called inside `check_email`.</span>
+    <span class="c"># Proc or method name (here is a Proc)</span>
+    before_check: ->(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>) {
+      puts <span class="s">&quot;before_check_content&quot;</span>
       content
-    <span class="k">end</span>
+    },
 
-    <span class="c"># --------------------------------------------------------------------------</span>
-    <span class="c">#  Custom checkers</span>
-    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="c"># Optional lifecycle hook to be executed on `check_email` call, after the `check` rules.</span>
+    <span class="c"># Proc or method name (here is the method name)</span>
+    after_check: <span class="n">:after_check_email</span>
 
-    <span class="c"># Triggered on instance: `user.check`</span>
-    @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
-    <span class="k">private</span> <span class="k">def</span> <span class="m">custom_checker</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-    <span class="k">end</span>
+    <span class="c"># Checker (all validators are supported)</span>
+    check: {
+      not_empty: {<span class="s">&quot;Email is required&quot;</span>},
+      email:     {<span class="s">&quot;It is not a valid email&quot;</span>},
+    },
 
-     <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
-    @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
-    <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.custom_checker(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
-      <span class="c"># Code...</span>
-      cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
-    <span class="k">end</span>
+    <span class="c"># Cleaner</span>
+    clean: {
+      <span class="c"># Data type</span>
+      <span class="k">type</span>: <span class="t">String</span>,
 
-    <span class="c"># --------------------------------------------------------------------------</span>
-    <span class="c">#  Formatters</span>
-    <span class="c"># --------------------------------------------------------------------------</span>
+      <span class="c"># Converter (if union or other) to the expected value type.</span>
+      <span class="c"># Example if the input value is i32, but i64 is expected</span>
+      <span class="c"># Here is a String</span>
+      to: <span class="n">:to_s</span>,
 
-    <span class="c"># Format (convert) email.</span>
-    <span class="k">def</span> <span class="m">self</span>.format_email(email)
-      puts <span class="s">&quot;mail stripped&quot;</span>
-      email.strip
-    <span class="k">end</span>
+      <span class="c"># Formatter (any Crystal Proc) or method name (Symbol)</span>
+      format: <span class="n">:format_email</span>,
 
-    <span class="c"># --------------------------------------------------------------------------</span>
-    <span class="c"># Normal methods</span>
-    <span class="c"># --------------------------------------------------------------------------</span>
+      <span class="c"># Error message</span>
+      <span class="c"># Default is &quot;Wrong type&quot; but it can be customized</span>
+      message: <span class="s">&quot;Oops! Wrong type.&quot;</span>,
+    }
+  }
 
-    <span class="k">def</span> <span class="m">foo</span>()
-      <span class="c"># Code...</span>
-    <span class="k">end</span>
+  <span class="c"># required</span>
+  property age : <span class="t">Int32</span>, {
+    required: <span class="s">&quot;Age is required&quot;</span>, <span class="c"># Custom message</span>
+    check: {
+      min:     {<span class="s">&quot;Age should be more than 18&quot;</span>, <span class="n">18</span>},
+      between: {<span class="s">&quot;Age should be between 25 and 35&quot;</span>, <span class="n">25</span>, <span class="n">35</span>},
+    },
+    clean: {<span class="k">type</span>: <span class="t">Int32</span>, to: <span class="n">:to_i32</span>, message: <span class="s">&quot;Unable to cast to Int32&quot;</span>},
+  }
 
-    <span class="k">def</span> <span class="m">self</span>.bar(v)
-      <span class="c"># Code...</span>
-    <span class="k">end</span>
+  <span class="c"># nilable</span>
+  property bio : <span class="t">String</span>?, {
+    check: {
+      between: {<span class="s">&quot;The user bio must be between 2 and 400 characters.&quot;</span>, <span class="n">2</span>, <span class="n">400</span>},
+    },
+    clean: {
+      <span class="k">type</span>: <span class="t">String</span>,
+      to: <span class="n">:to_s</span>,
+      <span class="c"># `nilable` means omited if not provided,</span>
+      <span class="c"># regardless of Crystal type (nilable or not)</span>
+      nilable: <span class="n">true</span>
+    },
+  }
 
-    <span class="c"># ...</span>
-  <span class="k">end</span></code></pre>
+  <span class="k">def</span> <span class="m">initialize</span>(@email, @age); <span class="k">end</span>
+
+  <span class="c"># ---------------------------------------------------------------------------</span>
+  <span class="c"># Lifecycle methods (hooks)</span>
+  <span class="c"># ---------------------------------------------------------------------------</span>
+
+  <span class="c"># Triggered on instance: `user.check`</span>
+  <span class="k">private</span> <span class="k">def</span> <span class="m">before_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+  <span class="k">end</span>
+
+  <span class="c"># Triggered on instance: `user.check`</span>
+  <span class="k">private</span> <span class="k">def</span> <span class="m">after_check</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+  <span class="k">end</span>
+
+  <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+  <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.before_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+    pp h
+  <span class="k">end</span>
+
+  <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+  <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.after_check(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+    pp cleaned_h
+    cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
+  <span class="k">end</span>
+
+  <span class="c"># Triggered on a static call and on instance call: `User.check_email(value)`, `User.check(h)`, `user.check`.</span>
+  <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.after_check_content(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, content : <span class="t">String</span>?, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    puts <span class="s">&quot;after_check_content&quot;</span>
+    puts <span class="s">&quot;Valid? </span><span class="i">#{</span>v.valid?<span class="i">}</span><span class="s">&quot;</span>
+    content
+  <span class="k">end</span>
+
+  <span class="c"># --------------------------------------------------------------------------</span>
+  <span class="c">#  Custom checkers</span>
+  <span class="c"># --------------------------------------------------------------------------</span>
+
+  <span class="c"># Triggered on instance: `user.check`</span>
+  @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
+  <span class="k">private</span> <span class="k">def</span> <span class="m">custom_checker</span>(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+  <span class="k">end</span>
+
+    <span class="c"># Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)</span>
+  @[<span class="t">Check</span><span class="t">::</span><span class="t">Checker</span>]
+  <span class="k">private</span> <span class="k">def</span> <span class="m">self</span>.custom_checker(v : <span class="t">Check</span><span class="t">::</span><span class="t">Validation</span>, h, cleaned_h, required : <span class="t">Bool</span>, format : <span class="t">Bool</span>)
+    <span class="c"># Code...</span>
+    cleaned_h <span class="c"># &lt;= returns cleaned_h!</span>
+  <span class="k">end</span>
+
+  <span class="c"># --------------------------------------------------------------------------</span>
+  <span class="c">#  Formatters</span>
+  <span class="c"># --------------------------------------------------------------------------</span>
+
+  <span class="c"># Format (convert) email.</span>
+  <span class="k">def</span> <span class="m">self</span>.format_email(email)
+    puts <span class="s">&quot;mail stripped&quot;</span>
+    email.strip
+  <span class="k">end</span>
+
+  <span class="c"># --------------------------------------------------------------------------</span>
+  <span class="c"># Normal methods</span>
+  <span class="c"># --------------------------------------------------------------------------</span>
+
+  <span class="k">def</span> <span class="m">foo</span>()
+    <span class="c"># Code...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">self</span>.bar(v)
+    <span class="c"># Code...</span>
+  <span class="k">end</span>
+
+  <span class="c"># ...</span>
+<span class="k">end</span></code></pre>
 
 <p><strong>Check</strong> with this example class (<code>User</code>):</p>
 

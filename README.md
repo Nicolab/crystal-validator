@@ -557,9 +557,8 @@ v, content = Article.check_content(input_data["content"]?)
 ```sh
 crystal spec
 crystal tool format
+./bin/ameba
 ```
-
-> TODO: add `ameba`?
 
 ## Contributing
 

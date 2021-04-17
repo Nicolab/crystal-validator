@@ -81,6 +81,11 @@
       
     </li>
   
+  <li class=" " data-id="validator/Check/Prop" data-name="check::prop">
+      <a href="Check/Prop.html">Prop</a>
+      
+    </li>
+  
   <li class=" " data-id="validator/Check/Validation" data-name="check::validation">
       <a href="Check/Validation.html">Validation</a>
       
@@ -178,6 +183,25 @@
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="RULES">
+        <strong>RULES</strong> = <code>{} <span class="k">of</span> <span class="t">String</span> => <span class="t">HashLiteral</span>(<span class="t">String</span>, <span class="t">ASTNode</span>)</code>
+      </dt>
+      
+    
+  </dl>
 
 
 
@@ -350,23 +374,20 @@ It must be used in conjonction with <code><a href="Check.html#rules(**fields)-ma
   <span class="t">Check</span>.checkable
 
   property title : <span class="t">String</span>
-  property content : <span class="t">String</span>
-
-  <span class="t">Check</span>.rules(
-    content: {
-      check: {
-        not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
-        between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
-        <span class="c"># ...</span>
-      },
-      clean: {
-        <span class="k">type</span>:    <span class="t">String</span>,
-        to:      <span class="n">:to_s</span>,
-        format:  ->(content : <span class="t">String</span>) { content.strip },
-        message: <span class="s">&quot;Wrong type&quot;</span>,
-      },
+  property content : <span class="t">String</span>, {
+    required: <span class="n">true</span>,
+    check:    {
+      not_empty: {<span class="s">&quot;Article content is required&quot;</span>},
+      between:   {<span class="s">&quot;The article content must be between 10 and 20 000 characters&quot;</span>, <span class="n">10</span>, <span class="n">20_000</span>},
+      <span class="c"># ...</span>
     },
-  )
+    clean: {
+      <span class="k">type</span>:    <span class="t">String</span>,
+      to:      <span class="n">:to_s</span>,
+      format:  ->(content : <span class="t">String</span>) { content.strip },
+      message: <span class="s">&quot;Wrong type&quot;</span>,
+    },
+  }
 <span class="k">end</span>
 
 <span class="c"># Triggered on all data</span>
