@@ -71,161 +71,158 @@ is! :email?, "contact@@example..org" # => Validator::Error
 
 ### Validation rules
 
+The validation rules can be defined directly when defining properties (with `getter` or `property`).
+Or with the macro `Check.rules`. Depending on preference, it's the same under the hood.
+
 ```crystal
 require "validator/check"
 
 class User
-    # Mixin
-    Check.checkable
+  # Mixin
+  Check.checkable
 
-    property email : String
-    property age : Int32
-    property bio : String?
+  # required
+  property email : String, {
+    required: true,
 
-    Check.rules(
-      # required
-      email: {
-        required: true,
-
-        # Optional lifecycle hook to be executed on `check_email` call.
-        # Before the `check` rules, just after `clean_email` called inside `check_email`.
-        # Proc or method name (here is a Proc)
-        before_check: ->(v : Check::Validation, content : String?, required : Bool, format : Bool) {
-           puts "before_check_content"
-           content
-        },
-
-        # Optional lifecycle hook to be executed on `check_email` call, after the `check` rules.
-        # Proc or method name (here is the method name)
-        after_check: :after_check_email
-
-        # Checker (all validators are supported)
-        check: {
-          not_empty: {"Email is required"},
-          email:     {"It is not a valid email"},
-        },
-
-        # Cleaner
-        clean: {
-          # Data type
-          type: String,
-
-          # Converter (if union or other) to the expected value type.
-          # Example if the input value is i32, but i64 is expected
-          # Here is a String
-          to: :to_s,
-
-          # Formatter (any Crystal Proc) or method name (Symbol)
-          format: :format_email,
-
-          # Error message
-          # Default is "Wrong type" but it can be customized
-          message: "Oops! Wrong type.",
-        },
-      },
-
-      # required
-      age: {
-        required: "Age is required", # Custom message
-        check: {
-          min:     {"Age should be more than 18", 18},
-          between: {"Age should be between 25 and 35", 25, 35},
-        },
-        clean: {type: Int32, to: :to_i32, message: "Unable to cast to Int32"},
-      },
-
-      # nilable
-      bio: {
-        check: {
-          between: {"The user bio must be between 2 and 400 characters.", 2, 400},
-        },
-        clean: {
-          type: String,
-          to: :to_s,
-          # `nilable` means omited if not provided,
-          # regardless of Crystal type (nilable or not)
-          nilable: true
-        },
-      },
-    )
-
-    def initialize(@email, @age); end
-
-    # ---------------------------------------------------------------------------
-    # Lifecycle methods (hooks)
-    # ---------------------------------------------------------------------------
-
-    # Triggered on instance: `user.check`
-    private def before_check(v : Check::Validation, required : Bool, format : Bool)
-      # Code...
-    end
-
-    # Triggered on instance: `user.check`
-    private def after_check(v : Check::Validation, required : Bool, format : Bool)
-      # Code...
-    end
-
-    # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    private def self.before_check(v : Check::Validation, h, required : Bool, format : Bool)
-      # Code...
-      pp h
-    end
-
-    # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    private def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
-      # Code...
-      pp cleaned_h
-      cleaned_h # <= returns cleaned_h!
-    end
-
-    # Triggered on a static call and on instance call: `User.check_email(value)`, `User.check(h)`, `user.check`.
-    private def self.after_check_content(v : Check::Validation, content : String?, required : Bool, format : Bool)
-      puts "after_check_content"
-      puts "Valid? #{v.valid?}"
+    # Optional lifecycle hook to be executed on `check_email` call.
+    # Before the `check` rules, just after `clean_email` called inside `check_email`.
+    # Proc or method name (here is a Proc)
+    before_check: ->(v : Check::Validation, content : String?, required : Bool, format : Bool) {
+      puts "before_check_content"
       content
-    end
+    },
 
-    # --------------------------------------------------------------------------
-    #  Custom checkers
-    # --------------------------------------------------------------------------
+    # Optional lifecycle hook to be executed on `check_email` call, after the `check` rules.
+    # Proc or method name (here is the method name)
+    after_check: :after_check_email
 
-    # Triggered on instance: `user.check`
-    @[Check::Checker]
-    private def custom_checker(v : Check::Validation, required : Bool, format : Bool)
-      # Code...
-    end
+    # Checker (all validators are supported)
+    check: {
+      not_empty: {"Email is required"},
+      email:     {"It is not a valid email"},
+    },
 
-     # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
-    @[Check::Checker]
-    private def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
-      # Code...
-      cleaned_h # <= returns cleaned_h!
-    end
+    # Cleaner
+    clean: {
+      # Data type
+      type: String,
 
-    # --------------------------------------------------------------------------
-    #  Formatters
-    # --------------------------------------------------------------------------
+      # Converter (if union or other) to the expected value type.
+      # Example if the input value is i32, but i64 is expected
+      # Here is a String
+      to: :to_s,
 
-    # Format (convert) email.
-    def self.format_email(email)
-      puts "mail stripped"
-      email.strip
-    end
+      # Formatter (any Crystal Proc) or method name (Symbol)
+      format: :format_email,
 
-    # --------------------------------------------------------------------------
-    # Normal methods
-    # --------------------------------------------------------------------------
+      # Error message
+      # Default is "Wrong type" but it can be customized
+      message: "Oops! Wrong type.",
+    }
+  }
 
-    def foo()
-      # Code...
-    end
+  # required
+  property age : Int32, {
+    required: "Age is required", # Custom message
+    check: {
+      min:     {"Age should be more than 18", 18},
+      between: {"Age should be between 25 and 35", 25, 35},
+    },
+    clean: {type: Int32, to: :to_i32, message: "Unable to cast to Int32"},
+  }
 
-    def self.bar(v)
-      # Code...
-    end
+  # nilable
+  property bio : String?, {
+    check: {
+      between: {"The user bio must be between 2 and 400 characters.", 2, 400},
+    },
+    clean: {
+      type: String,
+      to: :to_s,
+      # `nilable` means omited if not provided,
+      # regardless of Crystal type (nilable or not)
+      nilable: true
+    },
+  }
 
-    # ...
+  def initialize(@email, @age); end
+
+  # ---------------------------------------------------------------------------
+  # Lifecycle methods (hooks)
+  # ---------------------------------------------------------------------------
+
+  # Triggered on instance: `user.check`
+  private def before_check(v : Check::Validation, required : Bool, format : Bool)
+    # Code...
   end
+
+  # Triggered on instance: `user.check`
+  private def after_check(v : Check::Validation, required : Bool, format : Bool)
+    # Code...
+  end
+
+  # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+  private def self.before_check(v : Check::Validation, h, required : Bool, format : Bool)
+    # Code...
+    pp h
+  end
+
+  # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+  private def self.after_check(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
+    # Code...
+    pp cleaned_h
+    cleaned_h # <= returns cleaned_h!
+  end
+
+  # Triggered on a static call and on instance call: `User.check_email(value)`, `User.check(h)`, `user.check`.
+  private def self.after_check_content(v : Check::Validation, content : String?, required : Bool, format : Bool)
+    puts "after_check_content"
+    puts "Valid? #{v.valid?}"
+    content
+  end
+
+  # --------------------------------------------------------------------------
+  #  Custom checkers
+  # --------------------------------------------------------------------------
+
+  # Triggered on instance: `user.check`
+  @[Check::Checker]
+  private def custom_checker(v : Check::Validation, required : Bool, format : Bool)
+    # Code...
+  end
+
+    # Triggered on a static call: `User.check(h)` (with a `Hash` or `JSON::Any`)
+  @[Check::Checker]
+  private def self.custom_checker(v : Check::Validation, h, cleaned_h, required : Bool, format : Bool)
+    # Code...
+    cleaned_h # <= returns cleaned_h!
+  end
+
+  # --------------------------------------------------------------------------
+  #  Formatters
+  # --------------------------------------------------------------------------
+
+  # Format (convert) email.
+  def self.format_email(email)
+    puts "mail stripped"
+    email.strip
+  end
+
+  # --------------------------------------------------------------------------
+  # Normal methods
+  # --------------------------------------------------------------------------
+
+  def foo()
+    # Code...
+  end
+
+  def self.bar(v)
+    # Code...
+  end
+
+  # ...
+end
 ```
 
 __Check__ with this example class (`User`):

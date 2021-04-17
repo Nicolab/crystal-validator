@@ -5,6 +5,8 @@
 # information and documentation: https://github.com/Nicolab/crystal-validator
 # ------------------------------------------------------------------------------
 
+require "prop"
+
 # :ditto:
 module Check
   # Declare a method as a checker.
@@ -39,23 +41,20 @@ module Check
   #   Check.checkable
   #
   #   property title : String
-  #   property content : String
-  #
-  #   Check.rules(
-  #     content: {
-  #       check: {
-  #         not_empty: {"Article content is required"},
-  #         between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
-  #         # ...
-  #       },
-  #       clean: {
-  #         type:    String,
-  #         to:      :to_s,
-  #         format:  ->(content : String) { content.strip },
-  #         message: "Wrong type",
-  #       },
+  #   property content : String, {
+  #     required: true,
+  #     check:    {
+  #       not_empty: {"Article content is required"},
+  #       between:   {"The article content must be between 10 and 20 000 characters", 10, 20_000},
+  #       # ...
   #     },
-  #   )
+  #     clean: {
+  #       type:    String,
+  #       to:      :to_s,
+  #       format:  ->(content : String) { content.strip },
+  #       message: "Wrong type",
+  #     },
+  #   }
   # end
   #
   # # Triggered on all data
@@ -65,9 +64,30 @@ module Check
   # v, content = Article.check_content(input_data["content"]?)
   # ```
   macro checkable
+    include Check::Prop
     include Check::Checkable
     extend Check::CheckableStatic
   end
+
+  # A mixin to make the `getter` macro of the Crystal std's,
+  # able to support the rules definition and factory block.
+  module Prop
+    macro included
+      include Prop
+
+      macro finished
+        {% verbatim do %}
+          {% for k, prop in PROPS %}
+            {% if prop[:args] %}
+              Check.rules({{prop[:args].double_splat}})
+            {% end %}
+          {% end %}
+        {% end %}
+      end
+    end
+  end
+
+  RULES = {} of String => HashLiteral(String, ASTNode)
 
   # Generates `check`, `check_{{field}}` and `clean_{{field}}` methods for *fields* (class variables).
   #
@@ -143,16 +163,31 @@ module Check
   #
   # See also `Check.checkable`.
   macro rules(**fields)
+    {% for field, rules in fields %}
+      {% unless RULES["#{@type.name}"] %}
+        {% RULES["#{@type.name}"] = {} of String => ASTNode %}
+      {% end %}
+
+      {% RULES["#{@type.name}"][field] = rules %}
+    {% end %}
+
+    # Returns all validation rules.
     private def self.validation_rules
-      {{fields}}
+      {
+        {% for field, rules in RULES["#{@type.name}"] %}
+          {{field}}: {{rules}},
+        {% end %}
+      }
     end
 
+    # Returns `true` if a given *field* is required.
     private def self.validation_required?(field) : Bool
       fields = self.validation_rules
       return false if fields[field].nil?
       fields[field].fetch("required", false) == false ? false : true
     end
 
+    # Returns `true` if a given *field* is nilable.
     private def self.validation_nilable?(field) : Bool
       fields = self.validation_rules
       return false if fields[field].nil? || fields[field]["clean"].nil?

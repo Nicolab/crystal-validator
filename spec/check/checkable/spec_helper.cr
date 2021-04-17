@@ -16,6 +16,16 @@ module H
     Check.checkable
 
     Check.rules(
+      age: {
+        check: {
+          min:     {"Age should be more than 18", 18},
+          between: {"Age should be between 25 and 35", 25, 35},
+        },
+        clean: {type: Int32, to: :to_i32, nilable: true},
+      }
+    )
+
+    property email : String, {
       email: {
         required: true,
         check:    {
@@ -27,22 +37,16 @@ module H
           to:   :to_s,
         },
       },
-      age: {
-        check: {
-          min:     {"Age should be more than 18", 18},
-          between: {"Age should be between 25 and 35", 25, 35},
-        },
-        clean: {type: Int32, to: :to_i32, nilable: true},
-      }
-    )
+    }
 
-    property email : String
     property age : Int32?
 
     @[JSON::Field(key: "testCase")]
     property test_case : Bool?
 
-    def initialize(@email, @age); end
+    def initialize(@email, @age)
+      init_props
+    end
 
     def self.test_validation_rules
       self.validation_rules["email"]["required"].should be_true

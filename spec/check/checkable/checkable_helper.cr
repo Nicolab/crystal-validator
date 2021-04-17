@@ -13,9 +13,19 @@ module H
     Check.checkable
 
     property email : String
-    property age : Int32?
+    property age : Int32?, {
+      age: {
+        check: {
+          min:     {"Age should be more than 18", 18},
+          between: {"Age should be between 25 and 35", 25, 35},
+        },
+        clean: {type: Int32, to: :to_i32, nilable: true},
+      },
+    }
 
-    def initialize(@email, @age); end
+    def initialize(@email, @age)
+      init_props
+    end
 
     Check.rules(
       email: {
@@ -31,13 +41,6 @@ module H
           # message: "Wrong type",
         },
       },
-      age: {
-        check: {
-          min:     {"Age should be more than 18", 18},
-          between: {"Age should be between 25 and 35", 25, 35},
-        },
-        clean: {type: Int32, to: :to_i32, nilable: true},
-      }
     )
   end
 
@@ -65,6 +68,10 @@ module H
           message: "Wrong type",
         },
       },
+    )
+
+    property email : String
+    property username : String?, {
       username: {
         required: "Username is required",
         check:    {
@@ -72,18 +79,16 @@ module H
         },
         clean: {type: String},
       },
+    }
+    property age : Int32?, {
       age: {
         check: {
           min:     {"Age should be more than 18", 18},
           between: {"Age should be between 25 and 35", 25, 35},
         },
         clean: {type: Int32, to: :to_i32, message: "Wrong type", nilable: true},
-      }
-    )
-
-    property email : String
-    property username : String?
-    property age : Int32?
+      },
+    }
 
     # ---------------------------------------------------------------------------
     # Spied methods
