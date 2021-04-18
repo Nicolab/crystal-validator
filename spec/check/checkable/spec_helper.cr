@@ -26,16 +26,14 @@ module H
     )
 
     property email : String, {
-      email: {
-        required: true,
-        check:    {
-          not_empty: {"Email should not be empty"},
-          email:     {"It is not a valid email"},
-        },
-        clean: {
-          type: String,
-          to:   :to_s,
-        },
+      required: true,
+      check:    {
+        not_empty: {"Email should not be empty"},
+        email:     {"It is not a valid email"},
+      },
+      clean: {
+        type: String,
+        to:   :to_s,
       },
     }
 

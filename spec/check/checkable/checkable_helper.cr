@@ -14,13 +14,11 @@ module H
 
     property email : String
     property age : Int32?, {
-      age: {
-        check: {
-          min:     {"Age should be more than 18", 18},
-          between: {"Age should be between 25 and 35", 25, 35},
-        },
-        clean: {type: Int32, to: :to_i32, nilable: true},
+      check: {
+        min:     {"Age should be more than 18", 18},
+        between: {"Age should be between 25 and 35", 25, 35},
       },
+      clean: {type: Int32, to: :to_i32, nilable: true},
     }
 
     def initialize(@email, @age)
@@ -72,22 +70,18 @@ module H
 
     property email : String
     property username : String?, {
-      username: {
-        required: "Username is required",
-        check:    {
-          min: {"Length must be more than 2", 2},
-        },
-        clean: {type: String},
+      required: "Username is required",
+      check:    {
+        min: {"Length must be more than 2", 2},
       },
+      clean: {type: String},
     }
     property age : Int32?, {
-      age: {
-        check: {
-          min:     {"Age should be more than 18", 18},
-          between: {"Age should be between 25 and 35", 25, 35},
-        },
-        clean: {type: Int32, to: :to_i32, message: "Wrong type", nilable: true},
+      check: {
+        min:     {"Age should be more than 18", 18},
+        between: {"Age should be between 25 and 35", 25, 35},
       },
+      clean: {type: Int32, to: :to_i32, message: "Wrong type", nilable: true},
     }
 
     # ---------------------------------------------------------------------------

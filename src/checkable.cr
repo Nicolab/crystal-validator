@@ -83,7 +83,7 @@ module Check
         {% verbatim do %}
           {% for k, prop in PROPS %}
             {% if prop[:args] %}
-              Check.rules({{prop[:args].double_splat}})
+              Check.rules({{prop[:name]}}: { {{prop[:args].double_splat}} })
             {% end %}
           {% end %}
         {% end %}
