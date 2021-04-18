@@ -156,8 +156,7 @@ Very simple and efficient, all validations return <code>true</code> or <code>fal
 
 <pre><code class="language-yaml">dependencies:
   validator:
-    github: nicolab/crystal-validator
-    version: ~> 1.6.0 # Check the latest version!</code></pre>
+    github: nicolab/crystal-validator</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
 
@@ -282,7 +281,9 @@ Or with the macro <code>Check.rules</code>. Depending on preference, it's the sa
     },
   }
 
-  <span class="k">def</span> <span class="m">initialize</span>(@email, @age); <span class="k">end</span>
+  <span class="k">def</span> <span class="m">initialize</span>(@email, @age)
+    init_props
+  <span class="k">end</span>
 
   <span class="c"># ---------------------------------------------------------------------------</span>
   <span class="c"># Lifecycle methods (hooks)</span>
