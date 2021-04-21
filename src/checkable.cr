@@ -57,7 +57,6 @@ module Check
   #   }
   #
   #   def initialize(@title, @content)
-  #     init_props
   #   end
   # end
   #

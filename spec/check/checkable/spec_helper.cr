@@ -43,7 +43,6 @@ module H
     property test_case : Bool?
 
     def initialize(@email, @age)
-      init_props
     end
 
     def self.test_validation_rules

@@ -22,7 +22,6 @@ module H
     }
 
     def initialize(@email, @age)
-      init_props
     end
 
     Check.rules(
