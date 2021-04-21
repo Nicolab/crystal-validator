@@ -1,5 +1,5 @@
 name: validator
-version: 1.8.0
+version: 1.9.0
 crystal: ">= 0.35.0"
 license: MIT
 
@@ -17,7 +17,7 @@ crystalline:
 dependencies:
   prop:
     github: nicolab/crystal-prop
-    version: ~> 0.5.0
+    version: ~> 0.6.0
 
 development_dependencies:
   ameba:
