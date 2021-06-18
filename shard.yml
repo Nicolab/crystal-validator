@@ -1,5 +1,5 @@
 name: validator
-version: 1.10.0
+version: 1.10.1
 crystal: ">= 0.35.0"
 license: MIT
 
