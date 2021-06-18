@@ -73,5 +73,18 @@ describe "Checkable" do
         h.should be_nil
       end
     end
+
+    describe "#h_from_json!" do
+      it "should get Crystal Hash (name convention) from JSON string" do
+        h = H::BundleTest.h_from_json!(%({"email": "false@mail.com", "age": 10, "testCase": null}))
+        h.should eq({"email" => "false@mail.com", "age" => 10, "test_case" => nil})
+      end
+
+      it "should raise when JSON string is invalid (not converted to Hash)" do
+        expect_raises(JSON::ParseException, "Unexpected char") do
+          H::BundleTest.h_from_json!(%(email": false@mail.com", "age": 10, "testCase": null}))
+        end
+      end
+    end
   end
 end

@@ -405,7 +405,7 @@ module Check
       end
     end
 
-    # Returns a `Hash` from a JSON input.
+    # Returns a *json* `Hash` from a JSON input.
     # The return type is a tuple with a bool as a first argument indicating
     # that the `JSON.parse` has been processed successfully or not and the 2nd
     # argument is the *json* Hash.
@@ -417,6 +417,16 @@ module Check
       return true, self.to_crystal_h(JSON.parse(json).as_h)
     rescue
       return false, nil
+    end
+
+    # Returns a *json* `Hash` from a JSON input.
+    # Same as `h_from_json`, except that this method raises a `JSON::ParseException` if the conversion fails.
+    #
+    # ```
+    # user_h = User.h_from_json!(json) # => {"username" => "Bob", "email" => "user@example.com"}
+    # ```
+    def h_from_json!(json : String | IO)
+      self.to_crystal_h(JSON.parse(json).as_h)
     end
 
     # Lifecycle method triggered before each call of `.check`.
