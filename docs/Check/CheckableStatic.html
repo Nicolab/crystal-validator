@@ -242,7 +242,14 @@ plus executing custom checkers defined with <code><a href="../Check/Checker.html
       <li class="entry-summary">
         <a href="#h_from_json(json:String%7CIO)-instance-method" class="signature"><strong>#h_from_json</strong>(json : String | IO)</a>
         
-          <div class="summary"><p>Returns a <code>Hash</code> from a JSON input.</p></div>
+          <div class="summary"><p>Returns a <em>json</em> <code>Hash</code> from a JSON input.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#h_from_json!(json:String%7CIO)-instance-method" class="signature"><strong>#h_from_json!</strong>(json : String | IO)</a>
+        
+          <div class="summary"><p>Returns a <em>json</em> <code>Hash</code> from a JSON input.</p></div>
         
       </li>
     
@@ -451,12 +458,34 @@ if the validation fails or if the clean has not been processed successfully.</p>
       
         <div class="doc">
           
-          <p>Returns a <code>Hash</code> from a JSON input.
+          <p>Returns a <em>json</em> <code>Hash</code> from a JSON input.
 The return type is a tuple with a bool as a first argument indicating
 that the <code>JSON.parse</code> has been processed successfully or not and the 2nd
 argument is the <em>json</em> Hash.</p>
 
 <pre><code class="language-crystal">ok, user_h <span class="o">=</span> <span class="t">User</span>.h_from_json(json) <span class="c"># =&gt; true, {&quot;username&quot; =&gt; &quot;Bob&quot;, &quot;email&quot; =&gt; &quot;user@example.com&quot;}</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="h_from_json!(json:String|IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>h_from_json!</strong>(json : String | IO)
+
+        <a class="method-permalink" href="#h_from_json!(json:String%7CIO)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns a <em>json</em> <code>Hash</code> from a JSON input.
+Same as <code><a href="../Check/CheckableStatic.html#h_from_json(json:String%7CIO)-instance-method">#h_from_json</a></code>, except that this method raises a <code>JSON::ParseException</code> if the conversion fails.</p>
+
+<pre><code class="language-crystal">user_h <span class="o">=</span> <span class="t">User</span>.h_from_json!(json) <span class="c"># =&gt; {&quot;username&quot; =&gt; &quot;Bob&quot;, &quot;email&quot; =&gt; &quot;user@example.com&quot;}</span></code></pre>
         </div>
       
       <br/>

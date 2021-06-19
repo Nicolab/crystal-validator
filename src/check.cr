@@ -5,6 +5,7 @@
 # information and documentation: https://github.com/Nicolab/crystal-validator
 # ------------------------------------------------------------------------------
 
+require "./validator"
 require "./checkable"
 
 # Standalone check module that provides a practical workflow for validations.
