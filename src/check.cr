@@ -20,7 +20,7 @@ module Check
 
   # Validation error.
   # To carry `Errors` into an `Exception`.
-  class ValidationError < Exception
+  class ValidationError < Validator::Error
     def initialize(@errors : Errors, @message = "Validation error")
       @message = "#{@message}s" if @errors.size > 1 && @message.as(String).ends_with?("error")
     end

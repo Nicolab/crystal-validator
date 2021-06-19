@@ -43,6 +43,9 @@ describe "Checkable" do
         checkable.check!
       end
 
+      # inherited
+      ex.should be_a Validator::Error
+
       # Custom error message defined in the email rule (CheckableTest)
       ex.errors.should eq({"email" => ["It is not a valid email"]})
 
@@ -126,6 +129,9 @@ describe "Checkable" do
       ex = expect_raises(Check::ValidationError, "Validation error") do
         H::CheckableTest.check! h, format: false
       end
+
+      # inherited
+      ex.should be_a Validator::Error
 
       # Custom error message defined in the email rule (CheckableTest)
       ex.errors.should eq({"email" => ["It is not a valid email"], "username" => ["Username is required"]})
